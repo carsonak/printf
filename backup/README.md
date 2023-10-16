@@ -6,6 +6,7 @@
     main function in it.
 - For clean directory try and use only the [main.c](#about-mainc "About main.c") for testing.
 - Follow [the cycle!](#the-cycle "The cycle")
+- Compiling command: gcc -Wall -Werror -Wextra -pedantic -std=gnu89 -Wno-format *.c -o printf
 
 #### The cycle
 
