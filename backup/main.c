@@ -14,54 +14,54 @@ int main(void)
 
 #ifdef _TASK1_
 
-	int ret = printf("5 * 5 = %d, 5 * 5 = %i", 10, 10);
+	int ret = printf("5*2=%d, 5*2=%i", 10, 10);
 	printf("\n%d\n", ret);
-	ret = _printf("5 * 5 = %d, 5 * 5 = %i", 10, 10);
+	ret = _printf("5*2=%d, 5*2=%i", 10, 10);
 	printf("\n%d\n\n", ret);
 
-	ret = printf("5 * 5 = %d, 5 * 5 = %i", 5 * 5, 10);
+	ret = printf("5*2=%d, 5*2=%i", 5 * 2, 10);
 	printf("\n%d\n", ret);
-	ret = _printf("5 * 5 = %d, 5 * 5 = %i", 10, 5 * 5);
-	printf("\n%d\n\n", ret);
-	ret = printf("5 * 5 = %d, 5 * 5 = %i", 5 * 5, 10);
-	printf("\n%d\n\n", ret);
-	ret = _printf("5 * 5 = %d, 5 * 5 = %i", 5 * 5, 10);
+	ret = _printf("5*2=%d, 5*2=%i", 5 * 2, 10);
+	printf("\n%d\n", ret);
+	ret = printf("5*5=%d, 5*5=%i", 25, 5 * 5);
+	printf("\n%d\n", ret);
+	ret = _printf("5*5=%d, 5*5=%i", 25, 5 * 5);
 	printf("\n%d\n\n", ret);
 
 	ret = printf("%d is -ve and %i is +ve", -10, +10);
 	printf("\n%d\n", ret);
 	ret = _printf("%d is -ve and %i is +ve", -10, +10);
-	printf("\n%d\n\n", ret);
+	printf("\n%d\n", ret);
 	ret = printf("%d is +ve and %i is -ve", +10, -10);
-	printf("\n%d\n\n", ret);
+	printf("\n%d\n", ret);
 	ret = _printf("%d is +ve and %i is -ve", +10, -10);
 	printf("\n%d\n\n", ret);
 
-	ret = printf("5 * 5 = %d", NULL);
+	ret = printf("5*5=%d", NULL);
 	printf("\n%d\n", ret);
-	ret = _printf("5 * 5 = %d", NULL);
-	printf("\n%d\n\n", ret);
-	ret = printf("5 * 5 = %i", NULL);
-	printf("\n%d\n\n", ret);
-	ret = _printf("5 * 5 = %i", NULL);
+	ret = _printf("5*5=%d", NULL);
+	printf("\n%d\n", ret);
+	ret = printf("5*5=%i", NULL);
+	printf("\n%d\n", ret);
+	ret = _printf("5*5=%i", NULL);
 	printf("\n%d\n\n", ret);
 
-	ret = printf("5 * 5 = %d", INT_MAX);
+	ret = printf("5*5=%d", INT_MAX);
 	printf("\n%d\n", ret);
-	ret = _printf("5 * 5 = %d", INT_MAX);
-	printf("\n%d\n\n", ret);
-	ret = printf("5 * 5 = %i", INT_MAX);
+	ret = _printf("5*5=%d", INT_MAX);
 	printf("\n%d\n", ret);
-	ret = _printf("5 * 5 = %i", INT_MAX);
+	ret = printf("5*5=%i", INT_MAX);
+	printf("\n%d\n", ret);
+	ret = _printf("5*5=%i", INT_MAX);
 	printf("\n%d\n\n", ret);
 
-	ret = printf("5 * 5 = %d", INT_MIN);
+	ret = printf("5*5=%d", INT_MIN);
 	printf("\n%d\n", ret);
-	ret = _printf("5 * 5 = %d", INT_MIN);
-	printf("\n%d\n\n", ret);
-	ret = printf("5 * 5 = %i", INT_MIN);
+	ret = _printf("5*5=%d", INT_MIN);
 	printf("\n%d\n", ret);
-	ret = _printf("5 * 5 = %i", INT_MIN);
+	ret = printf("5*5=%i", INT_MIN);
+	printf("\n%d\n", ret);
+	ret = _printf("5*5=%i", INT_MIN);
 	printf("\n%d\n\n", ret);
 
 #endif /*_TASK1_*/

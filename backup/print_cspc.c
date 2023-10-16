@@ -35,7 +35,7 @@ int print_s(va_list set)
 int print_c(va_list set)
 {
 	int err = 0;
-	int *ch = malloc(sizeof(int));
+	int ch[1];
 
 	if (set)
 	{

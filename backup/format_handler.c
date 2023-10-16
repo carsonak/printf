@@ -9,7 +9,7 @@
  */
 int format_handler(char format, va_list set)
 {
-	int b = 0, count = 0;
+	int b = 0, err = 0;
 	f_prt fmts[] = {
 		{'c', print_c},
 		{'s', print_s},
@@ -22,7 +22,7 @@ int format_handler(char format, va_list set)
 	{
 		if (format == fmts[b].ch)
 		{
-			count += fmts[b].f(set);
+			err += fmts[b].f(set);
 			break;
 		}
 	}
@@ -30,5 +30,5 @@ int format_handler(char format, va_list set)
 	if (fmts[b].ch == '\0')
 		return (-1);
 
-	return (count);
+	return (err);
 }
