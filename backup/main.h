@@ -10,6 +10,7 @@
 #include <unistd.h>
 
 int _printf(const char *format, ...);
+int format_handler(char format, va_list set);
 int print_c(va_list st);
 int print_s(va_list st);
 int print_pc(va_list st);

@@ -9,15 +9,15 @@
 int print_d(va_list set)
 {
 	int count = 0;
-	int num;
+	int *num = malloc(sizeof(int));
 
 	if (set)
 	{
-		num = va_arg(set, int);
-		count += write(1, num, sizeof(num));
+		*num = va_arg(set, int);
+		count += write(1, num, sizeof(*num));
 	}
 
-	return (count);
+	return (count / sizeof(*num));
 }
 
 /**
@@ -29,13 +29,13 @@ int print_d(va_list set)
 int print_i(va_list set)
 {
 	int count = 0;
-	int num;
+	int *num = malloc(sizeof(int));
 
 	if (set)
 	{
-		num = va_arg(set, int);
-		count += write(1, num, sizeof(num));
+		*num = va_arg(set, int);
+		count += write(1, num, sizeof(*num));
 	}
 
-	return (count);
+	return (count / sizeof(*num));
 }

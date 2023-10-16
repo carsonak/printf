@@ -1,5 +1,5 @@
 #include "main.h"
-// #define _OVERALL_*/ /*Overall test for the printf function*/
+/*#define _OVERALL_*/ /*Overall test for the printf function*/
 #define _TASK0_ /*Tests for %c, %s and %%*/
 
 /**

@@ -8,15 +8,9 @@
  */
 int _printf(const char *format, ...)
 {
-	int ch, count = 0;
+	int count = 0, *ch = malloc(sizeof(int));
 	va_list set;
-	unsigned long int a = 0, b = 0;
-	f_prt fmts[] = {
-		{'c', print_c},
-		{'d', print_d},
-		{'s', print_s},
-		{'%', print_pc},
-		{'\0', NULL}};
+	unsigned long int a = 0;
 
 	if (format == NULL)
 		return (0);
@@ -26,20 +20,21 @@ int _printf(const char *format, ...)
 	{
 		if (format[a] != '%')
 		{
-			ch = format[a];
-			count += write(1, ch, sizeof(ch));
+			*ch = format[a];
+			write(1, ch, sizeof(*ch));
+			count++;
 		}
 		else
 		{
 			a++;
-			for (b = 0; fmts[b].ch; b++)
+			if (format_handler(format[a], set) == -1)
 			{
-				if (format[a] == fmts[b].ch)
-				{
-					count += fmts[b].f(set);
-					break;
-				}
+				*ch = format[a];
+				write(1, ch, sizeof(*ch));
+				count++;
 			}
+
+			count += format_handler(format[a], set);
 		}
 	}
 
