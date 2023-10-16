@@ -15,7 +15,6 @@ int print_c(va_list st);
 int print_s(va_list st);
 int print_pc(va_list st);
 int print_i(va_list st);
-int print_d(va_list st);
 
 /**
  * struct prt - struct prt for storing a format specifier and it's function

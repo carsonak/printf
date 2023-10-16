@@ -1,6 +1,8 @@
 #include "main.h"
-/*#define _OVERALL_*/ /*Overall test for the printf function*/
-#define _TASK0_ /*Tests for %c, %s and %%*/
+/* #define _OVERALL_*/ /*Overall test for the printf function*/
+/*#define _TASK0_ Tests for %c, %s and %%*/
+/*#define RANDOM*/
+#define _TASK1_
 
 /**
  * main - the main test file
@@ -9,7 +11,61 @@
  */
 int main(void)
 {
-#ifdef _TASK0_
+
+#ifdef _TASK1_
+
+	int ret = printf("5 * 5 = %d, 5 * 5 = %i", 10, 10);
+	printf("\n%d\n", ret);
+	ret = _printf("5 * 5 = %d, 5 * 5 = %i", 10, 10);
+	printf("\n%d\n\n", ret);
+
+	ret = printf("5 * 5 = %d, 5 * 5 = %i", 5 * 5, 10);
+	printf("\n%d\n", ret);
+	ret = _printf("5 * 5 = %d, 5 * 5 = %i", 10, 5 * 5);
+	printf("\n%d\n\n", ret);
+	ret = printf("5 * 5 = %d, 5 * 5 = %i", 5 * 5, 10);
+	printf("\n%d\n\n", ret);
+	ret = _printf("5 * 5 = %d, 5 * 5 = %i", 5 * 5, 10);
+	printf("\n%d\n\n", ret);
+
+	ret = printf("%d is -ve and %i is +ve", -10, +10);
+	printf("\n%d\n", ret);
+	ret = _printf("%d is -ve and %i is +ve", -10, +10);
+	printf("\n%d\n\n", ret);
+	ret = printf("%d is +ve and %i is -ve", +10, -10);
+	printf("\n%d\n\n", ret);
+	ret = _printf("%d is +ve and %i is -ve", +10, -10);
+	printf("\n%d\n\n", ret);
+
+	ret = printf("5 * 5 = %d", NULL);
+	printf("\n%d\n", ret);
+	ret = _printf("5 * 5 = %d", NULL);
+	printf("\n%d\n\n", ret);
+	ret = printf("5 * 5 = %i", NULL);
+	printf("\n%d\n\n", ret);
+	ret = _printf("5 * 5 = %i", NULL);
+	printf("\n%d\n\n", ret);
+
+	ret = printf("5 * 5 = %d", INT_MAX);
+	printf("\n%d\n", ret);
+	ret = _printf("5 * 5 = %d", INT_MAX);
+	printf("\n%d\n\n", ret);
+	ret = printf("5 * 5 = %i", INT_MAX);
+	printf("\n%d\n", ret);
+	ret = _printf("5 * 5 = %i", INT_MAX);
+	printf("\n%d\n\n", ret);
+
+	ret = printf("5 * 5 = %d", INT_MIN);
+	printf("\n%d\n", ret);
+	ret = _printf("5 * 5 = %d", INT_MIN);
+	printf("\n%d\n\n", ret);
+	ret = printf("5 * 5 = %i", INT_MIN);
+	printf("\n%d\n", ret);
+	ret = _printf("5 * 5 = %i", INT_MIN);
+	printf("\n%d\n\n", ret);
+
+#endif /*_TASK1_*/
+#ifdef RANDOM
 	int ret = printf("What!?");
 	printf("\n%d\n", ret);
 	ret = _printf("What!?");
@@ -25,9 +81,30 @@ int main(void)
 	ret = _printf("What %s %s!?", "The", "Hell");
 	printf("\n%d\n\n", ret);
 
-	ret = printf("What %!?", "The");
+	ret = printf("The number of %c\n", 'f');
+	printf("%d\n", ret);
+	ret = _printf("The number of %c\n", 'f');
+	printf("%d\n", ret);
+#endif /* RANDOM */
+#ifdef _TASK0_
+	int ret = printf("What!?");
 	printf("\n%d\n", ret);
-	ret = _printf("What %!?", "The");
+	ret = _printf("What!?");
+	printf("\n%d\n", ret);
+
+	ret = printf("What %s!?", "The");
+	printf("\n%d\n", ret);
+	ret = _printf("What %s!?", "The");
+	printf("\n%d\n\n", ret);
+
+	ret = printf("What %s %s!?", "The", "Hell");
+	printf("\n%d\n", ret);
+	ret = _printf("What %s %s!?", "The", "Hell");
+	printf("\n%d\n\n", ret);
+
+	ret = printf("What %s!?", "The");
+	printf("\n%d\n", ret);
+	ret = _printf("What %s!?", "The");
 	printf("\n%d\n\n", ret);
 
 	ret = printf("What %!?");

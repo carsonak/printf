@@ -12,9 +12,10 @@ int format_handler(char format, va_list set)
 	int b = 0, count = 0;
 	f_prt fmts[] = {
 		{'c', print_c},
-		{'d', print_d},
 		{'s', print_s},
 		{'%', print_pc},
+		{'d', print_i},
+		{'i', print_i},
 		{'\0', NULL}};
 
 	for (b = 0; fmts[b].ch; b++)

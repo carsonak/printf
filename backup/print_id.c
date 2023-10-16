@@ -1,26 +1,6 @@
 #include "main.h"
 
 /**
- * print_d - prints an integer
- * @set: argument from the _printf function
- *
- * Return: number of bytes written
- */
-int print_d(va_list set)
-{
-	int count = 0;
-	int *num = malloc(sizeof(int));
-
-	if (set)
-	{
-		*num = va_arg(set, int);
-		count += write(1, num, sizeof(*num));
-	}
-
-	return (count / sizeof(*num));
-}
-
-/**
  * print_i - prints an integer
  * @set: argument from the _printf function
  *
@@ -28,14 +8,14 @@ int print_d(va_list set)
  */
 int print_i(va_list set)
 {
-	int count = 0;
+	int err = 0;
 	int *num = malloc(sizeof(int));
 
 	if (set)
 	{
 		*num = va_arg(set, int);
-		count += write(1, num, sizeof(*num));
+		err += write(1, num, sizeof(*num));
 	}
 
-	return (count / sizeof(*num));
+	return (err / sizeof(*num));
 }

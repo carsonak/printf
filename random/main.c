@@ -10,19 +10,21 @@
 int main(void)
 {
 #ifdef RANDOM
-       int ret = printf("What!?");
-         printf("\n%d\n", ret);
-	 ret = _printf("What!?");
-	 printf("\n%d\n", ret);
-	    
-        ret = printf("What %s!?", "The");
+	int ret = printf("What!?");
+	printf("\n%d\n", ret);
+	ret = _printf("What!?");
+	printf("\n%d\n", ret);
+
+	ret = printf("What %s!?", "The");
 	printf("\n%d\n", ret);
 	ret = _printf("What %s!?", "The");
 	printf("\n%d\n\n", ret);
+
 	ret = printf("What %s %s!?", "The", "Hell");
 	printf("\n%d\n", ret);
 	ret = _printf("What %s %s!?", "The", "Hell");
 	printf("\n%d\n\n", ret);
+
 	ret = printf("The number of %c\n", 'f');
 	printf("%d\n", ret);
 	ret = _printf("The number of %c\n", 'f');
