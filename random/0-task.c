@@ -1,23 +1,21 @@
 #include "main.h"
 
-
 /**
-  * _printf - produces output according to a format.
-  *
-  *@format: format to be passed to _printf function.
-  *
-  *
-  */
+ * _printf - produces output according to a format.
+ *
+ *@format: format to be passed to _printf function.
+ *
+ *Return: number of characters
+ */
 int _printf(const char *format, ...)
 {
-	int index;
+	int index, num = 0;
 	va_list args;
-	int num = 0;
+	char *str, *ch = malloc(sizeof(char));
 
 	va_start(args, format);
 	for (index = 0; format[index] != '\0'; index++)
 	{
-		char *ch = malloc(sizeof(char));
 		if (format[index] == '%' && format[index + 1] == 'c')
 		{
 			*ch = va_arg(args, int);
@@ -27,7 +25,7 @@ int _printf(const char *format, ...)
 		}
 		else if (format[index] == '%' && format[index + 1] == 's')
 		{
-			char *str = va_arg(args, char *);
+			str = va_arg(args, char *);
 			write(1, str, strlen(str));
 			num += strlen(str);
 			index++;
