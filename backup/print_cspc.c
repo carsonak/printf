@@ -8,16 +8,14 @@
  */
 int print_s(va_list set)
 {
-	unsigned long int i, count = 0;
+	int count = 0;
 	char *str;
 
 	if (set)
 	{
 		str = va_arg(set, char *);
 		if (str)
-		{
 			count += write(1, str, strlen(str));
-		}
 		else
 		{
 			str = "(null)";
@@ -56,15 +54,11 @@ int print_c(va_list set)
  */
 int print_pc(va_list set)
 {
-
 	int count = 0;
-	int *pc = malloc(sizeof(int));
+	char pc[] = {'%'};
+	(void)set;
 
-	if (set)
-	{
-		*pc = va_arg(set, int);
-		count += write(1, pc, sizeof(*pc));
-	}
+	count += write(1, pc, sizeof(*pc));
 
-	return (count / sizeof(*pc));
+	return (count);
 }

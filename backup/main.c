@@ -13,7 +13,7 @@ int main(void)
 	int ret = printf("What!?");
 	printf("\n%d\n", ret);
 	ret = _printf("What!?");
-	printf("\n%d\n", ret);
+	printf("\n%d\n\n", ret);
 
 	ret = printf("What %s!?", "The");
 	printf("\n%d\n", ret);
@@ -25,9 +25,9 @@ int main(void)
 	ret = _printf("What %s %s!?", "The", "Hell");
 	printf("\n%d\n\n", ret);
 
-	ret = printf("What %s!?", "The");
+	ret = printf("What %!?", "The");
 	printf("\n%d\n", ret);
-	ret = _printf("What %s!?", "The");
+	ret = _printf("What %!?", "The");
 	printf("\n%d\n\n", ret);
 
 	ret = printf("What %!?");

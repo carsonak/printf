@@ -4,16 +4,17 @@
  * _printf - prints a string and checks for any format specifiers inside it
  * @format: - a formatted string
  *
- * Return: number of characters printed
+ * Return: number of characters printed, or an error number
  */
 int _printf(const char *format, ...)
 {
-	int count = 0, *ch = malloc(sizeof(int));
+	int err = 0, count = 0;
+	char *ch = malloc(sizeof(*ch));
 	va_list set;
 	unsigned long int a = 0;
 
 	if (format == NULL)
-		return (0);
+		return (-1);
 
 	va_start(set, format);
 	for (a = 0; format[a]; a++)
@@ -21,24 +22,30 @@ int _printf(const char *format, ...)
 		if (format[a] != '%')
 		{
 			*ch = format[a];
-			write(1, ch, sizeof(*ch));
-			count++;
+			count += write(1, ch, sizeof(*ch));
 		}
 		else
 		{
 			a++;
-			if (format_handler(format[a], set) == -1)
+			err += format_handler(format[a], set);
+			if (err >= 0)
+				count += err;
+			else if (err < 0 && format[a])
 			{
+				err = 0;
+				*ch = format[a - 1];
+				count += write(1, ch, sizeof(*ch));
 				*ch = format[a];
-				write(1, ch, sizeof(*ch));
-				count++;
+				count += write(1, ch, sizeof(*ch));
 			}
-
-			count += format_handler(format[a], set);
+			else
+				break;
 		}
 	}
-
 	va_end(set);
+
+	if (err < 0)
+		return (err);
 
 	return (count);
 }

@@ -9,7 +9,7 @@
  */
 int format_handler(char format, va_list set)
 {
-	unsigned long int b = 0, count = 0;
+	int b = 0, count = 0;
 	f_prt fmts[] = {
 		{'c', print_c},
 		{'d', print_d},
