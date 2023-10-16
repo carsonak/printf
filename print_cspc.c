@@ -8,22 +8,22 @@
  */
 int print_s(va_list set)
 {
-	int count = 0;
+	int err = 0;
 	char *str;
 
 	if (set)
 	{
 		str = va_arg(set, char *);
 		if (str)
-			count += write(1, str, strlen(str));
+			err += write(1, str, strlen(str));
 		else
 		{
 			str = "(null)";
-			count += write(1, str, strlen(str));
+			err += write(1, str, strlen(str));
 		}
 	}
 
-	return (count);
+	return (err);
 }
 
 /**
@@ -34,16 +34,16 @@ int print_s(va_list set)
  */
 int print_c(va_list set)
 {
-	int count = 0;
+	int err = 0;
 	int *ch = malloc(sizeof(int));
 
 	if (set)
 	{
 		*ch = va_arg(set, int);
-		count += write(1, ch, sizeof(*ch));
+		err += write(1, ch, sizeof(*ch));
 	}
 
-	return (count / sizeof(*ch));
+	return (err / sizeof(*ch));
 }
 
 /**
@@ -54,11 +54,11 @@ int print_c(va_list set)
  */
 int print_pc(va_list set)
 {
-	int count = 0;
+	int err = 0;
 	char pc[] = {'%'};
 	(void)set;
 
-	count += write(1, pc, sizeof(*pc));
+	err += write(1, pc, sizeof(*pc));
 
-	return (count);
+	return (err);
 }
