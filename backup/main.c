@@ -1,5 +1,6 @@
 #include "main.h"
-#define _OVERALL_ /*Overall test for the printf function*/
+// #define _OVERALL_*/ /*Overall test for the printf function*/
+#define _TASK0_ /*Tests for %c, %s and %%*/
 
 /**
  * main - the main test file
@@ -8,6 +9,58 @@
  */
 int main(void)
 {
+#ifdef _TASK0_
+	int ret = printf("What!?");
+	printf("\n%d\n", ret);
+	ret = _printf("What!?");
+	printf("\n%d\n", ret);
+
+	ret = printf("What %s!?", "The");
+	printf("\n%d\n", ret);
+	ret = _printf("What %s!?", "The");
+	printf("\n%d\n\n", ret);
+
+	ret = printf("What %s %s!?", "The", "Hell");
+	printf("\n%d\n", ret);
+	ret = _printf("What %s %s!?", "The", "Hell");
+	printf("\n%d\n\n", ret);
+
+	ret = printf("What %s!?", "The");
+	printf("\n%d\n", ret);
+	ret = _printf("What %s!?", "The");
+	printf("\n%d\n\n", ret);
+
+	ret = printf("What %!?");
+	printf("\n%d\n", ret);
+	ret = _printf("What %!?");
+	printf("\n%d\n\n", ret);
+
+	ret = printf("What %s!?", NULL);
+	printf("\n%d\n", ret);
+	ret = _printf("What %s!?", NULL);
+	printf("\n%d\n\n", ret);
+
+	ret = printf(NULL);
+	printf("\n%d\n", ret);
+	ret = _printf(NULL);
+	printf("\n%d\n\n", ret);
+
+	ret = printf("What!?%");
+	printf("\n%d\n", ret);
+	ret = _printf("What!?%");
+	printf("\n%d\n\n", ret);
+
+	ret = printf("What %c!?", 'T');
+	printf("\n%d\n", ret);
+	ret = _printf("What %c!?", 'T');
+	printf("\n%d\n\n", ret);
+
+	ret = printf("What %c!?", "The");
+	printf("\n%d\n", ret);
+	ret = _printf("What %c!?", "The");
+	printf("\n%d\n\n", ret);
+
+#endif /*_TASK0_*/
 
 #ifdef _OVERALL_
 
@@ -44,7 +97,7 @@ int main(void)
 	printf("Unknown:[%r]\n");
 	return (0);
 
-#endif
+#endif /*_OVERALL_*/
 
 	return (0);
 }
