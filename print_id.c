@@ -8,14 +8,29 @@
  */
 int print_i(va_list set)
 {
-	int err = 0;
-	int *num = malloc(sizeof(int));
+	int num, err = 0;
+	char *numS;
 
 	if (set)
 	{
-		*num = va_arg(set, int);
-		err += write(1, num, sizeof(*num));
+		num = va_arg(set, int);
+		if (!num)
+		{
+			numS = malloc(sizeof(*numS));
+			if (numS)
+			{
+				*numS = '0';
+				err += write(1, numS, sizeof(*numS));
+				free(numS);
+			}
+			return (err);
+		}
+
+		numS = itos(num);
+		if (numS)
+			err += write(1, numS, strlen(numS));
 	}
 
-	return (err / sizeof(*num));
+	free(numS);
+	return (err);
 }
