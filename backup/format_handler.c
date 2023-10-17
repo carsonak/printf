@@ -15,8 +15,8 @@ int format_handler(va_list set, char format, char *buf)
 		{'c', print_c},
 		{'s', print_s},
 		{'%', print_pc},
-		{'d', print_i},
-		{'i', print_i},
+		{'d', print_number},
+		{'i', print_number},
 		{'\0', NULL}};
 
 	for (b = 0; fmts[b].ch; b++)

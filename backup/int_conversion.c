@@ -5,8 +5,9 @@
   *
   *@num: integer passed.
   */
-void print_number(int num, char *str)
+int print_number(va_list set, char *str)
 {
+	int num;
 	int var;
 	char b;
 	int index;
@@ -14,6 +15,7 @@ void print_number(int num, char *str)
 
 	var = 1;
 	index = 0;
+	num = va_arg(set, int);
 	if (num < 0)
 	{
 		str[index] = '-';
@@ -35,4 +37,5 @@ void print_number(int num, char *str)
 		index++;
 	}
 	str[index] = '\0';
+	return (index);
 }

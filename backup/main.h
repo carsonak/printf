@@ -10,7 +10,7 @@
 #include <unistd.h>
 
 #define BUFFSIZE 1024
-
+int print_number(va_list set, char *str);
 int _printf(const char *format, ...);
 int format_handler(va_list set, char format, char *buf);
 int _write(char *buf, unsigned int a);
