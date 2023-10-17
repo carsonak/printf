@@ -10,8 +10,8 @@ int _printf(const char *format, ...)
 {
 	int err = 0, count = 0;
 	char *ch = malloc(sizeof(*ch));
-	va_list set;
 	unsigned long int a = 0;
+	va_list set;
 
 	if (format == NULL)
 		return (-1);

@@ -14,13 +14,21 @@ int print_i(va_list set)
 	if (set)
 	{
 		num = va_arg(set, int);
-		if (num)
+		if (!num)
 		{
-			numS = itos(num);
-			err += write(1, numS, strlen(numS));
+			numS = malloc(1);
+			*numS = '0';
+			err += write(1, numS, sizeof(*numS));
+			free(numS);
+			return (err);
 		}
+
+		numS = itos(num);
+		if (numS)
+			err += write(1, numS, strlen(numS));
 	}
 
+	free(numS);
 	return (err);
 }
 
@@ -62,6 +70,7 @@ char *itos(int n)
 			numS[b] = '-';
 			b++;
 		}
+
 		for (; div > 0 && b <= len; b++)
 		{
 			numS[b] = ('0' + (num / div));
