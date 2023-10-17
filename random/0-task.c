@@ -30,7 +30,14 @@ int _printf(const char *format, ...)
 			num += strlen(str);
 			index++;
 		}
-		else
+		else if (format[index] == '%')
+		{
+
+		}
+		else if (format[index] == '%%)
+		{
+
+		}
 		{
 			*ch = format[index];
 			write(1, ch, sizeof(char));
