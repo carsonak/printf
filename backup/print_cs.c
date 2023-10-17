@@ -3,10 +3,11 @@
 /**
  * print_s - prints a string
  * @set: argument from the _printf function
+ * @buf: buffer
  *
  * Return: number of bytes written
  */
-int print_s(va_list set)
+int print_s(va_list set, char *buf)
 {
 	int err = 0;
 	char *str;
@@ -15,11 +16,18 @@ int print_s(va_list set)
 	{
 		str = va_arg(set, char *);
 		if (str)
-			err += write(1, str, strlen(str));
+		{
+			while (str[err])
+			{
+				buf[err] = str[err];
+				err++;
+			}
+		}
 		else
 		{
 			str = "(null)";
-			err += write(1, str, strlen(str));
+			while (str[err])
+				buf[err] = str[err];
 		}
 	}
 
@@ -29,19 +37,14 @@ int print_s(va_list set)
 /**
  * print_c - prints a character
  * @set: argument from the _printf function
+ * @buf: buffer
  *
  * Return: number of bytes written
  */
-int print_c(va_list set)
+int print_c(va_list set, char *buf)
 {
-	int err = 0;
-	int ch[1];
-
 	if (set)
-	{
-		*ch = va_arg(set, int);
-		err += write(1, ch, sizeof(*ch));
-	}
+		*buf = va_arg(set, int);
 
-	return (err / sizeof(*ch));
+	return (1);
 }
