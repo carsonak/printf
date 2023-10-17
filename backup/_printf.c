@@ -13,7 +13,7 @@ int _printf(const char *format, ...)
 	unsigned long int a = 0;
 	va_list set;
 
-	if (format == NULL)
+	if (format == NULL || !ch)
 		return (-1);
 
 	va_start(set, format);
@@ -43,7 +43,7 @@ int _printf(const char *format, ...)
 		}
 	}
 	va_end(set);
-
+	free(ch);
 	if (err < 0)
 		return (err);
 

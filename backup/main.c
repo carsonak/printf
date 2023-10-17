@@ -1,8 +1,8 @@
 #include "main.h"
 /* #define _OVERALL_*/ /*Overall test for the printf function*/
-/*#define _TASK0_ Tests for %c, %s and %%*/
+#define _TASK0_		   /*Tests for %c, %s and %%*/
 /*#define RANDOM*/
-#define _TASK1_
+/*#define _TASK1_*/
 
 /**
  * main - the main test file

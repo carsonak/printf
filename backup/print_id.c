@@ -16,10 +16,13 @@ int print_i(va_list set)
 		num = va_arg(set, int);
 		if (!num)
 		{
-			numS = malloc(1);
-			*numS = '0';
-			err += write(1, numS, sizeof(*numS));
-			free(numS);
+			numS = malloc(sizeof(*numS));
+			if (numS)
+			{
+				*numS = '0';
+				err += write(1, numS, sizeof(*numS));
+				free(numS);
+			}
 			return (err);
 		}
 
