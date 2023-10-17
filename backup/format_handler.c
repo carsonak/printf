@@ -4,10 +4,11 @@
  * format_handler - handles formatting of strings
  * @format: the format specifier
  * @set: the argument to be formatted
+ * @buf: character buffer
  *
  * Return: the number of characters printed, -1 if format doesn't match
  */
-int format_handler(char format, va_list set)
+int format_handler(va_list set, char format, char *buf)
 {
 	int b = 0, err = 0;
 	f_prt fmts[] = {
@@ -22,7 +23,7 @@ int format_handler(char format, va_list set)
 	{
 		if (format == fmts[b].ch)
 		{
-			err += fmts[b].f(set);
+			err += fmts[b].f(set, buf);
 			break;
 		}
 	}

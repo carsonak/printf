@@ -35,7 +35,7 @@ int print_s(va_list set)
 int print_c(va_list set)
 {
 	int err = 0;
-	int *ch = malloc(sizeof(int));
+	int ch[1];
 
 	if (set)
 	{
@@ -44,21 +44,4 @@ int print_c(va_list set)
 	}
 
 	return (err / sizeof(*ch));
-}
-
-/**
- * print_pc - prints a %
- * @set: argument from the _printf function
- *
- * Return: number of bytes written
- */
-int print_pc(va_list set)
-{
-	int err = 0;
-	char pc[] = {'%'};
-	(void)set;
-
-	err += write(1, pc, sizeof(*pc));
-
-	return (err);
 }
