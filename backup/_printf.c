@@ -10,37 +10,44 @@ int _printf(const char *format, ...)
 {
 	int err = 0, count = 0;
 	char buffer[1024];
-	unsigned int a = 0;
+	unsigned int a = 0, b = 0;
 	va_list set;
 
 	if (format == NULL)
 		return (-1);
 
 	va_start(set, format);
-	memset(buffer, '0', 1023);
+	memset(buffer, '0', sizeof(buffer));
 	buffer[1023] = '\0';
-	for (a = 0; format[a] && a < 1024; a++)
+	while (format[a] && b < 1024)
 	{
 		if (format[a] != '%')
-			buffer[a] = format[a];
+			buffer[b] = format[a];
 		else
 		{
 			a++;
-			err += format_handler(set, format[a], &buffer[a]);
+			if (format[a] == '\0')
+				break;
+			err += format_handler(set, format[a], &buffer[b]);
 			if (err < 0 && format[a])
 			{
 				err = 0;
-				buffer[a - 1] = format[a - 1];
-				buffer[a] = format[a];
+				buffer[b] = format[a - 1];
+				b++;
+				buffer[b] = format[a];
 			}
 			else
-				break;
+			{
+				b = b + err;
+			}
 		}
+		b++;
+		a++;
 	}
 	va_end(set);
 
 	if (err >= 0)
-		count = _write(buffer, a);
+		count = _write(buffer, b);
 	else
 		return (err);
 
