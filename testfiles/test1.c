@@ -16,9 +16,18 @@ int main(void)
     ret = _printf("5*2=%d, 5*3=%i", 10, 10);
     printf("\n%d\n\n", ret);
 
-    printf("5+2=%d, 5+3=%i", 5 + 2, 5 + 3);
+    ret = printf("%d is -ve and %i is +ve", -10, +10);
     printf("\n%d\n", ret);
-    ret = _printf("5+2=%d, 5+3=%i", 5 + 2, 5 + 3);
+    ret = _printf("%d is -ve and %i is +ve", -10, +10);
+    printf("\n%d\n", ret);
+    ret = printf("%d is +ve and %i is -ve", +10984, -109395);
+    printf("\n%d\n", ret);
+    ret = _printf("%d is +ve and %i is -ve", +10984, -109395);
+    printf("\n%d\n\n", ret);
+
+    printf("5+2=%d, 15095+294833=%i", 5 + 2, 15095 + 294833);
+    printf("\n%d\n", ret);
+    ret = _printf("5+2=%d, 15095+294833=%i", 5 + 2, 15095 + 294833);
     printf("\n%d\n\n", ret);
 
     ret = printf("57-32=%d, 15095-294833=%i", 57 - 32, 15095 - 294833);
@@ -39,15 +48,6 @@ int main(void)
     ret = printf("5*5=%d, 10000*10000=%i", 25, 10000 * 10000);
     printf("\n%d\n", ret);
     ret = _printf("5*5=%d, 10000*10000=%i", 25, 10000 * 10000);
-    printf("\n%d\n\n", ret);
-
-    ret = printf("%d is -ve and %i is +ve", -10, +10);
-    printf("\n%d\n", ret);
-    ret = _printf("%d is -ve and %i is +ve", -10, +10);
-    printf("\n%d\n", ret);
-    ret = printf("%d is +ve and %i is -ve", +10984, -109395);
-    printf("\n%d\n", ret);
-    ret = _printf("%d is +ve and %i is -ve", +10984, -109395);
     printf("\n%d\n\n", ret);
 
     ret = printf("NULL=%d, NULL=%i", NULL, NULL);

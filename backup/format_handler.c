@@ -1,35 +1,35 @@
 #include "main.h"
 
 /**
- * format_handler - handles formatting of strings
- * @format: the format specifier
+ * format_handler - checks format specifier and executes the right functions
  * @set: the argument to be formatted
- * @buf: character buffer
+ * @format: the format specifier
+ * @buf: pointer to character buffer
+ * @buf_i: pointer to current index of the buffer
  *
  * Return: the number of characters printed, -1 if format doesn't match
  */
-int format_handler(va_list set, char format, char *buf)
+int format_handler(va_list set, char format, char *buf, unsigned int *buf_i)
 {
-	int b = 0, err = 0;
-	f_prt fmts[] = {
-		{'c', print_c},
-		{'s', print_s},
-		{'%', print_pc},
-		{'d', print_number},
-		{'i', print_number},
-		{'\0', NULL}};
+	int b = 0;
+	f_prt fmts[] = {{'c', print_c},
+					{'s', print_s},
+					{'%', print_pc},
+					{'d', print_num},
+					{'i', print_num},
+					{NULL, NULL}};
 
 	for (b = 0; fmts[b].ch; b++)
 	{
 		if (format == fmts[b].ch)
 		{
-			err += fmts[b].f(set, buf);
+			fmts[b].f(set, buf, buf_i);
 			break;
 		}
 	}
 
-	if (fmts[b].ch == '\0')
+	if (fmts[b].ch == NULL)
 		return (-1);
 
-	return (err);
+	return (0);
 }

@@ -9,15 +9,15 @@
 #include <stdarg.h>
 #include <unistd.h>
 
-#define BUFFSIZE 1024
-int print_number(va_list set, char *str);
+#define BUFSZ (1024)
+
 int _printf(const char *format, ...);
-int format_handler(va_list set, char format, char *buf);
-int _write(char *buf, unsigned int a);
-int print_c(va_list set, char *buf);
-int print_s(va_list set, char *buf);
-int print_pc(va_list set, char *buf);
-int print_i(va_list set, char *buf);
+unsigned int _flushbuff(char *buf, unsigned int *index);
+int format_handler(va_list set, char format, char *buf, unsigned int *buf_i);
+void print_c(va_list set, char *buf, unsigned int *buf_i);
+void print_s(va_list set, char *buf, unsigned int *buf_i);
+void print_pc(va_list set, char *buf, unsigned int *buf_i);
+void print_num(va_list set, char *buf, unsigned int *buf_i);
 
 /**
  * struct prt - struct prt for storing a format specifier and it's function
@@ -28,7 +28,7 @@ int print_i(va_list set, char *buf);
 typedef struct prt
 {
 	char ch;
-	int (*f)(va_list set, char *buf);
+	int (*f)(va_list set, char *buf, unsigned int *buf_i);
 } f_prt;
 
 #endif

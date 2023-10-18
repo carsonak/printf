@@ -28,5 +28,5 @@
 #### About the code
 
 - Document properly!
-- Group similar functions inside one file with a
-    descriptive name.
+- Group similar functions inside one file with a descriptive name.
+- Before storing any characters inside the buffer

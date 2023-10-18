@@ -1,11 +1,13 @@
 #include "main.h"
 
 /**
-  * print_number - prints number.
-  *
-  *@num: integer passed.
-  */
-int print_number(va_list set, char *str)
+ * print_num - converts int to bufing
+ * @set: argument from _printf
+ * @buf: Buffer to store the number
+ *
+ * Return: The number of characters printed
+ */
+int print_num(va_list set, char *buf)
 {
 	int num;
 	int var;
@@ -18,7 +20,7 @@ int print_number(va_list set, char *str)
 	num = va_arg(set, int);
 	if (num < 0)
 	{
-		str[index] = '-';
+		buf[index] = '-';
 		num2 = -num;
 		index++;
 	}
@@ -28,14 +30,14 @@ int print_number(va_list set, char *str)
 	{
 		var = var * 10;
 	}
-	while ( var > 0)
+	while (var > 0)
 	{
 		b = num2 / var;
-		str[index] = (b + '0');
+		buf[index] = (b + '0');
 		num2 = num2 % var;
 		var = var / 10;
 		index++;
 	}
-	str[index] = '\0';
+	buf[index] = '\0';
 	return (index);
 }
