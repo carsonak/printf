@@ -8,19 +8,19 @@
  */
 int _printf(const char *format, ...)
 {
-	int err = 0;
+	long int err, count = 0;
 	char buffer[BUFSZ];
-	unsigned int *buf_i, a = 0, buffer_index = 0, count = 0;
-	va_list set;
+	unsigned int *buf_i, a = 0, buffer_index = 0;
+	va_list args;
 
 	if (format == NULL)
 		return (-1);
 
-	buf_i = buffer_index;
-	_flushbuff(buffer, &buf_i);
-	va_start(set, format);
+	buf_i = &buffer_index;
+	err = _flushbuff(buffer, buf_i);
+	va_start(args, format);
 
-	for (a = 0, buf_i = 0; format[a]; *buf_i++, a++)
+	for (a = 0, buf_i = 0; format[a]; ++*buf_i, a++)
 	{
 		if (*buf_i >= BUFSZ - 24)
 			count += _flushbuff(buffer, buf_i);
@@ -34,13 +34,13 @@ int _printf(const char *format, ...)
 				break;
 			}
 
-			err += format_handler(set, format[a], buffer, buf_i);
+			err += format_handler(args, format[a], buffer, buf_i);
 
-			if (err == -1)
+			if (err < 0 && format[a])
 			{
 				err = 0;
 				buffer[*buf_i] = format[a - 1];
-				*buf_i++;
+				++*buf_i;
 				buffer[*buf_i] = format[a];
 			}
 		}
@@ -48,12 +48,15 @@ int _printf(const char *format, ...)
 			buffer[*buf_i] = format[a];
 	}
 
-	va_end(set);
+	va_end(args);
 
 	if (err >= 0)
 		count += _flushbuff(buffer, buf_i);
 	else
+	{
+		_flushbuff(buffer, buf_i);
 		return (err);
+	}
 
-	return (count);
+	return (count + *buf_i + err);
 }

@@ -29,4 +29,10 @@
 
 - Document properly!
 - Group similar functions inside one file with a descriptive name.
-- Before storing any characters inside the buffer
+- Before storing any characters inside the buffer make sure to
+    check if it is full and flush it if is full.
+- The Buffer has its own **[independent index](_printf.c "#L13: buffer_index")**. Pointer *[buf_i](_printf.c "#L19: buf_i")* should
+    point to this index at all times and is passed on to every
+    function that writes content to the buffer in order to
+    consistently keep track of the total number of characters in
+    the buffer.

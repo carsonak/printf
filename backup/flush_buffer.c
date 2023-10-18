@@ -7,16 +7,16 @@
  *
  * Return: number of printed characters
  */
-unsigned int _flushbuff(char *buf, unsigned int *index)
+long int _flushbuff(char *buf, unsigned int *index)
 {
 	unsigned int count = 0;
 
-	if (*index >= 0 && *index < BUFSZ)
+	if (*index < BUFSZ)
 		count += write(1, buf, *index);
 	else
 		exit(-1);
 
-	memset(buf, '\0', sizeof(buf));
+	buf = memset(buf, '\0', BUFSZ);
 	*index = 0;
 	return (count);
 }

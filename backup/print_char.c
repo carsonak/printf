@@ -2,16 +2,20 @@
 
 /**
  * print_c - handles the character format specifier
- * @set: argument from the _printf function
+ * @args: argument from the _printf function
  * @buf: pointer to buffer
  * @buf_i: pointer to current index of
  *
+ * Return: number of characters written
  */
-void print_c(va_list set, char *buf, unsigned int *buf_i)
+long int print_c(va_list args, char *buf, unsigned int *buf_i)
 {
-	if (set)
+	if (args)
 	{
-		buf[*buf_i] = (va_arg(set, int)) + '0';
-		*buf_i++;
+		buf[*buf_i] = (va_arg(args, int)) + '0';
+		++*buf_i;
+		return (1);
 	}
+
+	return (0);
 }

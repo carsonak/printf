@@ -2,14 +2,16 @@
 
 /**
  * print_pc - handles format specifier for %
- * @set: argument from the _printf function
+ * @args: argument from the _printf function
  * @buf: pointer to the buffer
  * @buf_i: pointer to current index of the buffer
  *
+ * Return: number of characters written
  */
-void print_pc(va_list set, char *buf, unsigned int *buf_i)
+long int print_pc(va_list args, char *buf, unsigned int *buf_i)
 {
-	(void)set;
+	(void)args;
 	buf[*buf_i] = '%';
-	*buf_i++;
+	++*buf_i;
+	return (1);
 }
