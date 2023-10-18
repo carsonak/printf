@@ -63,5 +63,5 @@ int _printf(const char *format, ...)
 		return (err);
 	}
 
-	return (count + *buf_i);
+	return (count);
 }

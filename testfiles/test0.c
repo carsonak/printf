@@ -66,9 +66,9 @@ int main(void)
 	ret = _printf("What %c!?");
 	printf("\n%d\n\n", ret);
 
-	ret = printf("What%d");
+	ret = printf("What%%");
 	printf("\n%d\n", ret);
-	ret = _printf("What%d");
+	ret = _printf("What%%");
 	printf("\n%d\n\n", ret);
 
 	ret = printf("What %c!?", "The");
