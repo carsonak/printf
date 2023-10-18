@@ -3,20 +3,20 @@
 /**
  * _flushbuff - prints out contents of buffer and resets it.
  * @buf: Pointer to the buffer
- * @index: Pointer to the current buffer index
+ * @buf_i: Pointer to the current buffer index
  *
  * Return: number of printed characters
  */
-long int _flushbuff(char *buf, unsigned int *index)
+long int _flushbuff(char *buf, unsigned int *buf_i)
 {
-	unsigned int count = 0;
+	long int err = 0;
 
-	if (*index < BUFSZ)
-		count += write(1, buf, *index);
+	if (*buf_i < PRINTF_BUFFER)
+		err += write(1, buf, *buf_i);
 	else
 		exit(-1);
 
-	buf = memset(buf, '\0', BUFSZ);
-	*index = 0;
-	return (count);
+	memset(buf, '\0', PRINTF_BUFFER);
+	*buf_i = 0;
+	return (err);
 }

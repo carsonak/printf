@@ -10,29 +10,27 @@
  */
 long int print_num(va_list args, char *buf, unsigned int *buf_i)
 {
-	long int var = 1, err = 0;
-	unsigned int num;
+	long int var = 1, err = 0, num = 0;
 
-	if (va_arg(args, int) < 0)
+	num = va_arg(args, int);
+	if (num < 0)
 	{
 		buf[*buf_i] = '-';
-		num = -(va_arg(args, int));
+		num = -num;
 		++*buf_i;
 	}
-	else
-		num = va_arg(args, int);
 
 	while (num / var >= 10)
 		var *= 10;
 
 	while (var > 0)
 	{
-		if (*buf_i >= BUFSIZ - 24)
+		if (*buf_i >= PRINTF_BUFFER - 24)
 			err += _flushbuff(buf, buf_i);
 
 		buf[*buf_i] = (num / var) + '0';
-		num = num % var;
-		var = var / 10;
+		num %= var;
+		var /= 10;
 		++*buf_i;
 	}
 

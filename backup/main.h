@@ -3,18 +3,16 @@
 
 #include <limits.h>
 #include <stdio.h>
-#include <stdbool.h>
 #include <string.h>
 #include <stdlib.h>
 #include <stdarg.h>
 #include <unistd.h>
 
-#define BUFSZ (1024)
+#define PRINTF_BUFFER (1024)
 
 int _printf(const char *format, ...);
 long int _flushbuff(char *buf, unsigned int *index);
-long int
-format_handler(va_list args, char format, char *buf, unsigned int *buf_i);
+long int format_handler(va_list args, char format, char *buf, unsigned int *buf_i);
 long int print_c(va_list args, char *buf, unsigned int *buf_i);
 long int print_s(va_list args, char *buf, unsigned int *buf_i);
 long int print_pc(va_list args, char *buf, unsigned int *buf_i);

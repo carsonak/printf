@@ -9,10 +9,9 @@
  *
  * Return: the number of characters printed, -1 if format doesn't match
  */
-long int
-format_handler(va_list args, char format, char *buf, unsigned int *buf_i)
+long int format_handler(va_list args, char format, char *buf, unsigned int *buf_i)
 {
-	long int b = 0, err = 0;
+	long int b, err = 0;
 	f_prt fmts[] = {{'c', print_c},
 					{'s', print_s},
 					{'%', print_pc},
