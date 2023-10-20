@@ -14,8 +14,8 @@ format_handler(va_list args, char format, char *buf, unsigned int *buf_i)
 {
 	long int b;
 	long int err;
-	err = 0;
 
+	err = 0;
 	f_prt fmts[] = {{'c', print_c},
 			{'s', print_s},
 			{'%', print_pc},
