@@ -19,9 +19,9 @@ int main(void)
 	memset(bigBuff, '\0', sizeof(bigBuff));
 	buf_filler(bigBuff);
 
-	ret = printf("%s", bigBuff);
+	ret = printf("xxxx This is a Buffer Test xxxx\n%s", bigBuff);
 	printf("\n\nNumber of characters printed: %d\n\n", ret);
-	ret = _printf("%s", bigBuff);
+	ret = _printf("xxxx This is a Buffer Test xxxx\n%s", bigBuff);
 	printf("\n\nNumber of characters printed: %d\n\n", ret);
 
 	return (0);

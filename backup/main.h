@@ -18,6 +18,7 @@ long int print_c(va_list args, char *buf, long int *buf_i);
 long int print_s(va_list args, char *buf, long int *buf_i);
 long int print_pc(va_list args, char *buf, long int *buf_i);
 long int print_num(va_list args, char *buf, long int *buf_i);
+long int print_b(va_list args, char *buf, long int *buf_i);
 
 /**
  * struct prt - struct prt for storing a format specifier and it's function

@@ -16,7 +16,7 @@ long int _flushbuff(char *buf, long int *buf_i)
 	else
 		exit(-1);
 
-	memset(buf, '0', PRINTF_BUFFER);
+	memset(buf, '*', PRINTF_BUFFER);
 	*buf_i = 0;
 	return (nob);
 }
