@@ -50,9 +50,20 @@ int _printf(const char *format, ...)
 		count += _flushbuff(buffer, buf_i);
 	else
 		_flushbuff(buffer, buf_i);
+<<<<<<< HEAD
 		return (nob);
 	return (count + *buf_i);
 	}
 
 	return (count);
+=======
+		return (err);
+<<<<<<< HEAD
+	return (count + *buf_i);
+=======
+	}
+
+	return (count);
+>>>>>>> main
+>>>>>>> 6055ec1ae4464d4aa1f9114392c23864645aedb3
 }
