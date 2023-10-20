@@ -6,7 +6,7 @@
     main function in it.
 - For a clean directory and files place test-files in [test-files](#about-test-files "About Test-Files").
 - Follow [the cycle!](#the-cycle "The cycle")
-- Compiling command: gcc -Wall -Werror -Wextra -pedantic -std=gnu89 -Wno-format *.c -o printf
+- Compiling command: gcc -Wall -Werror -Wextra -pedantic -std=gnu89 -Wno-format -g *.c -o printf
 
 #### The cycle
 
