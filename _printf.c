@@ -45,5 +45,11 @@ int _printf(const char *format, ...)
 	else
 		_flushbuff(buffer, buf_i);
 		return (err);
+<<<<<<< HEAD
 	return (count + *buf_i);
+=======
+	}
+
+	return (count);
+>>>>>>> main
 }
