@@ -12,7 +12,7 @@
 long int
 format_handler(va_list args, char format, char *buf, unsigned int *buf_i)
 {
-	long int b, err = 0;
+	long int b, nob = 0;
 	f_prt fmts[] = {{'c', print_c},
 					{'s', print_s},
 					{'%', print_pc},
@@ -24,7 +24,7 @@ format_handler(va_list args, char format, char *buf, unsigned int *buf_i)
 	{
 		if (format == fmts[b].ch)
 		{
-			err += fmts[b].f(args, buf, buf_i);
+			nob += fmts[b].f(args, buf, buf_i);
 			break;
 		}
 	}
@@ -32,5 +32,5 @@ format_handler(va_list args, char format, char *buf, unsigned int *buf_i)
 	if (!(fmts[b].ch))
 		return (-1);
 
-	return (err);
+	return (nob);
 }

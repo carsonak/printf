@@ -10,7 +10,7 @@
  */
 long int print_s(va_list args, char *buf, unsigned int *buf_i)
 {
-	unsigned int idx, err = 0;
+	unsigned int idx, nob = 0;
 	char *str;
 
 	if (args)
@@ -21,7 +21,7 @@ long int print_s(va_list args, char *buf, unsigned int *buf_i)
 			for (idx = 0; str[idx]; idx++, ++*buf_i)
 			{
 				if (*buf_i >= PRINTF_BUFFER - 24)
-					err += _flushbuff(buf, buf_i);
+					nob += _flushbuff(buf, buf_i);
 
 				buf[*buf_i] = str[idx];
 			}
@@ -32,12 +32,12 @@ long int print_s(va_list args, char *buf, unsigned int *buf_i)
 			for (idx = 0; str[idx]; idx++, ++*buf_i)
 			{
 				if (*buf_i >= PRINTF_BUFFER - 24)
-					err += _flushbuff(buf, buf_i);
+					nob += _flushbuff(buf, buf_i);
 
 				buf[*buf_i] = str[idx];
 			}
 		}
 	}
 
-	return (err + *buf_i);
+	return (nob + *buf_i);
 }

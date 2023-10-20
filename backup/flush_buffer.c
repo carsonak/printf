@@ -9,14 +9,14 @@
  */
 long int _flushbuff(char *buf, unsigned int *buf_i)
 {
-	long int err = 0;
+	long int nob = 0;
 
 	if (*buf_i < PRINTF_BUFFER)
-		err += write(1, buf, *buf_i);
+		nob += write(1, buf, *buf_i + 1);
 	else
 		exit(-1);
 
 	memset(buf, '\0', PRINTF_BUFFER);
 	*buf_i = 0;
-	return (err);
+	return (nob);
 }
