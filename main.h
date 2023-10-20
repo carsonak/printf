@@ -11,13 +11,13 @@
 #define PRINTF_BUFFER (1024)
 
 int _printf(const char *format, ...);
-long int _flushbuff(char *buf, unsigned int *index);
+long int _flushbuff(char *buf, long int *index);
 long int
-format_handler(va_list args, char format, char *buf, unsigned int *buf_i);
-long int print_c(va_list args, char *buf, unsigned int *buf_i);
-long int print_s(va_list args, char *buf, unsigned int *buf_i);
-long int print_pc(va_list args, char *buf, unsigned int *buf_i);
-long int print_num(va_list args, char *buf, unsigned int *buf_i);
+format_handler(va_list args, char format, char *buf, long int *buf_i);
+long int print_c(va_list args, char *buf, long int *buf_i);
+long int print_s(va_list args, char *buf, long int *buf_i);
+long int print_pc(va_list args, char *buf, long int *buf_i);
+long int print_num(va_list args, char *buf, long int *buf_i);
 
 /**
  * struct prt - struct prt for storing a format specifier and it's function
@@ -28,7 +28,7 @@ long int print_num(va_list args, char *buf, unsigned int *buf_i);
 typedef struct prt
 {
 	char ch;
-	long int (*f)(va_list args, char *buf, unsigned int *buf_i);
+	long int (*f)(va_list args, char *buf, long int *buf_i);
 } f_prt;
 
 #endif

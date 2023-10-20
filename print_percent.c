@@ -8,7 +8,7 @@
  *
  * Return: number of characters written
  */
-long int print_pc(va_list args, char *buf, unsigned int *buf_i)
+long int print_pc(va_list args, char *buf, long int *buf_i)
 {
 	(void)args;
 	buf[*buf_i] = '%';
