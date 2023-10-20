@@ -12,13 +12,16 @@
 long int
 format_handler(va_list args, char format, char *buf, unsigned int *buf_i)
 {
-	long int b, err = 0;
+	long int b;
+	long int err;
+	err = 0;
+
 	f_prt fmts[] = {{'c', print_c},
-					{'s', print_s},
-					{'%', print_pc},
-					{'d', print_num},
-					{'i', print_num},
-					{'\0', NULL}};
+			{'s', print_s},
+			{'%', print_pc},
+			{'d', print_num},
+			{'i', print_num},
+			{'\0', NULL}};
 
 	for (b = 0; fmts[b].ch; b++)
 	{
