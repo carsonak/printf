@@ -8,13 +8,17 @@
  *
  * Return: number of characters written
  */
-long int print_c(va_list args, char *buf, unsigned int *buf_i)
+long int print_c(va_list args, char *buf, long int *buf_i)
 {
+	char ch;
+
 	if (args)
 	{
-		buf[*buf_i] = (va_arg(args, int)) + '0';
-		++*buf_i;
-		return (1);
+		ch = va_arg(args, int);
+		if (ch)
+			buf[*buf_i] = ch + '0';
+		else
+			buf[*buf_i] = '\0';
 	}
 
 	return (0);

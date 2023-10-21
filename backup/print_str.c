@@ -8,9 +8,9 @@
  *
  * Return: number of characters written
  */
-long int print_s(va_list args, char *buf, unsigned int *buf_i)
+long int print_s(va_list args, char *buf, long int *buf_i)
 {
-	unsigned int idx, err = 0;
+	unsigned int idx, nob = 0;
 	char *str;
 
 	if (args)
@@ -18,26 +18,30 @@ long int print_s(va_list args, char *buf, unsigned int *buf_i)
 		str = va_arg(args, char *);
 		if (str)
 		{
-			for (idx = 0; str[idx]; idx++, ++*buf_i)
+			for (idx = 0; str[idx] != '\0'; idx++)
 			{
 				if (*buf_i >= PRINTF_BUFFER - 24)
-					err += _flushbuff(buf, buf_i);
+					nob += _flushbuff(buf, buf_i);
 
 				buf[*buf_i] = str[idx];
+				*buf_i += 1;
 			}
+			*buf_i -= 1;
 		}
 		else
 		{
 			str = "(null)";
-			for (idx = 0; str[idx]; idx++, ++*buf_i)
+			for (idx = 0; str[idx] != '\0'; idx++)
 			{
 				if (*buf_i >= PRINTF_BUFFER - 24)
-					err += _flushbuff(buf, buf_i);
+					nob += _flushbuff(buf, buf_i);
 
 				buf[*buf_i] = str[idx];
+				*buf_i += 1;
 			}
+			*buf_i -= 1;
 		}
 	}
 
-	return (err + *buf_i);
+	return (nob);
 }

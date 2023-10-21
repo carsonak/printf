@@ -7,7 +7,7 @@
  *
  * Return: number of printed characters
  */
-long int _flushbuff(char *buf, unsigned int *buf_i)
+long int _flushbuff(char *buf, long int *buf_i)
 {
 	long int nob = 0;
 
@@ -16,7 +16,7 @@ long int _flushbuff(char *buf, unsigned int *buf_i)
 	else
 		exit(-1);
 
-	memset(buf, '\0', PRINTF_BUFFER);
+	memset(buf, '0', PRINTF_BUFFER);
 	*buf_i = 0;
 	return (nob);
 }
