@@ -17,7 +17,7 @@ int _printf(const char *format, ...)
 		return (-1);
 
 	buf_i = &buffer_index;
-	err = _flushbuff(buffer, buf_i);
+	nob = _flushbuff(buffer, buf_i);
 	va_start(args, format);
 
 	for (a = 0, *buf_i = 0; format[a]; ++*buf_i, a++)
