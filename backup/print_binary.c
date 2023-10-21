@@ -18,6 +18,11 @@ long int print_b(va_list args, char *buf, long int *buf_i)
 		num = va_arg(args, long int);
 		num_cpy = (num < 0 ? -num : num);
 
+		if (num == 0)
+		{
+			buf[*buf_i] = '0';
+			return (0);
+		}
 		while (hlp < num_cpy)
 		{
 			hlp *= 2;

@@ -41,7 +41,7 @@ typedef struct flags_width_precision_length
 
 int _printf(const char *format, ...);
 long int _flushbuff(char *buf, long int *index);
-long int format_handler(va_list args, char *format,
+long int format_handler(va_list args, const char *format,
 						long int fmt_i, char *buf, long int *buf_i);
 long int print_c(va_list args, char *buf, long int *buf_i);
 long int print_s(va_list args, char *buf, long int *buf_i);
