@@ -55,8 +55,6 @@ int _printf(const char *format, ...)
 	}
 
 	return (count);
->>>>>>> main
-=======
 			{ /*If the next character is a null break out of the loop*/
 				nob = -1;
 				break;
@@ -82,5 +80,4 @@ int _printf(const char *format, ...)
 		return (nob);
 	}
 	return (count + _flushbuff(buffer, &buf_i));
->>>>>>> acdca2c12acf65c36306c7a83d8f443d948498be
 }
