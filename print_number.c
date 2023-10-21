@@ -8,7 +8,7 @@
  *
  * Return: number of characters written
  */
-long int print_num(va_list args, char *buf, unsigned int *buf_i)
+long int print_num(va_list args, char *buf, long int *buf_i)
 {
 	long int var = 1, nob = 0, num = 0;
 
@@ -17,7 +17,7 @@ long int print_num(va_list args, char *buf, unsigned int *buf_i)
 	{
 		buf[*buf_i] = '-';
 		num = -num;
-		++*buf_i;
+		*buf_i += 1;
 	}
 
 	while (num / var >= 10)
@@ -25,14 +25,24 @@ long int print_num(va_list args, char *buf, unsigned int *buf_i)
 
 	while (var > 0)
 	{
+<<<<<<< HEAD
 		if (*buf_i >= PRINTF_BUFFER - 24) 
+=======
+		if (*buf_i >= PRINTF_BUFFER - 24)
+>>>>>>> acdca2c12acf65c36306c7a83d8f443d948498be
 			nob += _flushbuff(buf, buf_i);
 
 		buf[*buf_i] = (num / var) + '0';
 		num %= var;
 		var /= 10;
-		++*buf_i;
+		*buf_i += 1;
 	}
 
+<<<<<<< HEAD
 	return (nob + *buf_i);
+=======
+	*buf_i -= 1;
+
+	return (nob);
+>>>>>>> acdca2c12acf65c36306c7a83d8f443d948498be
 }
