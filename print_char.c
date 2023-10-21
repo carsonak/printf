@@ -16,7 +16,7 @@ long int print_c(va_list args, char *buf, long int *buf_i)
 	{
 		ch = va_arg(args, int);
 		if (ch)
-			buf[*buf_i] = ch + '0';
+			buf[*buf_i] = ch;
 		else
 			buf[*buf_i] = '\0';
 	}

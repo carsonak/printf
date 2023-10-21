@@ -3,33 +3,28 @@
 /**
  * format_handler - checks format specifier and executes the right functions
  * @args: the argument to be formatted
- * @format: the format specifier
+ * @format: the format string
+ * @fmt_i: index of the format string
  * @buf: pointer to character buffer
  * @buf_i: pointer to current index of the buffer
  *
  * Return: the number of characters printed, -1 if format doesn't match
  */
-long int
-format_handler(va_list args, char format, char *buf, long int *buf_i)
+long int format_handler(va_list args, const char *format,
+			long int fmt_i, char *buf, long int *buf_i)
 {
-<<<<<<< HEAD
-	long int b;
-	long int err;
-
-	err = 0;
-=======
 	long int b, nob = 0;
->>>>>>> acdca2c12acf65c36306c7a83d8f443d948498be
-	f_prt fmts[] = {{'c', print_c},
-			{'s', print_s},
-			{'%', print_pc},
-			{'d', print_num},
-			{'i', print_num},
-			{'\0', NULL}};
 
+	c_sp fmts[] = {{'c', print_c},
+		   	{'s', print_s},
+		   	{'%', print_pc},
+		   	{'d', print_num},
+		   	{'i', print_num},
+			{'b', print_b},
+			{'\0', NULL}};
 	for (b = 0; fmts[b].ch; b++)
 	{
-		if (format == fmts[b].ch)
+		if (format[fmt_i] == fmts[b].ch)
 		{
 			nob += fmts[b].f(args, buf, buf_i);
 			break;
