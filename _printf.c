@@ -15,46 +15,14 @@ int _printf(const char *format, ...)
 	if (format == NULL)
 		return (-1);
 	va_start(args, format);
-<<<<<<< HEAD
-
-	for (a = 0, *buf_i = 0; format[a]; ++*buf_i, a++)
-		if (*buf_i >= PRINTF_BUFFER - 24)
-			count += _flushbuff(buffer, buf_i);
-=======
 	for (a = 0, buf_i = 0; format[a]; buf_i++, a++)
 	{
 		if (buf_i >= PRINTF_BUFFER - 24)
 			count += _flushbuff(buffer, &buf_i);
->>>>>>> acdca2c12acf65c36306c7a83d8f443d948498be
 		if (format[a] == '%')
+		{
 			a++;
 			if (format[a] == '\0')
-<<<<<<< HEAD
-				err = -1;
-				break;
-			err += format_handler(args, format[a], buffer, buf_i);
-			if (err < 0)
-				err = 0;
-				buffer[*buf_i] = format[a - 1];
-				++*buf_i;
-				buffer[*buf_i] = format[a];
-			else
-				count += err;
-				err = 0;
-		else
-			buffer[*buf_i] = format[a];
-	va_end(args);
-	if (err >= 0)
-		count += _flushbuff(buffer, buf_i);
-	else
-		_flushbuff(buffer, buf_i);
-		return (err);
-<<<<<<< HEAD
-	return (count + *buf_i);
-=======
-	}
-
-	return (count);
 			{ /*If the next character is a null break out of the loop*/
 				nob = -1;
 				break;
