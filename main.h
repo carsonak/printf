@@ -10,6 +10,9 @@
 
 #define PRINTF_BUFFER (1024)
 
+long int print_hexa(va_list args, char *buff, long int *buff_index);
+long int print_oct(va_list args, char *buff, long int *buff_index);
+long int print_dec(va_list args, char *buffer, long int *buff_index);
 int _printf(const char *format, ...);
 long int _flushbuff(char *buf, long int *index);
 long int
