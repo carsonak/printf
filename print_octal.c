@@ -8,25 +8,25 @@
   *
   *Return: Return number of chara
   */
-unsigned int print_oct(va_list args, char *buff, char *buff_index)
+int print_oct(va_list args, char *buff, long int *buff_index)
 {
-	unsigned int num;
-	unsigned int nob = 0;
+	int num;
+	int nob = 0;
 
-	num = va_arg(args, format);
+	num = va_arg(args, int);
 	if (num < 0)
 	{
 		exit(-1);
 	}
 	while (num > 0)
 	{
-		if (buff[buff_index] >= PRINT_BUFFER)
+		if (*buff_index > PRINTF_BUFFER - 24)
 		{
 			nob += _flushbuff(buff, buff_index);
 		}
-			buff[buff_index] = num % 8;
+			buff[*buff_index] = num % 8;
 			num = num / 8;
-		nob = _flushbuff(buff, buff[buff_index]);
 	}
+	va_end(args);
 	return (nob);
 }

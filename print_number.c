@@ -25,11 +25,7 @@ long int print_num(va_list args, char *buf, long int *buf_i)
 
 	while (var > 0)
 	{
-<<<<<<< HEAD
 		if (*buf_i >= PRINTF_BUFFER - 24) 
-=======
-		if (*buf_i >= PRINTF_BUFFER - 24)
->>>>>>> acdca2c12acf65c36306c7a83d8f443d948498be
 			nob += _flushbuff(buf, buf_i);
 
 		buf[*buf_i] = (num / var) + '0';
@@ -37,12 +33,8 @@ long int print_num(va_list args, char *buf, long int *buf_i)
 		var /= 10;
 		*buf_i += 1;
 	}
-
-<<<<<<< HEAD
+	va_end(args);
 	return (nob + *buf_i);
-=======
 	*buf_i -= 1;
-
 	return (nob);
->>>>>>> acdca2c12acf65c36306c7a83d8f443d948498be
 }

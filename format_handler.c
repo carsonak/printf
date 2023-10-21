@@ -12,24 +12,15 @@
 long int
 format_handler(va_list args, char format, char *buf, long int *buf_i)
 {
-<<<<<<< HEAD
-	long int b;
-	long int nob;
-
-<<<<<<< HEAD
-	nob = 0;
-=======
-	err = 0;
-=======
 	long int b, nob = 0;
->>>>>>> acdca2c12acf65c36306c7a83d8f443d948498be
->>>>>>> main
+
 	f_prt fmts[] = {{'c', print_c},
 			{'s', print_s},
 			{'%', print_pc},
 			{'d', print_num},
 			{'i', print_num},
 			{'o', print_oct},
+			{'u', print_dec},
 			{'\0', NULL}};
 
 	for (b = 0; fmts[b].ch; b++)
