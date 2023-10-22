@@ -20,9 +20,11 @@ long int format_handler(va_list args, const char *format,
 				   {'%', print_pc},
 				   {'d', print_num},
 				   {'i', print_num},
+				   {'b', print_b},
 				   {'o', print_oct},
 				   {'u', print_dec},
-				   {'x', print_dec},
+				   {'x', print_lower_hexa},
+				   {'X', print_upper_hexa},
 				   {'\0', NULL}};
 	for (b = 0; fmts[b].ch; b++)
 	{
