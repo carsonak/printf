@@ -12,25 +12,39 @@
   */
 long int print_hexa(va_list args, char *buff, long int *buff_index)
 {
-	unsigned int num;
-	unsigned int nob = 0;
+	long int num, num_count = 0;
+	long int var = 16;
+	long int nob = 0, count = 0;
 
-	num = va_arg(args, int);
-	if (num > 0)
+	buff_index = 0;
+	num = va_arg(args, unsigned int);
+	if (num < 0)
 	{
-		if (*buff_index > PRINTF_BUFFER - 24)
+		num = -num;
+	}
+	while (var < num)
+	{
+		var = var * 16;
+		count++;
+	}
+	num_count = count;
+	while (count >= 0)
+	{
+		if (*buff_index > PRINTF_BUFFER)
 		{
 			nob += _flushbuff(buff, buff_index);
 		}
-		else
+		if (num % 16 < 10)
 		{
-			if (num % 16 <= 9)
-			{
-				buff[*buff_index] = num % 16 + '0';
-				num = num / 16;
-			}
-			else if (num % 16
+			buff[*buff_index + count] = num % 16 + 48;
 		}
+		else if (num % 16 >= 10 && num % 16 <= 15)
+		{
+			buff[*buff_index + count] = num % 16 + 55;
+		}
+		num = num / 16;
+		count--;
 	}
+	*buff_index = *buff_index + num_count;
 	return (nob);
 }

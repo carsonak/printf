@@ -13,19 +13,27 @@
   */
 long int print_dec(va_list args, char *buffer, long int *buff_index)
 {
-	unsigned int num;
-	unsigned int nob = 0;
+	long int num, num_count = 0;
+	long int nob = 0, count = 0;
+	long int var = 10;
 
-	num = va_arg(args, int);
-	while (num > 0)
+	num = va_arg(args, unsigned int);
+	while (var < num)
+	{
+		var = var * 10;
+		count++;
+	}
+	num_count = count;
+	while (count >= 0)
 	{
 		if (*buff_index > PRINTF_BUFFER)
 		{
 			nob += _flushbuff(buffer, buff_index);
 		}
-		buffer[*buff_index] = num % 10 + '0';
+		buffer[*buff_index + count] = num % 10 + '0';
 		num = num / 10;
-		*buff_index = *buff_index + 1;
+		count--;
 	}
+	*buff_index = *buff_index + num_count;
 	return (nob);
 }
