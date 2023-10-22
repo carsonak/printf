@@ -21,7 +21,7 @@ long int print_b(va_list args, char *buf, long int *buf_i)
 			buf[*buf_i] = '0';
 			return (0);
 		}
-		while (hlp < num)
+		while (hlp <= num)
 		{
 			hlp *= 2;
 			count++;

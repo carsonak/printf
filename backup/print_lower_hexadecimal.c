@@ -18,7 +18,7 @@ long int print_lower_hexa(va_list args, char *buff, long int *buff_index)
 	int count = 0;
 
 	num = va_arg(args, unsigned int);
-	while (var < num)
+	while (var <= num)
 	{
 		var = var * 16;
 		count++;

@@ -17,7 +17,7 @@ long int print_oct(va_list args, char *buff, long int *buff_index)
 	long int count = 0, num_count = 0;
 
 	num = va_arg(args, unsigned int);
-	while (var < num)
+	while (var <= num)
 	{
 		var = var * 8;
 		count++;

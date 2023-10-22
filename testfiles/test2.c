@@ -17,16 +17,28 @@ int main(void)
 	ret = _printf("%b", 0);
 	_printf("\n%d\n\n", ret);
 
+	_printf("1 = ");
+	ret = _printf("%b", 1);
+	_printf("\n%d\n\n", ret);
+
+	_printf("2 = ");
+	ret = _printf("%b", 2);
+	_printf("\n%d\n\n", ret);
+
+	_printf("7 = ");
+	ret = _printf("%b", 7);
+	_printf("\n%d\n\n", ret);
+
 	_printf("8 = ");
 	ret = _printf("%b", 8);
 	_printf("\n%d\n\n", ret);
 
-	_printf("15 = ");
-	ret = _printf("%b", 15);
+	_printf("9 = ");
+	ret = _printf("%b", 9);
 	_printf("\n%d\n\n", ret);
 
-	_printf("17 = ");
-	ret = _printf("%b", 17);
+	_printf("1024 = ");
+	ret = _printf("%b", 1024);
 	_printf("\n%d\n\n", ret);
 
 	_printf("INT_MIN = ");
