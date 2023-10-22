@@ -12,15 +12,12 @@
   */
 long int print_lower_hexa(va_list args, char *buff, long int *buff_index)
 {
-	long int num, num_count = 0;
-	long int var = 16;
-	long int nob = 0, count = 0;
+	unsigned int num, num_count = 0;
+	unsigned  int var = 16;
+	unsigned int nob = 0;
+	int count = 0;
 
 	num = va_arg(args, unsigned int);
-	if (num < 0)
-	{
-		num = -num;
-	}
 	while (var < num)
 	{
 		var = var * 16;
@@ -33,7 +30,7 @@ long int print_lower_hexa(va_list args, char *buff, long int *buff_index)
 		{
 			nob += _flushbuff(buff, buff_index);
 		}
-		if (num % 16 < 10 && num % 16 >= 0)
+		if (num % 16 < 10)
 		{
 			buff[*buff_index + count] = num % 16 + '0';
 		}
