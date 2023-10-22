@@ -1,6 +1,6 @@
 #include "main.h"
 /**
-  * print_hexa - converts integer into lowercase hexadecimal.
+  * print_upper_hexa - converts integer into lowercase hexadecimal.
   *
   *@args: variable arguments passed.
   *
