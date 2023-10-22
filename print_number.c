@@ -33,8 +33,8 @@ long int print_num(va_list args, char *buf, long int *buf_i)
 		var /= 10;
 		*buf_i += 1;
 	}
-	va_end(args);
-	return (nob + *buf_i);
+
 	*buf_i -= 1;
+
 	return (nob);
 }

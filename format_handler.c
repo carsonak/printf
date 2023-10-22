@@ -11,19 +11,17 @@
  * Return: the number of characters printed, -1 if format doesn't match
  */
 long int format_handler(va_list args, const char *format,
-			long int fmt_i, char *buf, long int *buf_i)
+						long int fmt_i, char *buf, long int *buf_i)
 {
 	long int b, nob = 0;
+	c_sp fmts[] = {{'c', print_c},
+				   {'s', print_s},
+				   {'%', print_pc},
+				   {'d', print_num},
+				   {'i', print_num},
+				   {'b', print_b},
+				   {'\0', NULL}};
 
-	 c_sp fmts[] = {{'c', print_c},
-			{'s', print_s},
-			{'%', print_pc},
-			{'d', print_num},
-			{'i', print_num},
-			{'o', print_oct},
-			{'u', print_dec},
-			{'x', print_dec},
-			{'\0', NULL}};
 	for (b = 0; fmts[b].ch; b++)
 	{
 		if (format[fmt_i] == fmts[b].ch)
