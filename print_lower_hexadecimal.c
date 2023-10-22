@@ -12,8 +12,8 @@
   */
 long int print_lower_hexa(va_list args, char *buff, long int *buff_index)
 {
-	unsigned int num, num_count = 0;
-	unsigned  int var = 16;
+	unsigned long int num, num_count = 0;
+	unsigned long int var = 16;
 	unsigned int nob = 0;
 	int count = 0;
 
@@ -26,7 +26,7 @@ long int print_lower_hexa(va_list args, char *buff, long int *buff_index)
 	num_count = count;
 	while (count >= 0)
 	{
-		if (*buff_index >= PRINTF_BUFFER)
+		if (*buff_index >= PRINTF_BUFFER - 24)
 		{
 			nob += _flushbuff(buff, buff_index);
 		}
@@ -36,7 +36,7 @@ long int print_lower_hexa(va_list args, char *buff, long int *buff_index)
 		}
 		else if (num % 16 >= 10 && num % 16 <= 15)
 		{
-			buff[*buff_index + count] = num % 16 + 'a';
+			buff[*buff_index + count] = ((num % 16) - 10) + 'a';
 		}
 		num = num / 16;
 		count--;
