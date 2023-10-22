@@ -11,7 +11,7 @@
  * Return: the number of characters printed, -1 if format doesn't match
  */
 long int format_handler(va_list args, const char *format,
-			long int fmt_i, char *buf, long int *buf_i)
+						long int fmt_i, char *buf, long int *buf_i)
 {
 	long int b, nob = 0;
 
