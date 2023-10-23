@@ -47,7 +47,8 @@ long int print_s(va_list args, char *buf, long int *buf_i);
 long int print_pc(va_list args, char *buf, long int *buf_i);
 long int print_num(va_list args, char *buf, long int *buf_i);
 long int print_b(va_list args, char *buf, long int *buf_i);
-long int print_hexa(va_list args, char *buff, long int *buff_index);
+long int print_lower_hexa(va_list args, char *buff, long int *buff_index);
+long int print_upper_hexa(va_list args, char *buff, long int *buff_index);
 long int print_oct(va_list args, char *buff, long int *buff_index);
 long int print_dec(va_list args, char *buffer, long int *buff_index);
 #endif
