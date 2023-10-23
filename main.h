@@ -51,4 +51,5 @@ long int print_lower_hexa(va_list args, char *buff, long int *buff_index);
 long int print_upper_hexa(va_list args, char *buff, long int *buff_index);
 long int print_oct(va_list args, char *buff, long int *buff_index);
 long int print_dec(va_list args, char *buffer, long int *buff_index);
+long int print_custom_s(va_list args, char *buff, long int *buf_index)
 #endif

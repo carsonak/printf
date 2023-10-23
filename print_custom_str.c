@@ -8,9 +8,9 @@
  *
  * Return: number of characters written
  */
-long int print_s(va_list args, char *buf, long int *buf_i)
+long int print_custom_s(va_list args, char *buff, long int *buff_index)
 {
-	unsigned int idx, nob = 0;
+	unsigned int index, nob = 0;
 	char *str;
 
 	if (args)
@@ -18,8 +18,13 @@ long int print_s(va_list args, char *buf, long int *buf_i)
 		str = va_arg(args, char *);
 		if (str)
 		{
-			for (idx = 0; str[idx] != '\0'; idx++)
+			for (index = 0; str[idx] != '\0'; index)
 			{
+				if (str[index] > 0 && str[index] < 32) || (str[index] >= 127)
+				{
+					str[index] = "\\x";
+					str[index + 1] = str[index] + 
+				}
 				if (*buf_i >= PRINTF_BUFFER - 24)
 				{
 					nob += _flushbuff(buf, buf_i);
