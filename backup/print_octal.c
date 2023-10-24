@@ -10,25 +10,32 @@
   *
   *Return: Return number of bytes to the console.
   */
-long int print_oct(va_list args, char *buff, long int *buff_index)
+int print_oct(va_list args, char *const buff, int *const buff_index)
 {
 	unsigned long int num, var = 8;
-	long int nob = 0;
+	int nob = 0;
 	long int count = 0, num_count = 0;
 
 	num = va_arg(args, unsigned int);
+	if (num == 0)
+	{
+		buff[*buff_index] = '0';
+		return (0);
+	}
+
 	while (var <= num)
 	{
 		var = var * 8;
 		count++;
 	}
+
 	num_count = count;
+	if ((*buff_index + count) > PRINTF_BUFFER - 24)
+		nob += _flushbuff(buff, buff_index);
+
 	while (count >= 0)
 	{
-		if (*buff_index > PRINTF_BUFFER - 24)
-		{
-			nob += _flushbuff(buff, buff_index);
-		}
+
 		buff[*buff_index + count] = num % 8 + '0';
 		num = num / 8;
 		count--;

@@ -8,7 +8,7 @@
  *
  * Return: number of characters written
  */
-long int print_c(va_list args, char *buf, long int *buf_i)
+int print_c(va_list args, char *const buf, int *const buf_i)
 {
 	char ch;
 

@@ -10,26 +10,31 @@
   *
   *Return: Return number on bytes printed on console.
   */
-long int print_lower_hexa(va_list args, char *buff, long int *buff_index)
+int print_lower_hexa(va_list args, char *const buff,
+					 int *const buff_index)
 {
-	unsigned long int num, num_count = 0;
-	unsigned long int var = 16;
-	unsigned int nob = 0;
-	int count = 0;
+	unsigned long int num, num_count = 0, var = 16;
+	int nob = 0, count = 0;
 
 	num = va_arg(args, unsigned int);
+	if (num == 0)
+	{
+		buff[*buff_index] = '0';
+		return (0);
+	}
+
 	while (var <= num)
 	{
 		var = var * 16;
 		count++;
 	}
+
 	num_count = count;
+	if ((*buff_index + count) >= PRINTF_BUFFER - 24)
+		nob += _flushbuff(buff, buff_index);
+
 	while (count >= 0)
 	{
-		if (*buff_index >= PRINTF_BUFFER - 24)
-		{
-			nob += _flushbuff(buff, buff_index);
-		}
 		if (num % 16 < 10)
 		{
 			buff[*buff_index + count] = num % 16 + '0';

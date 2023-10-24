@@ -8,7 +8,7 @@
  *
  * Return: number of characters written
  */
-long int print_s(va_list args, char *buf, long int *buf_i)
+int print_s(va_list args, char *const buf, int *const buf_i)
 {
 	unsigned int idx, nob = 0;
 	char *str;

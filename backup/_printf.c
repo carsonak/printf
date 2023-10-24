@@ -9,7 +9,7 @@
 int _printf(const char *format, ...)
 {
 	char buffer[PRINTF_BUFFER];
-	long int buf_i = 0, fmt_i = 0, count = 0, nob = _flushbuff(buffer, &buf_i);
+	int buf_i = 0, fmt_i = 0, count = 0, nob = _flushbuff(buffer, &buf_i);
 	va_list args;
 
 	if (format == NULL)

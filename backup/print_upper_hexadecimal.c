@@ -10,11 +10,11 @@
   *
   *Return: Return number on bytes printed on console.
   */
-long int print_upper_hexa(va_list args, char *buff, long int *buff_index)
+int print_upper_hexa(va_list args, char *const buff, int *const buff_index)
 {
 	unsigned long int num, num_count = 0;
 	unsigned long int var = 16;
-	long int nob = 0, count = 0;
+	int nob = 0, count = 0;
 
 	num = va_arg(args, unsigned int);
 	while (var <= num)

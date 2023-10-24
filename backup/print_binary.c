@@ -8,9 +8,10 @@
  *
  * Return: Number of characters printed if any
  */
-long int print_b(va_list args, char *buf, long int *buf_i)
+int print_b(va_list args, char *const buf, int *const buf_i)
 {
-	long int nob = 0, count = 0;
+	int nob = 0;
+	long int count = 0;
 	unsigned long int num = 0, hlp = 2;
 
 	if (args)

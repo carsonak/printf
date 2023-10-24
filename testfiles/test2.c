@@ -7,7 +7,7 @@
 int main(void)
 {
 	int ret = 0;
-	long int res = INT_MAX, l = UINT_MAX + 1024;
+	long int res = INT_MAX;
 
 	_printf("-1024 = ");
 	ret = _printf("%b", -1024);
@@ -50,7 +50,7 @@ int main(void)
 	_printf("\n%d\n\n", ret);
 
 	_printf("UINT_MAX + 1024 = ");
-	ret = _printf("%b", l);
+	ret = _printf("%b", UINT_MAX + 1024);
 	_printf("\n%d\n\n", ret);
 
 	ret = _printf("There is %b bytes in %b KB\n", 1024, 1);

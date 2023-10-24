@@ -21,7 +21,7 @@
 typedef struct conversion_specifiers
 {
 	char ch;
-	long int (*f)(va_list args, char *buf, long int *buf_i);
+	int (*f)(va_list args, char *const buf, int *const buf_i);
 } c_sp;
 /**
  * struct flags_width_precision_length - struct prt for tracking and calling
@@ -35,20 +35,26 @@ typedef struct flags_width_precision_length
 {
 	bool gate;
 	char ch;
-	long int (*f)(va_list args, char *buf, long int *buf_i);
-} f_w_p_l;
+	int (*f)(int num_len, char *const buf, int *const buf_i, ...);
+} f_w_p;
 
 int _printf(const char *format, ...);
-long int _flushbuff(char *buf, long int *index);
-long int format_handler(va_list args, const char *format,
-						long int fmt_i, char *buf, long int *buf_i);
-long int print_c(va_list args, char *buf, long int *buf_i);
-long int print_s(va_list args, char *buf, long int *buf_i);
-long int print_pc(va_list args, char *buf, long int *buf_i);
-long int print_num(va_list args, char *buf, long int *buf_i);
-long int print_b(va_list args, char *buf, long int *buf_i);
-long int print_lower_hexa(va_list args, char *buff, long int *buff_index);
-long int print_upper_hexa(va_list args, char *buff, long int *buff_index);
-long int print_oct(va_list args, char *buff, long int *buff_index);
-long int print_dec(va_list args, char *buffer, long int *buff_index);
+int _flushbuff(char *const buf, int *const buf_i);
+int format_handler(va_list args, const char *const format,
+				   int fmt_i, char *const buf, int *const buf_i);
+int fwp(char mod, int num_len, f_w_p *edits, char *const buf,
+		int *const buf_i);
+int print_c(va_list args, char *const buf, int *const buf_i);
+int print_s(va_list args, char *const buf, int *const buf_i);
+int print_pc(va_list args, char *const buf, int *const buf_i);
+int print_Rnum(va_list args, char *const buf, int *const buf_i);
+int print_b(va_list args, char *const buf, int *const buf_i);
+int print_lower_hexa(va_list args, char *const buff, int *const buff_index);
+int print_upper_hexa(va_list args, char *const buff, int *const buff_index);
+int print_oct(va_list args, char *const buff, int *const buff_index);
+int print_dec(va_list args, char *const buffer, int *const buff_index);
+int print_p(va_list args, char *const buff, int *const buff_index);
+int print_prefix(int len, char *const buf, int *const buf_i, ...);
+int print_plus(int len, char *const buf, int *const buf_i, ...);
+
 #endif
