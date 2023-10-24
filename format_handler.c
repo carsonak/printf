@@ -29,6 +29,9 @@ int format_handler(va_list args, const char *const format,
 				   {'p', print_p},
 				   {'\0', NULL}};
 
+	if (edits == NULL)
+		return (-1);
+
 	for (b = 0; fmts[b].ch; b++)
 	{
 		if (format[fmt_i] == fmts[b].ch)
