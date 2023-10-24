@@ -11,9 +11,9 @@ int main(void)
 {
     int ret;
 
-    ret = printf("5*2=%d, 5*3=%i", 10, 10);
+    ret = printf("5*3=%d, 5*3=%i", 15, 15);
     printf("\n%d\n", ret);
-    ret = _printf("5*2=%d, 5*3=%i", 10, 10);
+    ret = _printf("5*3=%d, 5*3=%i", 15, 15);
     printf("\n%d\n\n", ret);
 
     ret = printf("%d is -ve and %i is +ve", -10, +10);

@@ -1,7 +1,7 @@
 #include "main.h"
 
 /**
- * print_Rnum - converts int to bufing
+ * print_Rnum - converts an int to a string and stores the results in a buffer
  * @args: argument from _printf
  * @buf: Pointer to the buffer
  * @buf_i: Pointer to current index of the buffer
@@ -13,7 +13,7 @@ int print_Rnum(va_list args, char *const buf, int *const buf_i)
 	int var = 1, nob = 0, count = 1;
 	long int num = 0;
 
-	num = va_arg(args, long int);
+	num = va_arg(args, int);
 	if (num < 0)
 	{
 		buf[*buf_i] = '-';
