@@ -16,7 +16,7 @@ int print_b(va_list args, char *const buf, int *const buf_i)
 
 	if (args)
 	{
-		num = va_arg(args, unsigned long int);
+		num = va_arg(args, unsigned int);
 		if (num == 0)
 		{
 			buf[*buf_i] = '0';
