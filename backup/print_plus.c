@@ -1,7 +1,7 @@
 #include "main.h"
 
 /**
- * print_plus - handles the '#' modifier, receives one variable argument
+ * print_plus - handles the ' ' & '+' modifier, receives one variable argument
  * @len: the number of digits stored in the buffer
  * @buf: the buffer
  * @buf_i: current index of the buffer

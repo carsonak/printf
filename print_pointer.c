@@ -1,11 +1,8 @@
 #include "main.h"
 /**
  * print_p - prints an address in lowercase hexadecimal
- *
  *@args: variable arguments passed.
- *
  *@buf: bufer storing the string.
- *
  *@buf_i: current index of the buffer
  *
  *Return: Return bytes printed to console.
@@ -17,7 +14,6 @@ int print_p(va_list args, char *buf, int *buf_i)
 	char *null = "(nil)";
 
 	address = (unsigned long int)va_arg(args, void *);
-
 	if (address == 0)
 	{
 		if ((*buf_i + 5) >= PRINTF_BUFFER - 24)
@@ -28,7 +24,6 @@ int print_p(va_list args, char *buf, int *buf_i)
 			*buf_i += 1;
 			count++;
 		}
-
 		*buf_i -= 1;
 		return (nob);
 	}
@@ -38,7 +33,6 @@ int print_p(va_list args, char *buf, int *buf_i)
 		var = var * 16;
 		count++;
 	}
-
 	if ((*buf_i + count) >= PRINTF_BUFFER - 24)
 		nob += _flushbuff(buf, buf_i);
 
@@ -53,7 +47,6 @@ int print_p(va_list args, char *buf, int *buf_i)
 		address /= 16;
 		count--;
 	}
-
 	*buf_i += address_count;
 	return (print_prefix(address_count, buf, buf_i, 'x'));
 }
