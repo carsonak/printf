@@ -30,6 +30,7 @@ int print_plus(int len, char_arr *buffer, ...);
 int print_prefix(int len, char_arr *buffer, ...);
 int print_ptr(va_list args, char_arr *buffer, modifiers mods);
 int print_str(va_list args, char_arr *buffer, modifiers mods);
+int print_STR(va_list args, char_arr *buffer, modifiers mods);
 int print_unknown(string format, char_arr *buffer);
 
 #endif

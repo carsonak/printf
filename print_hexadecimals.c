@@ -28,9 +28,7 @@ static unsigned int count_digits(long int n)
  * @is_negative: flag to indicate when number is negative.
  * @is_upper: flag indicating whether to use upper case letters.
  *
- * Return: Returns a positive int on success
- * (if buffer was flushed the number returned will be greater than 0),
- * negative int on failure.
+ * Return: Returns a positive int on success, negative int on failure.
  */
 int print_hexadecimals(
 	uintmax_t num, char_arr *buffer, modifiers mods, bool is_negative,
@@ -75,9 +73,7 @@ int print_hexadecimals(
  * @buffer: working buffer for `_printf`.
  * @mods: modifier flags.
  *
- * Return: Returns a positive int on success
- * (if buffer was flushed the number returned will be greater than 0),
- * negative int on failure.
+ * Return: Returns a positive int on success, negative int on failure.
  */
 int print_hexa_lower(va_list args, char_arr *buffer, modifiers mods)
 {
@@ -92,9 +88,7 @@ int print_hexa_lower(va_list args, char_arr *buffer, modifiers mods)
  * @buffer: working buffer for `_printf`.
  * @mods: modifier flags.
  *
- * Return: Returns a positive int on success
- * (if buffer was flushed the number returned will be greater than 0),
- * negative int on failure.
+ * Return: Returns a positive int on success, negative int on failure.
  */
 int print_hexa_upper(va_list args, char_arr *buffer, modifiers mods)
 {

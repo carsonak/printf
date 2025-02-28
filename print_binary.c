@@ -26,9 +26,7 @@ static unsigned int count_digits(long int n)
  * @buffer: working buffer for `_printf`.
  * @mods: modifier flags.
  *
- * Return: Returns a positive int on success
- * (if buffer was flushed the number returned will be greater than 0),
- * negative int on failure.
+ * Return: Returns a positive int on success, negative int on failure.
  */
 int print_binary(va_list args, char_arr *buffer, modifiers mods)
 {
