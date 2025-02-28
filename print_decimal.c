@@ -1,25 +1,26 @@
 #include "main.h"
 
 /**
- * print_dec - converts integer to decimal.
+ * print_decimal - converts integer to decimal.
+ * @args: the arguments to be formatted.
+ * @buffer: working buffer for `_printf`.
+ * @mods: modifier flags.
  *
- *@args: args passed.
- *
- *@buff: holds decimal before printing on the console.
- *
- *@buff_index: element of a buffer.
- *
- *Return: Returns a decimal on success and -1 on failure.
+ * Return: Returns a positive int on success
+ * (if buffer was flushed the number returned will be greater than 0),
+ * negative int on failure.
  */
-int print_dec(va_list args, char *const buff, int *const buff_index)
+int print_decimal(va_list args, char_arr buffer, modifiers mods)
 {
-	unsigned long int num, var = 10;
+	unsigned long int num;
+	unsigned int var = 10;
 	int nob = 0, count = 0, num_count = 0;
 
+	(void)mods;
 	num = va_arg(args, unsigned int);
 	if (num == 0)
 	{
-		buff[*buff_index] = '0';
+		buffer.buf[buffer.i] = '0';
 		return (0);
 	}
 
@@ -30,15 +31,16 @@ int print_dec(va_list args, char *const buff, int *const buff_index)
 	}
 
 	num_count = count;
-	if ((*buff_index + count) > PRINTF_BUFFER_LENGTH)
-		nob += flush_buffer(buff, buff_index);
+	if ((buffer.i + count) >= buffer.size)
+		nob += flush_buffer(buffer);
 
 	while (count >= 0)
 	{
-		buff[*buff_index + count] = num % 10 + '0';
+		buffer.buf[buffer.i + count] = num % 10 + '0';
 		num = num / 10;
 		count--;
 	}
-	*buff_index = *buff_index + num_count;
+
+	buffer.i = buffer.i + num_count;
 	return (nob);
 }

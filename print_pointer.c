@@ -1,30 +1,34 @@
 #include "main.h"
+
 /**
- * print_p - prints an address in lowercase hexadecimal
- *@args: variable arguments passed.
- *@buf: bufer storing the string.
- *@buf_i: current index of the buffer
+ * print_ptr - prints an address in lowercase hexadecimal.
+ * @args: the arguments to be formatted.
+ * @buffer: working buffer for `_printf`.
+ * @mods: modifier flags.
  *
- *Return: Return bytes printed to console.
+ * Return: Returns a positive int on success
+ * (if buffer was flushed the number returned will be greater than 0),
+ * negative int on failure.
  */
-int print_p(va_list args, char *buf, int *buf_i)
+int print_ptr(va_list args, char_arr buffer, modifiers mods)
 {
 	int nob = 0, count = 0;
 	unsigned long int address, address_count = 0, var = 16;
 	char *null = "(nil)";
 
+	(void)mods;
 	address = (unsigned long int)va_arg(args, void *);
 	if (address == 0)
 	{
-		if ((*buf_i + 5) >= PRINTF_BUFFER_LENGTH - 24)
-			nob += flush_buffer(buf, buf_i);
+		if ((buffer.i + 5) >= buffer.size - 24)
+			nob += flush_buffer(buffer);
 		while (null[count])
 		{
-			buf[*buf_i] = null[count];
-			*buf_i += 1;
+			buffer.buf[buffer.i] = null[count];
+			buffer.i += 1;
 			count++;
 		}
-		*buf_i -= 1;
+		buffer.i -= 1;
 		return (nob);
 	}
 
@@ -33,20 +37,20 @@ int print_p(va_list args, char *buf, int *buf_i)
 		var = var * 16;
 		count++;
 	}
-	if ((*buf_i + count) >= PRINTF_BUFFER_LENGTH - 24)
-		nob += flush_buffer(buf, buf_i);
+	if ((buffer.i + count) >= buffer.size - 24)
+		nob += flush_buffer(buffer);
 
 	address_count = count;
 	while (count >= 0)
 	{
 		if (address % 16 < 10)
-			buf[*buf_i + count] = address % 16 + '0';
+			buffer.buf[buffer.i + count] = address % 16 + '0';
 		else if (address % 16 > 9 && address % 16 < 16)
-			buf[*buf_i + count] = ((address % 16) - 10) + 'a';
+			buffer.buf[buffer.i + count] = ((address % 16) - 10) + 'a';
 
 		address /= 16;
 		count--;
 	}
-	*buf_i += address_count;
-	return (print_prefix(address_count, buf, buf_i, 'x'));
+	buffer.i += address_count;
+	return (print_prefix(address_count, buffer, 'x'));
 }

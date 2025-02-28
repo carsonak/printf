@@ -1,18 +1,21 @@
 #include "main.h"
 
 /**
- * print_s - handles string format specifier
- * @args: argument from the _printf function
- * @buf: pointer to buffer
- * @buf_i: pointer to current index of the buffer
+ * print_str - handles string format specifier.
+ * @args: the arguments to be formatted.
+ * @buffer: working buffer for `_printf`.
+ * @mods: modifier flags.
  *
- * Return: number of characters written
+ * Return: Returns a positive int on success
+ * (if buffer was flushed the number returned will be greater than 0),
+ * negative int on failure.
  */
-int print_s(va_list args, char *const buf, int *const buf_i)
+int print_str(va_list args, char_arr buffer, modifiers mods)
 {
 	unsigned int idx, nob = 0;
 	char *str;
 
+	(void)mods;
 	if (args)
 	{
 		str = va_arg(args, char *);
@@ -20,26 +23,26 @@ int print_s(va_list args, char *const buf, int *const buf_i)
 		{
 			for (idx = 0; str[idx] != '\0'; idx++)
 			{
-				if (*buf_i >= PRINTF_BUFFER_LENGTH - 24)
-					nob += flush_buffer(buf, buf_i);
+				if (buffer.i >= buffer.size)
+					nob += flush_buffer(buffer);
 
-				buf[*buf_i] = str[idx];
-				*buf_i += 1;
+				buffer.buf[buffer.i] = str[idx];
+				buffer.i += 1;
 			}
-			*buf_i -= 1;
+			buffer.i -= 1;
 		}
 		else
 		{
 			str = "(null)";
 			for (idx = 0; str[idx] != '\0'; idx++)
 			{
-				if (*buf_i >= PRINTF_BUFFER_LENGTH - 24)
-					nob += flush_buffer(buf, buf_i);
+				if (buffer.i >= buffer.size)
+					nob += flush_buffer(buffer);
 
-				buf[*buf_i] = str[idx];
-				*buf_i += 1;
+				buffer.buf[buffer.i] = str[idx];
+				buffer.i += 1;
 			}
-			*buf_i -= 1;
+			buffer.i -= 1;
 		}
 	}
 

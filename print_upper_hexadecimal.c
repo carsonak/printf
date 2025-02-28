@@ -1,21 +1,22 @@
 #include "main.h"
+
 /**
-  * print_upper_hexa - converts integer into lowercase hexadecimal.
-  *
-  *@args: variable arguments passed.
-  *
-  *@buff: stores before printing.
-  *
-  *@buff_index: pointer to an element in an array.
-  *
-  *Return: Return number on bytes printed on console.
-  */
-int print_upper_hexa(va_list args, char *const buff, int *const buff_index)
+ * print_upper_hexa - converts integer into lowercase hexadecimal.
+ * @args: the arguments to be formatted.
+ * @buffer: working buffer for `_printf`.
+ * @mods: modifier flags.
+ *
+ * Return: Returns a positive int on success
+ * (if buffer was flushed the number returned will be greater than 0),
+ * negative int on failure.
+ */
+int print_upper_hexa(va_list args, char_arr buffer, modifiers mods)
 {
 	unsigned long int num, num_count = 0;
 	unsigned long int var = 16;
 	int nob = 0, count = 0;
 
+	(void)mods;
 	num = va_arg(args, unsigned int);
 	while (var <= num)
 	{
@@ -25,21 +26,21 @@ int print_upper_hexa(va_list args, char *const buff, int *const buff_index)
 	num_count = count;
 	while (count >= 0)
 	{
-		if (*buff_index >= PRINTF_BUFFER_LENGTH)
+		if (buffer.i >= buffer.size)
 		{
-			nob += flush_buffer(buff, buff_index);
+			nob += flush_buffer(buffer);
 		}
 		if (num % 16 < 10)
 		{
-			buff[*buff_index + count] = num % 16 + '0';
+			buffer.buf[buffer.i + count] = num % 16 + '0';
 		}
 		else if (num % 16 >= 10 && num % 16 <= 15)
 		{
-			buff[*buff_index + count] = ((num % 16) - 10) + 'A';
+			buffer.buf[buffer.i + count] = ((num % 16) - 10) + 'A';
 		}
 		num = num / 16;
 		count--;
 	}
-	*buff_index = *buff_index + num_count;
+	buffer.i = buffer.i + num_count;
 	return (nob);
 }

@@ -1,24 +1,27 @@
 #include "main.h"
 
 /**
- * print_c - handles the character format specifier
- * @args: argument from the _printf function
- * @buf: pointer to buffer
- * @buf_i: pointer to current index of
+ * print_character - handles the 'c' (character) format specifier.
+ * @args: the arguments to be formatted.
+ * @buffer: working buffer for `_printf`.
+ * @mods: modifier flags.
  *
- * Return: number of characters written
+ * Return: Returns a positive int on success
+ * (if buffer was flushed the number returned will be greater than 0),
+ * negative int on failure.
  */
-int print_c(va_list args, char *const buf, int *const buf_i)
+int print_character(va_list args, char_arr buffer, modifiers mods)
 {
 	char ch;
 
+	(void)mods;
 	if (args)
 	{
 		ch = va_arg(args, int);
 		if (ch)
-			buf[*buf_i] = ch;
+			buffer.buf[buffer.i] = ch;
 		else
-			buf[*buf_i] = '\0';
+			buffer.buf[buffer.i] = '\0';
 	}
 
 	return (0);

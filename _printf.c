@@ -1,101 +1,88 @@
 #include "main.h"
 
+#define PRINTF_BUFFER_LENGTH (1024U)
+
 /**
- * fwp - handles the flags, width, precision and length modifiers
- * @mod: modifier specifier
- * @num_len: number of digits in the number
- * @edits: pointer to an array of structures
- * @buf: the buffer
- * @buf_i: current buffer index
- *
- * Return: number of bytes printed if any
+ * get_flags - interpret the flag modifiers in the string.
+ * @format: the format string.
+ * @mods: variable to store results.
  */
-int fwp(int mod, int num_len, f_w_p *edits, char *const buf,
-		int *const buf_i)
+static void get_flags(string format, modifiers mods)
 {
-	int nob = 0, b;
-
-	edits[0].gate = false;
-	edits[0].ch = ' ';
-	edits[0].func = print_plus;
-
-	edits[1].gate = false;
-	edits[1].ch = '+';
-	edits[1].func = print_plus;
-
-	edits[2].gate = false;
-	edits[2].ch = '#';
-	edits[2].func = print_prefix;
-
-	edits[3].gate = false;
-	edits[3].ch = '\0';
-	edits[3].func = NULL;
-
-	if (num_len < 0 && mod != 'G')
-	{
-		for (b = 0; edits[b].ch; b++)
-			if (mod == edits[b].ch)
-				edits[b].gate = true;
-	}
-	else
-	{
-		for (b = 0; edits[b].ch; b++)
-			if (edits[b].gate)
-				return (edits[b].func(num_len, buf, buf_i, mod));
-	}
-
-	return (nob);
+	(void)format;
+	(void)mods;
 }
 
 /**
- * format_handler - checks format specifier and executes the right functions
- * @args: the argument to be formatted
- * @format: the format string
- * @fmt_i: index of the format string
- * @buf: pointer to character buffer
- * @buf_i: pointer to current index of the buffer
+ * get_width - interpret the width modifiers in the string.
+ * @args: list of arguments to `_printf`.
+ * @format: the format string.
+ * @mods: variable to store results.
+ */
+static void get_width(va_list args, string format, modifiers mods)
+{
+	(void)args;
+	(void)format;
+	(void)mods;
+}
+
+/**
+ * get_precision - interpret the precision modifiers in the string.
+ * @args: list of arguments to `_printf`.
+ * @format: the format string.
+ * @mods: variable to store results.
+ */
+static void get_precision(va_list args, string format, modifiers mods)
+{
+	(void)args;
+	(void)format;
+	(void)mods;
+}
+
+/**
+ * get_type - interpret the length modifiers in the string.
+ * @format: the format string.
+ * @mods: variable to store results.
+ */
+static void get_type(string format, modifiers mods)
+{
+	(void)format;
+	(void)mods;
+}
+
+/**
+ * format_handler - handles formatting of an argument.
+ * @args: the argument to be formatted.
+ * @format: the format string.
+ * @buffer: working buffer for `_printf`.
  *
  * Return: the number of characters printed, -1 if format doesn't match
  */
-static int format_handler(va_list args, const char *const format,
-						  int fmt_i, char *const buf, int *const buf_i)
+static int format_handler(va_list args, string format, char_arr buffer)
 {
-	long int b, i_cpy = *buf_i;
-	int nob = 0;
-	f_w_p *edits = malloc(sizeof(*edits) * 4);
-	conversion_specifiers fmts[] = {{'c', print_c},
-									{'s', print_s},
-									{'%', print_pc},
-									{'d', print_Rnum},
-									{'i', print_Rnum},
-									{'b', print_b},
-									{'o', print_oct},
-									{'u', print_dec},
-									{'x', print_lower_hexa},
-									{'X', print_upper_hexa},
-									{'p', print_p},
-									{'\0', NULL}};
+	int bytes_printed = -1, i = 0;
+	modifiers mods = {0};
+	format_funcs fmt_funcs[] = {
+		{print_character, 'c'},  {print_str, 's'},     {print_percent, '%'},
+		{print_decimal, 'd'},    {print_decimal, 'i'}, {print_binary, 'b'},
+		{print_oct, 'o'},        {print_decimal, 'u'}, {print_lower_hexa, 'x'},
+		{print_upper_hexa, 'X'}, {print_ptr, 'p'},     {0},
+	};
 
-	if (edits == NULL)
-		return (-1);
-
-	for (b = 0; fmts[b].ch; b++)
+	get_flags(format, mods);
+	get_width(args, format, mods);
+	get_precision(args, format, mods);
+	get_type(format, mods);
+	for (i = 0; i < (int)(sizeof(fmt_funcs) / sizeof(*fmt_funcs)); i++)
 	{
-		if (format[fmt_i] == fmts[b].ch)
+		if (format.s[format.i] == fmt_funcs[i].ch)
 		{
-			nob += fmts[b].func(args, buf, buf_i);
+			bytes_printed = fmt_funcs[i].func(args, buffer, mods);
 			break;
 		}
-		else
-			fwp(format[fmt_i], -1, edits, buf, buf_i);
 	}
 
-	nob += fwp('G', (*buf_i - i_cpy), edits, buf, buf_i);
-	free(edits);
-	if (fmts[b].ch == '\0')
-		return (-1);
-
-	return (nob);
+	return (bytes_printed);
 }
 
 /**
@@ -106,49 +93,57 @@ static int format_handler(va_list args, const char *const format,
  */
 int _printf(const char *format, ...)
 {
-	printf_buffer buffer = {0};
-	int buf_i = 0, fmt_i = 0, bytes_printed = 0;
-	int nob = flush_buffer(buffer, &buf_i);
 	va_list args;
+	int bytes_printed = 0, ret_val = 0;
+	string fmt;
+	char arr[PRINTF_BUFFER_LENGTH];
+	char_arr buffer;
 
 	if (format == NULL)
 		return (-1);
 
 	va_start(args, format);
-	for (fmt_i = 0, buf_i = 0; format[fmt_i]; ++buf_i, ++fmt_i)
+	fmt.size = -1;
+	fmt.i = 0;
+	fmt.s = format;
+	buffer.size = sizeof(arr);
+	buffer.i = 0;
+	buffer.buf = arr;
+	for (fmt.i = 0, buffer.i = 0; fmt.s[fmt.i]; ++buffer.i, ++fmt.i)
 	{
-		if (buf_i > PRINTF_BUFFER_LENGTH)
-			bytes_printed += flush_buffer(buffer, &buf_i);
-
-		if (format[fmt_i] == '%')
+		if (buffer.i >= buffer.size)
 		{
-			fmt_i++;
-			if (format[fmt_i] == '\0')
-			{ /*If the next character is fmt_i null break out of the loop*/
-				nob = -1;
-				break;
-			} /*Calling the format handler*/
-			nob += format_handler(args, format, fmt_i, buffer, &buf_i);
-			if (nob < 0)
-			{ /*If no format specifier just print the percent and the character*/
-				buffer[buf_i] = format[fmt_i - 1];
-				buf_i++;
-				buffer[buf_i] = format[fmt_i];
-			}
-			else
-				bytes_printed += nob;
-			nob = 0;
+			ret_val = flush_buffer(buffer);
+			if (ret_val < 0)
+				goto error_handling;
+
+			bytes_printed += ret_val;
 		}
-		else
-			buffer[buf_i] = format[fmt_i];
+
+		if (format[fmt.i] != '%')
+		{
+			buffer.buf[buffer.i] = format[fmt.i];
+			continue;
+		}
+
+		++fmt.i;
+		if (format[fmt.i] == '\0')
+			break;
+
+		ret_val = format_handler(args, fmt, buffer);
+		if (ret_val < 0)
+			goto error_handling;
+
+		bytes_printed += ret_val;
 	}
 
 	va_end(args);
-	if (nob < 0)
+	ret_val = flush_buffer(buffer);
+	if (ret_val < 0)
 	{
-		flush_buffer(buffer, &buf_i);
-		return (nob);
+error_handling:
+		return (-1);
 	}
 
-	return (bytes_printed + flush_buffer(buffer, &buf_i));
+	return (bytes_printed + ret_val);
 }

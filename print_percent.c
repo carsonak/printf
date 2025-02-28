@@ -1,16 +1,20 @@
 #include "main.h"
 
 /**
- * print_pc - handles format specifier for %
- * @args: argument from the _printf function
- * @buf: pointer to the buffer
- * @buf_i: pointer to current index of the buffer
+ * print_percent - handles format specifier for '%'.
+ * @args: the arguments to be formatted.
+ * @buffer: working buffer for `_printf`.
+ * @mods: modifier flags.
  *
- * Return: number of characters written
+ * Return: Returns a positive int on success
+ * (if buffer was flushed the number returned will be greater than 0),
+ * negative int on failure.
  */
-int print_pc(va_list args, char *const buf, int *const buf_i)
+int print_percent(va_list args, char_arr buffer, modifiers mods)
 {
 	(void)args;
-	buf[*buf_i] = '%';
+	(void)mods;
+	buffer.buf[buffer.i] = '%';
+	++buffer.i;
 	return (0);
 }

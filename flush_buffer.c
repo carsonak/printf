@@ -6,10 +6,10 @@
  *
  * Return: number of printed characters, -1 on error.
  */
-int flush_buffer(printf_buffer buffer)
+int flush_buffer(char_arr buffer)
 {
-	int bytes_printed = write(STDOUT_FILENO, buffer.buf, buffer.cursor);
+	int bytes_printed = write(STDOUT_FILENO, buffer.buf, buffer.i);
 
-	buffer.cursor = 0;
+	buffer.i = 0;
 	return (bytes_printed);
 }
