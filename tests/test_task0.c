@@ -1,5 +1,7 @@
 #include "main.h"
 
+#include <stdio.h>
+
 /**
  * main - the TASK0 test file
  *
@@ -10,9 +12,9 @@ int main(void)
 	int len, len2;
 
 	len = _printf("%c", 'S');
-	printf("%d\n\n", len);
+	printf("\n%d\n\n", len);
 	len2 = printf("%c", 'S');
-	printf("%d\n\n", len2);
+	printf("\n%d\n\n", len2);
 	fflush(stdout);
 
 	len = _printf("A char inside a sentence: %c. Did it work?\n", 'F');
