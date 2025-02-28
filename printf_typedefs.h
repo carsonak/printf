@@ -107,7 +107,7 @@ typedef struct printf_modifiers
  */
 typedef struct format_funcs
 {
-	int (*func)(va_list args, char_arr buffer, modifiers mods);
+	int (*func)(va_list args, char_arr *buffer, modifiers mods);
 	char ch;
 } format_funcs;
 

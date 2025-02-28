@@ -10,11 +10,11 @@
  * (if buffer was flushed the number returned will be greater than 0),
  * negative int on failure.
  */
-int print_percent(va_list args, char_arr buffer, modifiers mods)
+int print_percent(va_list args, char_arr *buffer, modifiers mods)
 {
 	(void)args;
 	(void)mods;
-	buffer.buf[buffer.i] = '%';
-	++buffer.i;
+	buffer->buf[buffer->i] = '%';
+	++buffer->i;
 	return (0);
 }

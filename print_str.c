@@ -10,7 +10,7 @@
  * (if buffer was flushed the number returned will be greater than 0),
  * negative int on failure.
  */
-int print_str(va_list args, char_arr buffer, modifiers mods)
+int print_str(va_list args, char_arr *buffer, modifiers mods)
 {
 	unsigned int idx, nob = 0;
 	char *str;
@@ -23,26 +23,26 @@ int print_str(va_list args, char_arr buffer, modifiers mods)
 		{
 			for (idx = 0; str[idx] != '\0'; idx++)
 			{
-				if (buffer.i >= buffer.size)
+				if (buffer->i >= buffer->size)
 					nob += flush_buffer(buffer);
 
-				buffer.buf[buffer.i] = str[idx];
-				buffer.i += 1;
+				buffer->buf[buffer->i] = str[idx];
+				buffer->i += 1;
 			}
-			buffer.i -= 1;
+			buffer->i -= 1;
 		}
 		else
 		{
 			str = "(null)";
 			for (idx = 0; str[idx] != '\0'; idx++)
 			{
-				if (buffer.i >= buffer.size)
+				if (buffer->i >= buffer->size)
 					nob += flush_buffer(buffer);
 
-				buffer.buf[buffer.i] = str[idx];
-				buffer.i += 1;
+				buffer->buf[buffer->i] = str[idx];
+				buffer->i += 1;
 			}
-			buffer.i -= 1;
+			buffer->i -= 1;
 		}
 	}
 

@@ -8,9 +8,9 @@
  *
  * Return: the number of characters printed if any
  */
-int print_prefix(int len, char_arr buffer, ...)
+int print_prefix(int len, char_arr *buffer, ...)
 {
-	int nob = 0, i_cpy = buffer.i;
+	int nob = 0, i_cpy = buffer->i;
 	char ch;
 	va_list arg;
 
@@ -20,34 +20,34 @@ int print_prefix(int len, char_arr buffer, ...)
 	{
 		for (; len > 0; len--)
 		{
-			buffer.buf[buffer.i + 2] = buffer.buf[buffer.i];
-			buffer.i -= 1;
+			buffer->buf[buffer->i + 2] = buffer->buf[buffer->i];
+			buffer->i -= 1;
 		}
 
-		buffer.buf[buffer.i] = '0';
-		buffer.buf[buffer.i + 1] = ch;
-		buffer.i = (i_cpy + 2);
+		buffer->buf[buffer->i] = '0';
+		buffer->buf[buffer->i + 1] = ch;
+		buffer->i = (i_cpy + 2);
 	}
 	else if (ch == 'X')
 	{
 		for (; len > 0; len--)
 		{
-			buffer.buf[buffer.i + 2] = buffer.buf[buffer.i];
-			buffer.i -= 1;
+			buffer->buf[buffer->i + 2] = buffer->buf[buffer->i];
+			buffer->i -= 1;
 		}
-		buffer.buf[buffer.i] = '0';
-		buffer.buf[buffer.i + 1] = ch;
-		buffer.i = (i_cpy + 2);
+		buffer->buf[buffer->i] = '0';
+		buffer->buf[buffer->i + 1] = ch;
+		buffer->i = (i_cpy + 2);
 	}
 	else if (ch == 'o')
 	{
 		for (; len > 0; len--)
 		{
-			buffer.buf[buffer.i + 1] = buffer.buf[buffer.i];
-			buffer.i -= 1;
+			buffer->buf[buffer->i + 1] = buffer->buf[buffer->i];
+			buffer->i -= 1;
 		}
-		buffer.buf[buffer.i] = ch;
-		buffer.i = (i_cpy + 1);
+		buffer->buf[buffer->i] = ch;
+		buffer->i = (i_cpy + 1);
 	}
 	va_end(arg);
 

@@ -10,9 +10,11 @@ TESTS_BIN_DIR := $(TESTS_DIR)/bin
 INCLUDE_DIRS := $(SRCS_DIR)
 
 # all .c files
-SRCS = $(shell find $(SRCS_DIR) -maxdepth 1 -path '*.c')
+SRCS = $(shell find $(SRCS_DIR) -maxdepth 1 -name '*.c')
 # .o file names
 OBJS = $(SRCS:$(SRCS_DIR)/%.c=$(OBJS_DIR)/%.o)
+# all test files
+TESTS = $(shell find $(TESTS_DIR) -name 'test_*.c')
 # auto-genarated files for .h files make rules
 # https://gcc.gnu.org/onlinedocs/gcc/Preprocessor-Options.html#index-M
 DEP_FILES = $(OBJS:.o=.d)
@@ -27,7 +29,7 @@ INCL_FLAGS = $(addprefix -iquote,$(INCLUDE_DIRS))
 # https://www.gnu.org/software/make/manual/html_node/Automatic-Prerequisites.html
 # https://gcc.gnu.org/onlinedocs/gcc/Preprocessor-Options.html#index-MMD
 CPPFLAGS := -MMD
-OPTIMISATION_FLAGS := -Og
+OPTIMISATION_FLAGS := -O0
 DEBUG_FLAGS := -g3 -fno-omit-frame-pointer
 WARN_FLAGS := --std=gnu89 -pedantic -Wall -Wextra -Wno-format -Werror
 
@@ -36,7 +38,7 @@ CFLAGS = $(WARN_FLAGS) $(INCL_FLAGS) $(CPPFLAGS) $(OPTIMISATION_FLAGS) $(DEBUG_F
 
 # $^ - names of all the prerequisites
 # $@ - the name of the target
-$(TESTS_BIN_DIR)/test_main: $(OBJS) $(TESTS_DIR)/test_main.c
+$(TESTS_BIN_DIR)/test_%: $(OBJS) $(TESTS_DIR)/test_%.c
 	@mkdir -p $(@D)
 	$(CC) $(CFLAGS) -o $@ $^
 

@@ -8,13 +8,13 @@
  *
  * Return: the nuber of characters printed if any
  */
-int print_plus(int len, char_arr buffer, ...)
+int print_plus(int len, char_arr *buffer, ...)
 {
-	int nob = 0, i_cpy = buffer.i;
+	int nob = 0, i_cpy = buffer->i;
 	char ch;
 	va_list arg;
 
-	if (buffer.buf[buffer.i - len] == '-')
+	if (buffer->buf[buffer->i - len] == '-')
 		return (nob);
 
 	va_start(arg, buffer);
@@ -22,13 +22,13 @@ int print_plus(int len, char_arr buffer, ...)
 
 	while (len > 0)
 	{
-		buffer.buf[buffer.i + 1] = buffer.buf[buffer.i];
-		buffer.i -= 1;
+		buffer->buf[buffer->i + 1] = buffer->buf[buffer->i];
+		buffer->i -= 1;
 		len--;
 	}
 
-	buffer.buf[buffer.i] = ch;
-	buffer.i = (i_cpy + 1);
+	buffer->buf[buffer->i] = ch;
+	buffer->i = (i_cpy + 1);
 
 	return (nob);
 }

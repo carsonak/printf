@@ -10,7 +10,7 @@
  * (if buffer was flushed the number returned will be greater than 0),
  * negative int on failure.
  */
-int print_binary(va_list args, char_arr buffer, modifiers mods)
+int print_binary(va_list args, char_arr *buffer, modifiers mods)
 {
 	int nob = 0;
 	long int count = 0;
@@ -22,7 +22,7 @@ int print_binary(va_list args, char_arr buffer, modifiers mods)
 		num = va_arg(args, unsigned int);
 		if (num == 0)
 		{
-			buffer.buf[buffer.i] = '0';
+			buffer->buf[buffer->i] = '0';
 			return (0);
 		}
 		while (hlp <= num)
@@ -32,17 +32,17 @@ int print_binary(va_list args, char_arr buffer, modifiers mods)
 		}
 
 		hlp = count;
-		if ((buffer.i + count) >= buffer.size)
+		if ((buffer->i + count) >= buffer->size)
 			nob += flush_buffer(buffer);
 
 		while (count >= 0)
 		{
-			buffer.buf[buffer.i + count] = (num % 2) + '0';
+			buffer->buf[buffer->i + count] = (num % 2) + '0';
 			num /= 2;
 			count--;
 		}
 
-		buffer.i += hlp;
+		buffer->i += hlp;
 	}
 
 	return (nob);
