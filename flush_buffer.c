@@ -1,22 +1,15 @@
 #include "main.h"
 
 /**
- * flush_buffer - prints out contents of buffer and resets it.
- * @buf: Pointer to the buffer
- * @buf_i: Pointer to the current buffer index
+ * flush_buffer - prints out contents of buffer and resets the cursor.
+ * @buffer: the printf buffer to flush.
  *
- * Return: number of printed characters
+ * Return: number of printed characters, -1 on error.
  */
-int flush_buffer(char *const buf, int *const buf_i)
+int flush_buffer(printf_buffer buffer)
 {
-	int nob = 0;
+	int bytes_printed = write(STDOUT_FILENO, buffer.buf, buffer.cursor);
 
-	if (*buf_i < PRINTF_BUFFER_LENGTH)
-		nob += write(1, buf, *buf_i);
-	else
-		exit(-1);
-
-	memset(buf, '*', PRINTF_BUFFER_LENGTH);
-	*buf_i = 0;
-	return (nob);
+	buffer.cursor = 0;
+	return (bytes_printed);
 }

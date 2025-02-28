@@ -39,13 +39,20 @@ typedef struct flags_width_precision_length
 	int (*func)(int num_len, char *const buf, int *const buf_i, ...);
 } f_w_p;
 
+/**
+ * struct printf_buffer - working buffer for printf and its functions.
+ * @buf: memory block to be used as buffer.
+ * @cursor: current index of the byte to be updated by operations.
+ */
+typedef struct printf_buffer
+{
+	char buf[PRINTF_BUFFER_LENGTH];
+	int cursor;
+} printf_buffer;
+
 int _printf(const char *format, ...);
 
 int flush_buffer(char *const buf, int *const buf_i);
-int format_handler(va_list args, const char *const format,
-				   int fmt_i, char *const buf, int *const buf_i);
-int fwp(int mod, int num_len, f_w_p *edits, char *const buf,
-		int *const buf_i);
 int print_c(va_list args, char *const buf, int *const buf_i);
 int print_s(va_list args, char *const buf, int *const buf_i);
 int print_pc(va_list args, char *const buf, int *const buf_i);
