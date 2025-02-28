@@ -37,19 +37,6 @@ typedef struct string
 } string;
 
 /**
- * struct char_arr - a simple mutable char buffer data type.
- * @size: size of the array in bytes.
- * @i: cursor of the array.
- * @buf: pointer to the first byte in the array.
- */
-typedef struct char_arr
-{
-	long int size;
-	long int i;
-	char *buf;
-} char_arr;
-
-/**
  * struct printf_flag_modifiers - printf flag modifiers.
  * @alternate_form: '#' flag.
  * @zero_padding: '0' flag.
@@ -99,6 +86,8 @@ typedef struct printf_modifiers
 	long int precision;
 	enum printf_type_modifiers type;
 } modifiers;
+
+typedef struct char_arr char_arr;
 
 /**
  * struct format_funcs - formatting functions and their identifiers.

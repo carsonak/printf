@@ -32,7 +32,7 @@ int _printf(const char *format, ...)
 		{
 			ret_val = buffer_putchar(&buffer, fmt.s[fmt.i]);
 			if (ret_val < 0)
-				goto error_handling;
+				return (-1);
 
 			bytes_printed += ret_val;
 			continue;
@@ -44,7 +44,7 @@ int _printf(const char *format, ...)
 
 		ret_val = format_handler(args, &fmt, &buffer);
 		if (ret_val < 0)
-			goto error_handling;
+			return (-1);
 
 		bytes_printed += ret_val;
 	}
@@ -52,10 +52,7 @@ int _printf(const char *format, ...)
 	va_end(args);
 	ret_val = buffer_flush(&buffer);
 	if (ret_val < 0)
-	{
-error_handling:
 		return (-1);
-	}
 
 	return (bytes_printed + ret_val);
 }

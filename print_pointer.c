@@ -11,11 +11,12 @@
 int print_ptr(va_list args, char_arr *buffer, modifiers mods)
 {
 	int nob = 0, count = 0;
-	unsigned long int address, address_count = 0, var = 16;
+	size_t address;
+	unsigned long int address_count = 0, var = 16;
 	char *null = "(nil)";
 
 	(void)mods;
-	address = (unsigned long int)va_arg(args, void *);
+	address = va_arg(args, void *);
 	if (address == 0)
 	{
 		if ((buffer->i + 5) >= buffer->size - 24)

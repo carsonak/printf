@@ -1,23 +1,18 @@
 #include "main.h"
 
 /**
- * print_str - handles string format specifier.
- * @args: the arguments to be formatted.
+ * print_strings - handles formating of strings.
+ * @str: the str to be formated.
  * @buffer: working buffer for `_printf`.
  * @mods: modifier flags.
  *
  * Return: Returns a positive int on success, negative int on failure.
  */
-int print_str(va_list args, char_arr *buffer, modifiers mods)
+int print_strings(const char *str, char_arr *buffer, modifiers mods)
 {
 	unsigned int idx, nob = 0;
-	const char *str;
 
 	(void)mods;
-	str = va_arg(args, char *);
-	if (!str)
-		str = "(null)";
-
 	for (idx = 0; str[idx] != '\0'; idx++)
 	{
 		int ret_val = buffer_putchar(buffer, str[idx]);
@@ -31,6 +26,26 @@ int print_str(va_list args, char_arr *buffer, modifiers mods)
 
 	buffer->i -= 1;
 	return (nob);
+}
+
+/**
+ * print_str - handles string format specifier.
+ * @args: the arguments to be formatted.
+ * @buffer: working buffer for `_printf`.
+ * @mods: modifier flags.
+ *
+ * Return: Returns a positive int on success, negative int on failure.
+ */
+int print_str(va_list args, char_arr *buffer, modifiers mods)
+{
+	const char *str;
+
+	(void)mods;
+	str = va_arg(args, char *);
+	if (!str)
+		str = "(null)";
+
+	return (print_strings(str, buffer, mods));
 }
 
 /**
