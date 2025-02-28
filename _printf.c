@@ -20,12 +20,8 @@ int _printf(const char *format, ...)
 		return (-1);
 
 	va_start(args, format);
-	fmt.size = -1;
-	fmt.i = 0;
-	fmt.s = format;
-	buffer.size = sizeof(arr);
-	buffer.i = 0;
-	buffer.buf = arr;
+	fmt.size = -1, fmt.i = 0, fmt.s = format;
+	buffer.size = sizeof(arr), buffer.i = 0, buffer.buf = arr;
 	for (fmt.i = 0, buffer.i = 0; fmt.s[fmt.i]; ++buffer.i, ++fmt.i)
 	{
 		if (fmt.s[fmt.i] != '%')

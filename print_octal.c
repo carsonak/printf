@@ -30,7 +30,7 @@ static unsigned int count_digits(long int n)
  */
 int print_oct(va_list args, char_arr *buffer, modifiers mods)
 {
-	unsigned long int num, var = 8;
+	unsigned long int num;
 	int nob = 0;
 	long int count = 0, num_count = 0;
 

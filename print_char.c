@@ -11,5 +11,5 @@
 int print_character(va_list args, char_arr *buffer, modifiers mods)
 {
 	(void)mods;
-	return (buffer_putchar(buffer, va_arg(args, char)));
+	return (buffer_putchar(buffer, va_arg(args, int)));
 }

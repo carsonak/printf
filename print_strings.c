@@ -70,7 +70,7 @@ int print_STR(va_list args, char_arr *buffer, modifiers mods)
 	{
 		int ret_val;
 
-		if (str[idx] > 31 && str[idx] < 128)
+		if (str[idx] > 31 /* && str[idx] < 128 */)
 			ret_val = buffer_putchar(buffer, str[idx]);
 		else
 		{

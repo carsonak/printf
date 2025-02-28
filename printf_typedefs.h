@@ -87,8 +87,6 @@ typedef struct printf_modifiers
 	enum printf_type_modifiers type;
 } modifiers;
 
-typedef struct char_arr char_arr;
-
 /**
  * struct format_funcs - formatting functions and their identifiers.
  * @func: The handling function.

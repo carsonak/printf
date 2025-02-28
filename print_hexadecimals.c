@@ -79,7 +79,7 @@ int print_hexa_lower(va_list args, char_arr *buffer, modifiers mods)
 {
 	unsigned int num = va_arg(args, unsigned int);
 
-	return (print_hexadecimal(num, buffer, mods, false, false));
+	return (print_hexadecimals(num, buffer, mods, false, false));
 }
 
 /**
@@ -94,5 +94,5 @@ int print_hexa_upper(va_list args, char_arr *buffer, modifiers mods)
 {
 	unsigned int num = va_arg(args, unsigned int);
 
-	return (print_hexadecimal(num, buffer, mods, false, true));
+	return (print_hexadecimals(num, buffer, mods, false, true));
 }
