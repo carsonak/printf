@@ -20,8 +20,8 @@ int print_s(va_list args, char *const buf, int *const buf_i)
 		{
 			for (idx = 0; str[idx] != '\0'; idx++)
 			{
-				if (*buf_i >= PRINTF_BUFFER - 24)
-					nob += _flushbuff(buf, buf_i);
+				if (*buf_i >= PRINTF_BUFFER_LENGTH - 24)
+					nob += flush_buffer(buf, buf_i);
 
 				buf[*buf_i] = str[idx];
 				*buf_i += 1;
@@ -33,8 +33,8 @@ int print_s(va_list args, char *const buf, int *const buf_i)
 			str = "(null)";
 			for (idx = 0; str[idx] != '\0'; idx++)
 			{
-				if (*buf_i >= PRINTF_BUFFER - 24)
-					nob += _flushbuff(buf, buf_i);
+				if (*buf_i >= PRINTF_BUFFER_LENGTH - 24)
+					nob += flush_buffer(buf, buf_i);
 
 				buf[*buf_i] = str[idx];
 				*buf_i += 1;

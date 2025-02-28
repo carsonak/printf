@@ -30,8 +30,8 @@ int print_dec(va_list args, char *const buff, int *const buff_index)
 	}
 
 	num_count = count;
-	if ((*buff_index + count) > PRINTF_BUFFER)
-		nob += _flushbuff(buff, buff_index);
+	if ((*buff_index + count) > PRINTF_BUFFER_LENGTH)
+		nob += flush_buffer(buff, buff_index);
 
 	while (count >= 0)
 	{

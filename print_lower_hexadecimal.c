@@ -30,8 +30,8 @@ int print_lower_hexa(va_list args, char *const buff,
 	}
 
 	num_count = count;
-	if ((*buff_index + count) >= PRINTF_BUFFER - 24)
-		nob += _flushbuff(buff, buff_index);
+	if ((*buff_index + count) >= PRINTF_BUFFER_LENGTH - 24)
+		nob += flush_buffer(buff, buff_index);
 
 	while (count >= 0)
 	{

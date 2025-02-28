@@ -29,8 +29,8 @@ int print_b(va_list args, char *const buf, int *const buf_i)
 		}
 
 		hlp = count;
-		if ((*buf_i + count) >= PRINTF_BUFFER - 24)
-			nob += _flushbuff(buf, buf_i);
+		if ((*buf_i + count) >= PRINTF_BUFFER_LENGTH - 24)
+			nob += flush_buffer(buf, buf_i);
 
 		while (count >= 0)
 		{

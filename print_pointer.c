@@ -16,8 +16,8 @@ int print_p(va_list args, char *buf, int *buf_i)
 	address = (unsigned long int)va_arg(args, void *);
 	if (address == 0)
 	{
-		if ((*buf_i + 5) >= PRINTF_BUFFER - 24)
-			nob += _flushbuff(buf, buf_i);
+		if ((*buf_i + 5) >= PRINTF_BUFFER_LENGTH - 24)
+			nob += flush_buffer(buf, buf_i);
 		while (null[count])
 		{
 			buf[*buf_i] = null[count];
@@ -33,8 +33,8 @@ int print_p(va_list args, char *buf, int *buf_i)
 		var = var * 16;
 		count++;
 	}
-	if ((*buf_i + count) >= PRINTF_BUFFER - 24)
-		nob += _flushbuff(buf, buf_i);
+	if ((*buf_i + count) >= PRINTF_BUFFER_LENGTH - 24)
+		nob += flush_buffer(buf, buf_i);
 
 	address_count = count;
 	while (count >= 0)

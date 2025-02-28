@@ -9,37 +9,39 @@
 #include <unistd.h>
 #include <stdbool.h>
 
-#define PRINTF_BUFFER (1024)
+#define PRINTF_BUFFER_LENGTH (1024U)
 
 /**
  * struct conversion_specifiers - a struct for storing a format specifier and
  * it's function
  *
  * @ch: The format identifier
- * @f: The function associated
+ * @func: The function associated
  */
 typedef struct conversion_specifiers
 {
 	char ch;
-	int (*f)(va_list args, char *const buf, int *const buf_i);
-} c_sp;
+	int (*func)(va_list args, char *const buffer, int *const buf_i);
+} conversion_specifiers;
+
 /**
  * struct flags_width_precision_length - struct prt for tracking and calling
  * functions of flag, field-width, precision and length modifiers
  *
  * @gate: bool value used as a control switch
  * @ch: The format identifier
- * @f: The function associated
+ * @func: The function associated
  */
 typedef struct flags_width_precision_length
 {
 	bool gate;
 	char ch;
-	int (*f)(int num_len, char *const buf, int *const buf_i, ...);
+	int (*func)(int num_len, char *const buf, int *const buf_i, ...);
 } f_w_p;
 
 int _printf(const char *format, ...);
-int _flushbuff(char *const buf, int *const buf_i);
+
+int flush_buffer(char *const buf, int *const buf_i);
 int format_handler(va_list args, const char *const format,
 				   int fmt_i, char *const buf, int *const buf_i);
 int fwp(int mod, int num_len, f_w_p *edits, char *const buf,

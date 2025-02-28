@@ -1,5 +1,3 @@
-/*#define _OVERALL_*/
-#ifdef _OVERALL_
 #include "main.h"
 
 /**
@@ -40,6 +38,6 @@ int main(void)
 	printf("Len:[%d]\n", len2);
 	_printf("Unknown:[%r]\n");
 	printf("Unknown:[%r]\n");
+
 	return (0);
 }
-#endif /*_OVERALL_*/

@@ -25,9 +25,9 @@ int print_upper_hexa(va_list args, char *const buff, int *const buff_index)
 	num_count = count;
 	while (count >= 0)
 	{
-		if (*buff_index >= PRINTF_BUFFER)
+		if (*buff_index >= PRINTF_BUFFER_LENGTH)
 		{
-			nob += _flushbuff(buff, buff_index);
+			nob += flush_buffer(buff, buff_index);
 		}
 		if (num % 16 < 10)
 		{

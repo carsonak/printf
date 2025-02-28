@@ -1,10 +1,12 @@
 #include "main.h"
+
 #include <stdio.h>
 #include <string.h>
+
 #define BUFFSIZE 9000
 
 void buf_filler(char *buf);
-void turnit(char *track, unsigned int i);
+void int_to_str(char *track, unsigned int i);
 
 /**
  * main - tests max buffer size
@@ -39,18 +41,18 @@ void buf_filler(char *buf)
 	while (i < BUFFSIZE)
 	{
 		memset(track, '0', sizeof(track) - 1);
-		turnit(track, (i / 5));
+		int_to_str(track, (i / 5));
 		for (y = 0; (i < BUFFSIZE) && track[y]; y++, i++)
 			buf[i] = track[y];
 	}
 }
 
 /**
- * turnit - convert integers into 4 byte strings
+ * int_to_str - convert integers into 4 byte strings
  * @track: the array in which the number is to be stored
  * @i: the integer
  */
-void turnit(char *track, unsigned int i)
+void int_to_str(char *track, unsigned int i)
 {
 	int num = i + 1, y = 3;
 
