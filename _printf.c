@@ -28,18 +28,13 @@ int _printf(const char *format, ...)
 	buffer.buf = arr;
 	for (fmt.i = 0, buffer.i = 0; fmt.s[fmt.i]; ++buffer.i, ++fmt.i)
 	{
-		if (buffer.i >= buffer.size)
+		if (fmt.s[fmt.i] != '%')
 		{
-			ret_val = flush_buffer(&buffer);
+			ret_val = buffer_putchar(&buffer, fmt.s[fmt.i]);
 			if (ret_val < 0)
 				goto error_handling;
 
 			bytes_printed += ret_val;
-		}
-
-		if (format[fmt.i] != '%')
-		{
-			buffer.buf[buffer.i] = format[fmt.i];
 			continue;
 		}
 
@@ -55,7 +50,7 @@ int _printf(const char *format, ...)
 	}
 
 	va_end(args);
-	ret_val = flush_buffer(&buffer);
+	ret_val = buffer_flush(&buffer);
 	if (ret_val < 0)
 	{
 error_handling:

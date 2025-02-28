@@ -12,6 +12,11 @@ int main(void)
 {
 	int ret;
 
+	ret = printf("0=%d, 0=%i", 0, 0);
+	printf("\n%d\n", ret);
+	ret = _printf("0=%d, 0=%i", 0, 0);
+	printf("\n%d\n\n", ret);
+
 	ret = printf("5*3=%d, 5*3=%i", 15, 15);
 	printf("\n%d\n", ret);
 	ret = _printf("5*3=%d, 5*3=%i", 15, 15);

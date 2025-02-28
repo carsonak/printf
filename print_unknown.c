@@ -16,12 +16,14 @@ int print_unknown(string format, char_arr *buffer)
 	while (format.s[format.i - i] != '%')
 		++i;
 
-	if (buffer->i + i >= buffer->size)
-		bytes_written = flush_buffer(buffer);
-
 	while (i > -1)
 	{
-		buffer->buf[buffer->i] = format.s[format.i - i];
+		int ret_val = buffer_putchar(buffer, format.s[format.i - i]);
+
+		if (ret_val < 0)
+			return (ret_val);
+
+		bytes_written += ret_val;
 		++buffer->i;
 		--i;
 	}

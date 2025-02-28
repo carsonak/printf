@@ -63,7 +63,7 @@ int format_handler(va_list args, string *format, char_arr *buffer)
 	format_funcs fmt_funcs[] = {
 		{print_character, 'c'},  {print_str, 's'},    {print_percent, '%'},
 		{print_int_di, 'd'},     {print_int_di, 'i'}, {print_binary, 'b'},
-		{print_oct, 'o'},        {print_int_di, 'u'}, {print_hexa_lower, 'x'},
+		{print_oct, 'o'},        {print_int_u, 'u'},  {print_hexa_lower, 'x'},
 		{print_hexa_upper, 'X'}, {print_ptr, 'p'},    {0},
 	};
 

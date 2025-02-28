@@ -21,7 +21,7 @@ int print_ptr(va_list args, char_arr *buffer, modifiers mods)
 	if (address == 0)
 	{
 		if ((buffer->i + 5) >= buffer->size - 24)
-			nob += flush_buffer(buffer);
+			nob += buffer_flush(buffer);
 		while (null[count])
 		{
 			buffer->buf[buffer->i] = null[count];
@@ -38,7 +38,7 @@ int print_ptr(va_list args, char_arr *buffer, modifiers mods)
 		count++;
 	}
 	if ((buffer->i + count) >= buffer->size - 24)
-		nob += flush_buffer(buffer);
+		nob += buffer_flush(buffer);
 
 	address_count = count;
 	while (count >= 0)

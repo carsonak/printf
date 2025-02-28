@@ -1,6 +1,26 @@
 #include "main.h"
 
 /**
+ * count_digits - count how many binary digits can represent an integer.
+ * @n: the integer.
+ *
+ * Return: number of digits in the integer.
+ */
+static unsigned int count_digits(long int n)
+{
+	int digits = 0;
+
+	/* clang-format off */
+	do {
+		/* clang-format on */
+		n /= 2;
+		++digits;
+	} while (n);
+
+	return (digits);
+}
+
+/**
  * print_binary - converts an unsigned int into binary.
  * @args: the arguments to be formatted.
  * @buffer: working buffer for `_printf`.
@@ -12,38 +32,24 @@
  */
 int print_binary(va_list args, char_arr *buffer, modifiers mods)
 {
-	int nob = 0;
-	long int count = 0;
-	unsigned long int num = 0, hlp = 2;
+	int bytes_written = 0;
+	unsigned int num = 0;
+	long int character_count = 0, i = 0;
 
 	(void)mods;
-	if (args)
+	num = va_arg(args, unsigned int);
+	character_count = count_digits(num);
+	for (i = character_count - 1; i >= 0; --i)
 	{
-		num = va_arg(args, unsigned int);
-		if (num == 0)
-		{
-			buffer->buf[buffer->i] = '0';
-			return (0);
-		}
-		while (hlp <= num)
-		{
-			hlp *= 2;
-			count++;
-		}
+		int ret_val = buffer_putchar(buffer, (num % 2) + '0');
 
-		hlp = count;
-		if ((buffer->i + count) >= buffer->size)
-			nob += flush_buffer(buffer);
+		if (ret_val < 0)
+			return (ret_val);
 
-		while (count >= 0)
-		{
-			buffer->buf[buffer->i + count] = (num % 2) + '0';
-			num /= 2;
-			count--;
-		}
-
-		buffer->i += hlp;
+		bytes_written += ret_val;
+		num /= 2;
 	}
 
-	return (nob);
+	buffer->i += character_count - 1;
+	return (bytes_written);
 }

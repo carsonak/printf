@@ -13,38 +13,24 @@
 int print_str(va_list args, char_arr *buffer, modifiers mods)
 {
 	unsigned int idx, nob = 0;
-	char *str;
+	const char *str;
 
 	(void)mods;
-	if (args)
+	str = va_arg(args, char *);
+	if (!str)
+		str = "(null)";
+
+	for (idx = 0; str[idx] != '\0'; idx++)
 	{
-		str = va_arg(args, char *);
-		if (str)
-		{
-			for (idx = 0; str[idx] != '\0'; idx++)
-			{
-				if (buffer->i >= buffer->size)
-					nob += flush_buffer(buffer);
+		int ret_val = buffer_putchar(buffer, str[idx]);
 
-				buffer->buf[buffer->i] = str[idx];
-				buffer->i += 1;
-			}
-			buffer->i -= 1;
-		}
-		else
-		{
-			str = "(null)";
-			for (idx = 0; str[idx] != '\0'; idx++)
-			{
-				if (buffer->i >= buffer->size)
-					nob += flush_buffer(buffer);
+		if (ret_val < 0)
+			return (ret_val);
 
-				buffer->buf[buffer->i] = str[idx];
-				buffer->i += 1;
-			}
-			buffer->i -= 1;
-		}
+		nob += ret_val;
+		++buffer->i;
 	}
 
+	buffer->i -= 1;
 	return (nob);
 }

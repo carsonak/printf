@@ -14,6 +14,5 @@ int print_percent(va_list args, char_arr *buffer, modifiers mods)
 {
 	(void)args;
 	(void)mods;
-	buffer->buf[buffer->i] = '%';
-	return (0);
+	return (buffer_putchar(buffer, '%'));
 }

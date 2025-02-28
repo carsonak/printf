@@ -12,17 +12,6 @@
  */
 int print_character(va_list args, char_arr *buffer, modifiers mods)
 {
-	char ch;
-
 	(void)mods;
-	if (args)
-	{
-		ch = va_arg(args, int);
-		if (ch)
-			buffer->buf[buffer->i] = ch;
-		else
-			buffer->buf[buffer->i] = '\0';
-	}
-
-	return (0);
+	return (buffer_putchar(buffer, va_arg(args, char)));
 }
