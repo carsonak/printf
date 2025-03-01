@@ -7,16 +7,16 @@
  *
  * Return: Returns a positive int on success, negative int on failure.
  */
-int print_unknown(string format, char_arr *buffer)
+int print_unknown(string *format, char_arr *buffer)
 {
-	int i = 0, bytes_written = 0;
+	intmax_t i = 0, bytes_written = 0;
 
-	while (format.s[format.i - i] != '%')
+	while (format->s[format->i - i] != '%')
 		++i;
 
-	while ((i > -1) && format.s[format.i - i])
+	while ((i > -1) && format->s[format->i - i])
 	{
-		int ret_val = buffer_putchar(buffer, format.s[format.i - i]);
+		int ret_val = buffer_putchar(buffer, format->s[format->i - i]);
 
 		if (ret_val < 0)
 			return (ret_val);
@@ -24,6 +24,9 @@ int print_unknown(string format, char_arr *buffer)
 		bytes_written += ret_val;
 		--i;
 	}
+
+	if ((i > -1) && !format->s[format->i - i])
+		--format->i;
 
 	return (bytes_written);
 }

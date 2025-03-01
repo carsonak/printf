@@ -10,7 +10,35 @@
  */
 int print_hexa_lower(va_list args, char_arr *buffer, modifiers mods)
 {
-	unsigned int num = va_arg(args, unsigned int);
+	uintmax_t num = 0;
+
+	switch (mods.length)
+	{
+		/* case PRINTF_CHAR: */
+		/* num = va_arg(args, unsigned char); */
+		/* break; */
+		/* case PRINTF_SHORT: */
+		/* num = va_arg(args, unsigned short int); */
+		/* break; */
+		/* case PRINTF_LONG: */
+		/* num = va_arg(args, unsigned long int); */
+		/* break; */
+		/* case PRINTF_LLONG: */
+		/* num = va_arg(args, unsigned long long int); */
+		/* break; */
+	case PRINTF_INTMAX_T:
+		num = va_arg(args, uintmax_t);
+		break;
+	case PRINTF_SIZE_T:
+		num = va_arg(args, size_t);
+		break;
+	case PRINTF_PTRDIFF_T:
+		num = va_arg(args, ptrdiff_t);
+		break;
+	default:
+		num = va_arg(args, unsigned int);
+		break;
+	}
 
 	mods.int_mod.alphabet_case = LOWER;
 	mods.int_mod.base = BASE16;
@@ -28,7 +56,35 @@ int print_hexa_lower(va_list args, char_arr *buffer, modifiers mods)
  */
 int print_hexa_upper(va_list args, char_arr *buffer, modifiers mods)
 {
-	unsigned int num = va_arg(args, unsigned int);
+	uintmax_t num = 0;
+
+	switch (mods.length)
+	{
+		/* case PRINTF_CHAR: */
+		/* num = va_arg(args, unsigned char); */
+		/* break; */
+		/* case PRINTF_SHORT: */
+		/* num = va_arg(args, unsigned short int); */
+		/* break; */
+		/* case PRINTF_LONG: */
+		/* num = va_arg(args, unsigned long int); */
+		/* break; */
+		/* case PRINTF_LLONG: */
+		/* num = va_arg(args, unsigned long long int); */
+		/* break; */
+	case PRINTF_INTMAX_T:
+		num = va_arg(args, uintmax_t);
+		break;
+	case PRINTF_SIZE_T:
+		num = va_arg(args, size_t);
+		break;
+	case PRINTF_PTRDIFF_T:
+		num = va_arg(args, ptrdiff_t);
+		break;
+	default:
+		num = va_arg(args, unsigned int);
+		break;
+	}
 
 	mods.int_mod.alphabet_case = UPPER;
 	mods.int_mod.base = BASE16;

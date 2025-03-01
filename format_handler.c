@@ -115,7 +115,7 @@ static void get_type(string *format, modifiers *mods)
 		mods->length = PRINTF_PTRDIFF_T;
 		break;
 	default:
-		break;
+		return;
 	}
 
 	++format->i;
@@ -163,7 +163,7 @@ int format_handler(va_list args, string *format, char_arr *buffer)
 	}
 
 	if (!fmt_funcs[i].ch)
-		bytes_printed = print_unknown(*format, buffer);
+		bytes_printed = print_unknown(format, buffer);
 
 	return (bytes_printed);
 }

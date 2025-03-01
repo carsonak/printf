@@ -63,7 +63,7 @@ struct printf_flag_modifiers
  */
 enum printf_int_length_modifiers
 {
-	PRINTF_CHAR,
+	PRINTF_CHAR = 1,
 	PRINTF_SHORT,
 	PRINTF_LONG,
 	PRINTF_LLONG,

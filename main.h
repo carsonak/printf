@@ -3,6 +3,7 @@
 
 #include <inttypes.h> /* imaxabs, fixed width types */
 #include <stdarg.h>   /* va_list */
+#include <stddef.h>   /* ptrdiff_t, size_t */
 #include <stdlib.h>   /* malloc */
 #include <unistd.h>   /* write */
 
@@ -27,6 +28,6 @@ int print_percent(va_list args, char_arr *buffer, modifiers mods);
 int print_ptr(va_list args, char_arr *buffer, modifiers mods);
 int print_str(va_list args, char_arr *buffer, modifiers mods);
 int print_STR(va_list args, char_arr *buffer, modifiers mods);
-int print_unknown(string format, char_arr *buffer);
+int print_unknown(string *format, char_arr *buffer);
 
 #endif
