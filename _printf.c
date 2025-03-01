@@ -22,7 +22,7 @@ int _printf(const char *format, ...)
 	va_start(args, format);
 	fmt.size = -1, fmt.i = 0, fmt.s = format;
 	buffer.size = sizeof(arr), buffer.i = 0, buffer.buf = arr;
-	for (fmt.i = 0, buffer.i = 0; fmt.s[fmt.i]; ++buffer.i, ++fmt.i)
+	for (; fmt.s[fmt.i]; ++fmt.i)
 	{
 		if (fmt.s[fmt.i] != '%')
 		{
@@ -35,9 +35,6 @@ int _printf(const char *format, ...)
 		}
 
 		++fmt.i;
-		if (format[fmt.i] == '\0')
-			break;
-
 		ret_val = format_handler(args, &fmt, &buffer);
 		if (ret_val < 0)
 			return (-1);

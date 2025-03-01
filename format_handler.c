@@ -7,8 +7,33 @@
  */
 static void get_flags(string *format, modifiers *mods)
 {
-	(void)format;
-	(void)mods;
+	while (format->s[format->i] == '#' || format->s[format->i] == '0' ||
+	       format->s[format->i] == '-' || format->s[format->i] == ' ' ||
+	       format->s[format->i] == '+')
+	{
+		switch (format->s[format->i])
+		{
+		case '#':
+			mods->flags.alternate_form = true;
+			break;
+		case '0':
+			mods->flags.zero_padding = true;
+			break;
+		case '-':
+			mods->flags.left_adjust = true;
+			break;
+		case ' ':
+			mods->flags.space = true;
+			break;
+		case '+':
+			mods->flags.sign = true;
+			break;
+		default:
+			break;
+		}
+
+		++format->i;
+	}
 }
 
 /**
@@ -19,9 +44,15 @@ static void get_flags(string *format, modifiers *mods)
  */
 static void get_width(va_list args, string *format, modifiers *mods)
 {
+	int i = 0;
+
 	(void)args;
-	(void)format;
-	(void)mods;
+	if (!_isdigit(format->s[format->i]))
+		return;
+
+	mods->width = _atoimax(&format->s[format->i]);
+	for (i = count_digits(mods->width, BASE10); i > 0; --i)
+		++format->i;
 }
 
 /**
@@ -32,9 +63,16 @@ static void get_width(va_list args, string *format, modifiers *mods)
  */
 static void get_precision(va_list args, string *format, modifiers *mods)
 {
+	int i = 0;
+
 	(void)args;
-	(void)format;
-	(void)mods;
+	if (format->s[format->i] != '.')
+		return;
+
+	++format->i;
+	mods->precision = _atoimax(&format->s[format->i]);
+	for (i = count_digits(mods->width, BASE10); i > 0; --i)
+		++format->i;
 }
 
 /**
@@ -44,8 +82,43 @@ static void get_precision(va_list args, string *format, modifiers *mods)
  */
 static void get_type(string *format, modifiers *mods)
 {
-	(void)format;
-	(void)mods;
+	switch (format->s[format->i])
+	{
+	case 'h':
+		mods->length = PRINTF_SHORT;
+		if (format->s[format->i + 1] == 'h')
+		{
+			++format->i;
+			mods->length = PRINTF_CHAR;
+		}
+
+		break;
+	case 'l':
+		mods->length = PRINTF_LONG;
+		if (format->s[format->i + 1] == 'l')
+		{
+			++format->i;
+			mods->length = PRINTF_LLONG;
+		}
+
+		break;
+	case 'L':
+		mods->length = PRINTF_LDOUBLE;
+		break;
+	case 'j':
+		mods->length = PRINTF_INTMAX_T;
+		break;
+	case 'z':
+		mods->length = PRINTF_SIZE_T;
+		break;
+	case 't':
+		mods->length = PRINTF_PTRDIFF_T;
+		break;
+	default:
+		break;
+	}
+
+	++format->i;
 }
 
 /**

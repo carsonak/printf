@@ -47,7 +47,7 @@ int buffer_puts(char_arr *buffer, const char *str)
 {
 	int bytes_written = 0;
 
-	while (str)
+	while (str && *str)
 	{
 		int ret_val = buffer_putchar(buffer, *str);
 

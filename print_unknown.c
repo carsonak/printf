@@ -14,7 +14,7 @@ int print_unknown(string format, char_arr *buffer)
 	while (format.s[format.i - i] != '%')
 		++i;
 
-	while (i > -1)
+	while ((i > -1) && format.s[format.i - i])
 	{
 		int ret_val = buffer_putchar(buffer, format.s[format.i - i]);
 
@@ -22,10 +22,8 @@ int print_unknown(string format, char_arr *buffer)
 			return (ret_val);
 
 		bytes_written += ret_val;
-		++buffer->i;
 		--i;
 	}
 
-	--buffer->i;
 	return (bytes_written);
 }

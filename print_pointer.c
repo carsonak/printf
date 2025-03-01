@@ -10,24 +10,13 @@
  */
 int print_ptr(va_list args, char_arr *buffer, modifiers mods)
 {
-	int nob = 0, count = 0;
-	size_t address;
-	char *null = "(nil)";
+	size_t address = (size_t)va_arg(args, void *);
 
-	(void)mods;
-	address = (size_t)va_arg(args, void *);
 	if (address == 0)
-	{
-		while (null[count])
-		{
-			buffer->buf[buffer->i] = null[count];
-			buffer->i += 1;
-			count++;
-		}
-		buffer->i -= 1;
-		return (nob);
-	}
+		return (buffer_puts(buffer, "(nil)"));
 
 	mods.flags.alternate_form = true;
-	return (print_hexadecimals(address, buffer, mods, false, false));
+	mods.int_mod.base = BASE16;
+	mods.int_mod.alphabet_case = LOWER;
+	return (format_integers(address, buffer, mods));
 }

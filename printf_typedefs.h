@@ -1,8 +1,9 @@
-#ifndef PRINTF_TYPEDEFS
-#define PRINTF_TYPEDEFS
+#ifndef PRINTF_TYPEDEFS_H
+#define PRINTF_TYPEDEFS_H
 
-#include <stdarg.h>  /* va_list */
-#include <stdbool.h> /* bool */
+#include <inttypes.h> /* intmax_t */
+#include <stdarg.h>   /* va_list */
+#include <stdbool.h>  /* bool */
 
 #define ATTR_FORMAT_FUNCTION(archetype, str_position, first_to_check)
 
@@ -24,15 +25,15 @@
 #endif /* __has_attribute */
 
 /**
- * struct string - a simple immutable string data type.
+ * struct string - a simple immutable string data length.
  * @size: size of the string in bytes.
  * @i: cursor of the string.
  * @s: pointer to the first character in the string.
  */
 typedef struct string
 {
-	long int size;
-	long int i;
+	intmax_t size;
+	intmax_t i;
 	char const *s;
 } string;
 
@@ -50,41 +51,82 @@ struct printf_flag_modifiers
 };
 
 /**
- * enum printf_type_modifiers - printf length modifiers.
- * @hh: signed char or unsigned char.
- * @h: short or unsigned short.
- * @l: long or unsigned long.
- * @ll: long or unsigned long.
- * @L: long double.
- * @j: intmax_t or uintmax_t.
- * @z: size_t or ssize_t.
- * @t: ptrdiff_t.
+ * enum printf_int_length_modifiers - printf length modifiers.
+ * @PRINTF_CHAR: signed char or unsigned char.
+ * @PRINTF_SHORT: short or unsigned short.
+ * @PRINTF_LONG: long or unsigned long.
+ * @PRINTF_LLONG: long or unsigned long.
+ * @PRINTF_LDOUBLE: long double.
+ * @PRINTF_INTMAX_T: intmax_t or uintmax_t.
+ * @PRINTF_SIZE_T: size_t or ssize_t.
+ * @PRINTF_PTRDIFF_T: ptrdiff_t.
  */
-enum printf_type_modifiers
+enum printf_int_length_modifiers
 {
-	hh,
-	h,
-	l,
-	ll,
-	L,
-	j,
-	z,
-	t
+	PRINTF_CHAR,
+	PRINTF_SHORT,
+	PRINTF_LONG,
+	PRINTF_LLONG,
+	PRINTF_LDOUBLE,
+	PRINTF_INTMAX_T,
+	PRINTF_SIZE_T,
+	PRINTF_PTRDIFF_T
 };
 
 /**
- * struct printf_modifiers - modifiers for the conversion.
+ * enum integer_bases - valid radii for integers.
+ * @BASE02: base 2.
+ * @BASE08: base 8.
+ * @BASE10: base 10.
+ * @BASE16: base 16.
+ */
+enum integer_bases
+{
+	BASE02 = 2U,
+	BASE08 = 8U,
+	BASE10 = 10U,
+	BASE16 = 16U
+};
+
+/**
+ * enum integer_alphabet_cases - symbols for integers > base10.
+ * @UPPER: uppercase A.
+ * @LOWER: lowercase a.
+ */
+enum integer_alphabet_cases
+{
+	UPPER = 'A',
+	LOWER = 'a'
+};
+
+/**
+ * struct integer_modifiers - flags for integer types.
+ * @base: the radix of the number.
+ * @alphabet_case: case to use for numbers greater than base 10.
+ * @is_negative: flag to indicate signedness.
+ */
+typedef struct integer_modifiers
+{
+	enum integer_bases base;
+	enum integer_alphabet_cases alphabet_case;
+	bool is_negative;
+} integer_mods;
+
+/**
+ * struct printf_modifiers - modifiers for `_printf` conversion.
  * @flags: flags.
  * @width: width.
  * @precision: precision.
- * @type: length.
+ * @length: length.
+ * @int_mod: integer flags.
  */
 typedef struct printf_modifiers
 {
 	struct printf_flag_modifiers flags;
-	long int width;
-	long int precision;
-	enum printf_type_modifiers type;
+	intmax_t width;
+	intmax_t precision;
+	enum printf_int_length_modifiers length;
+	integer_mods int_mod;
 } modifiers;
 
 /**
@@ -98,4 +140,4 @@ typedef struct format_funcs
 	char ch;
 } format_funcs;
 
-#endif /* PRINTF_TYPEDEFS */
+#endif /* PRINTF_TYPEDEFS_H */

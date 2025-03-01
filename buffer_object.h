@@ -1,6 +1,8 @@
 #ifndef PRINTF_BUFFER_OBJECT_H
 #define PRINTF_BUFFER_OBJECT_H
 
+#include <inttypes.h> /* intmax_t */
+
 /**
  * struct char_arr - a simple mutable char buffer data type.
  * @size: size of the array in bytes.
@@ -9,8 +11,8 @@
  */
 typedef struct char_arr
 {
-	long int size;
-	long int i;
+	intmax_t size;
+	intmax_t i;
 	char *buf;
 } char_arr;
 

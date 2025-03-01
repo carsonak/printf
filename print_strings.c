@@ -1,14 +1,14 @@
 #include "main.h"
 
 /**
- * print_strings - handles formating of strings.
+ * format_strings - handles formating of strings.
  * @str: the str to be formated.
  * @buffer: working buffer for `_printf`.
  * @mods: modifier flags.
  *
  * Return: Returns a positive int on success, negative int on failure.
  */
-int print_strings(const char *str, char_arr *buffer, modifiers mods)
+int format_strings(const char *str, char_arr *buffer, modifiers mods)
 {
 	unsigned int idx, nob = 0;
 
@@ -21,10 +21,8 @@ int print_strings(const char *str, char_arr *buffer, modifiers mods)
 			return (ret_val);
 
 		nob += ret_val;
-		++buffer->i;
 	}
 
-	buffer->i -= 1;
 	return (nob);
 }
 
@@ -45,7 +43,7 @@ int print_str(va_list args, char_arr *buffer, modifiers mods)
 	if (!str)
 		str = "(null)";
 
-	return (print_strings(str, buffer, mods));
+	return (format_strings(str, buffer, mods));
 }
 
 /**
@@ -76,17 +74,16 @@ int print_STR(va_list args, char_arr *buffer, modifiers mods)
 		{
 			modifiers m = {0};
 
-			m.precision = 2;
-			ret_val = print_hexadecimals(str[idx], buffer, m, false, true);
+			m.precision = 2, m.int_mod.base = BASE16,
+			m.int_mod.alphabet_case = UPPER;
+			ret_val = format_integers((unsigned char)str[idx], buffer, m);
 		}
 
 		if (ret_val < 0)
 			return (ret_val);
 
 		nob += ret_val;
-		++buffer->i;
 	}
 
-	buffer->i -= 1;
 	return (nob);
 }

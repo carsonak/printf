@@ -3,20 +3,18 @@
 
 #include <inttypes.h> /* imaxabs, fixed width types */
 #include <stdarg.h>   /* va_list */
+#include <stdlib.h>   /* malloc */
 #include <unistd.h>   /* write */
 
 #include "buffer_object.h"
 #include "printf_typedefs.h"
+#include "util_functions.h"
 
 ATTR_FORMAT_FUNCTION(printf, 1, 2) int _printf(const char *format, ...);
 
 int format_handler(va_list args, string *format, char_arr *buffer);
-int print_hexadecimals(
-	uintmax_t num, char_arr *buffer, modifiers mods, bool is_negative,
-	bool is_upper);
-int print_integers(
-	uintmax_t num, char_arr *buffer, modifiers mods, bool is_negative);
-int print_strings(const char *str, char_arr *buffer, modifiers mods);
+int format_integers(uintmax_t num, char_arr *buffer, modifiers mods);
+int format_strings(const char *str, char_arr *buffer, modifiers mods);
 
 int print_binary(va_list args, char_arr *buffer, modifiers mods);
 int print_character(va_list args, char_arr *buffer, modifiers mods);
