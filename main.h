@@ -1,6 +1,7 @@
 #ifndef _MAIN_H_
 #define _MAIN_H_
 
+#include <assert.h> /* assert */
 #include <inttypes.h> /* imaxabs, fixed width types */
 #include <stdarg.h>   /* va_list */
 #include <stddef.h>   /* ptrdiff_t, size_t */
@@ -9,6 +10,7 @@
 
 #include "buffer_object.h"
 #include "printf_typedefs.h"
+#include "string_object.h"
 #include "util_functions.h"
 
 ATTR_FORMAT_FUNCTION(printf, 1, 2) int _printf(const char *format, ...);

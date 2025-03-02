@@ -2,6 +2,7 @@
 #define PRINTF_BUFFER_OBJECT_H
 
 #include <inttypes.h> /* intmax_t */
+#include <unistd.h>   /* STDOUT_FILENO */
 
 /**
  * struct char_arr - a simple mutable char buffer data type.
@@ -16,6 +17,7 @@ typedef struct char_arr
 	char *buf;
 } char_arr;
 
+ssize_t _write(int fd, const void *buf, size_t bytes);
 int buffer_flush(char_arr *buffer);
 int buffer_putchar(char_arr *buffer, char c);
 int buffer_puts(char_arr *buffer, const char *str);

@@ -10,23 +10,23 @@
 int print_unknown(string *format, char_arr *buffer)
 {
 	intmax_t i = 0, bytes_written = 0;
+	char c = 0;
 
-	while (format->s[format->i - i] != '%')
+	while (string_readp(format) != '%')
 		++i;
 
-	while ((i > -1) && format->s[format->i - i])
+	c = string_readn(format);
+	while ((i > -1) && c > 0)
 	{
-		int ret_val = buffer_putchar(buffer, format->s[format->i - i]);
+		int ret_val = buffer_putchar(buffer, c);
 
 		if (ret_val < 0)
 			return (ret_val);
 
 		bytes_written += ret_val;
 		--i;
+		c = string_readn(format);
 	}
-
-	if ((i > -1) && !format->s[format->i - i])
-		--format->i;
 
 	return (bytes_written);
 }

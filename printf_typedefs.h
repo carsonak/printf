@@ -25,19 +25,6 @@
 #endif /* __has_attribute */
 
 /**
- * struct string - a simple immutable string data length.
- * @size: size of the string in bytes.
- * @i: cursor of the string.
- * @s: pointer to the first character in the string.
- */
-typedef struct string
-{
-	intmax_t size;
-	intmax_t i;
-	char const *s;
-} string;
-
-/**
  * struct printf_flag_modifiers - printf flag modifiers.
  * @alternate_form: '#' flag.
  * @zero_padding: '0' flag.

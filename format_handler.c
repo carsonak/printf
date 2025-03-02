@@ -7,11 +7,11 @@
  */
 static void get_flags(string *format, modifiers *mods)
 {
-	while (format->s[format->i] == '#' || format->s[format->i] == '0' ||
-	       format->s[format->i] == '-' || format->s[format->i] == ' ' ||
-	       format->s[format->i] == '+')
+	char c = string_readc(format);
+
+	while (c == '#' || c == '0' || c == '-' || c == ' ' || c == '+')
 	{
-		switch (format->s[format->i])
+		switch (c)
 		{
 		case '#':
 			mods->flags.alternate_form = true;
@@ -32,8 +32,10 @@ static void get_flags(string *format, modifiers *mods)
 			break;
 		}
 
-		++format->i;
+		c = string_readc(format);
 	}
+
+	string_readp(format);
 }
 
 /**
@@ -47,12 +49,12 @@ static void get_width(va_list args, string *format, modifiers *mods)
 	int i = 0;
 
 	(void)args;
-	if (!_isdigit(format->s[format->i]))
+	if (!_isdigit(string_getc(format)))
 		return;
 
 	mods->width = _atoimax(&format->s[format->i]);
 	for (i = count_digits(mods->width, BASE10); i > 0; --i)
-		++format->i;
+		string_readc(format);
 }
 
 /**
@@ -66,13 +68,13 @@ static void get_precision(va_list args, string *format, modifiers *mods)
 	int i = 0;
 
 	(void)args;
-	if (format->s[format->i] != '.')
+	if (string_getc(format) != '.')
 		return;
 
-	++format->i;
+	string_readc(format);
 	mods->precision = _atoimax(&format->s[format->i]);
 	for (i = count_digits(mods->width, BASE10); i > 0; --i)
-		++format->i;
+		string_readc(format);
 }
 
 /**
@@ -82,22 +84,22 @@ static void get_precision(va_list args, string *format, modifiers *mods)
  */
 static void get_type(string *format, modifiers *mods)
 {
-	switch (format->s[format->i])
+	switch (string_readc(format))
 	{
 	case 'h':
 		mods->length = PRINTF_SHORT;
-		if (format->s[format->i + 1] == 'h')
+		if (string_getc(format) == 'h')
 		{
-			++format->i;
+			string_readc(format);
 			mods->length = PRINTF_CHAR;
 		}
 
 		break;
 	case 'l':
 		mods->length = PRINTF_LONG;
-		if (format->s[format->i + 1] == 'l')
+		if (string_getc(format) == 'l')
 		{
-			++format->i;
+			string_readc(format);
 			mods->length = PRINTF_LLONG;
 		}
 
@@ -115,10 +117,9 @@ static void get_type(string *format, modifiers *mods)
 		mods->length = PRINTF_PTRDIFF_T;
 		break;
 	default:
+		string_readp(format);
 		return;
 	}
-
-	++format->i;
 }
 
 /**
@@ -149,13 +150,14 @@ int format_handler(va_list args, string *format, char_arr *buffer)
 		{0},
 	};
 
+	assert(format && buffer);
 	get_flags(format, &mods);
 	get_width(args, format, &mods);
 	get_precision(args, format, &mods);
 	get_type(format, &mods);
 	for (i = 0; fmt_funcs[i].ch; i++)
 	{
-		if (format->s[format->i] == fmt_funcs[i].ch)
+		if (string_readc(format) == fmt_funcs[i].ch)
 		{
 			bytes_printed = fmt_funcs[i].func(args, buffer, mods);
 			break;

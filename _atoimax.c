@@ -1,6 +1,7 @@
-#include <limits.h>
+#include <limits.h> /* INTMAX_MAX */
+#include <stddef.h> /* size_t */
 
-#include "main.h"
+#include "util_functions.h"
 
 /**
  * _isdigit - check if a character is a decimal digit.
