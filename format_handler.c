@@ -132,6 +132,7 @@ static void get_type(string *format, modifiers *mods)
  */
 int format_handler(va_list args, string *format, char_arr *buffer)
 {
+	char c = 0;
 	int bytes_printed = 0, i = 0;
 	modifiers mods = {0};
 	format_funcs fmt_funcs[] = {
@@ -155,11 +156,13 @@ int format_handler(va_list args, string *format, char_arr *buffer)
 	get_width(args, format, &mods);
 	get_precision(args, format, &mods);
 	get_type(format, &mods);
+	c = string_getc(format);
 	for (i = 0; fmt_funcs[i].ch; i++)
 	{
-		if (string_readc(format) == fmt_funcs[i].ch)
+		if (c == fmt_funcs[i].ch)
 		{
 			bytes_printed = fmt_funcs[i].func(args, buffer, mods);
+			string_readc(format);
 			break;
 		}
 	}

@@ -10,13 +10,16 @@
 int print_unknown(string *format, char_arr *buffer)
 {
 	intmax_t i = 0, bytes_written = 0;
-	char c = 0;
+	char c = string_getc(format);
 
-	while (string_readp(format) != '%')
+	while (c != '%')
+	{
 		++i;
+		c = string_readp(format);
+	}
 
-	c = string_readn(format);
-	while ((i > -1) && c > 0)
+	for (c = string_readc(format); (i > -1) && c > -1;
+	     c = string_readc(format), --i)
 	{
 		int ret_val = buffer_putchar(buffer, c);
 
@@ -24,9 +27,8 @@ int print_unknown(string *format, char_arr *buffer)
 			return (ret_val);
 
 		bytes_written += ret_val;
-		--i;
-		c = string_readn(format);
 	}
 
+	string_readp(format);
 	return (bytes_written);
 }
