@@ -138,9 +138,14 @@ bool test(void)
 
 	/**************************%6s**************************/
 
-	PRINTF_TEST_TEMPLATE("%*s", "Best School !\n", 6);
-	PRINTF_TEST_TEMPLATE("%*s", "Hi!\n", 6);
-	PRINTF_TEST_TEMPLATE("In the middle %*s of a sentence.\n", "Hey", 6);
+	PRINTF_TEST_TEMPLATE("%*s", 6, "Best School !\n");
+	PRINTF_TEST_TEMPLATE("%*s", 6, "Hi!\n");
+	PRINTF_TEST_TEMPLATE("In the middle %*s of a sentence.\n", 6, "Hey");
+
+	if (!failed)
+		fprintf(
+			stderr,
+			__FILE__ ": " COLOUR_BOLD_BRIGHT_GREEN "OK" COLOUR_OFF "\n");
 
 	return (failed);
 }

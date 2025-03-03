@@ -26,5 +26,10 @@ bool test(void)
 	PRINTF_TEST_TEMPLATE("Unknown:[% 6.4lr]\n");
 	PRINTF_TEST_TEMPLATE("Percent end: %");
 
+	if (!failed)
+		fprintf(
+			stderr,
+			__FILE__ ": " COLOUR_BOLD_BRIGHT_GREEN "OK" COLOUR_OFF "\n");
+
 	return (failed);
 }

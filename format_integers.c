@@ -8,9 +8,12 @@
  *
  * Return: number of digits in the integer.
  */
-unsigned short int count_digits(uintmax_t n, unsigned short int base)
+unsigned short int count_digits(uintmax_t n, const unsigned short int base)
 {
 	unsigned short int digits = 0;
+
+	if (base < 2)
+		return (0);
 
 	/* clang-format off */
 	do {
@@ -23,88 +26,51 @@ unsigned short int count_digits(uintmax_t n, unsigned short int base)
 }
 
 /**
- * int_to_str - converts a number to a string representation.
- * @str: pointer to memory block to store the string.
- * @num: the natural number to convert.
+ * insert_symbols - insert sign and alt characters if needed.
+ * @str: pointer to memory block to store the characters.
+ * @num: the number to be formatted.
  * @mods: modifier flags.
- *
- * Return: pointer to the string.
  */
-static char *int_to_str(char *const str, uintmax_t num, integer_mods mods)
+static void insert_symbols(char *str, uintmax_t num, const modifiers mods)
 {
-	int digits = count_digits(num, mods.base) - 1;
-
-	for (; digits > -1; --digits)
-	{
-		if (num % mods.base < 10)
-			str[digits] = num % mods.base + '0';
-		else
-			str[digits] = ((num % mods.base) - 10) + mods.alphabet_case;
-
-		num /= mods.base;
-	}
-
-	return (str);
-}
-
-/**
- * calculate_str_size - calculate size of string required to store the formated
- * number.
- * @num: the number.
- * @mods: modifier flags.
- *
- * Return: the calculated size.
- */
-static intmax_t calculate_str_size(const uintmax_t num, const modifiers mods)
-{
-	intmax_t character_count = count_digits(num, mods.int_mod.base);
-
-	if (mods.flags.sign || mods.int_mod.is_negative)
-		++character_count;
-
-	if (mods.flags.alternate_form && mods.int_mod.base != BASE10)
-	{
-		++character_count;
-		if (mods.int_mod.base == BASE16)
-			++character_count;
-	}
-
-	if (mods.width > mods.precision)
-		character_count += mods.width;
-	else
-		character_count += mods.precision;
-
-	return (character_count);
-}
-
-/**
- * insert_special_characters - insert sign and alt characters if needed.
- * @str: the string to format.
- * @mods: modifier flags.
- *
- * Return: number of characters inserted.
- */
-static unsigned int insert_special_characters(char *str, modifiers mods)
-{
-	unsigned int i = 0;
-
 	if (mods.flags.sign || mods.flags.space || mods.int_mod.is_negative)
 	{
 		if (mods.int_mod.is_negative)
-			str[i++] = '-';
+			*(str++) = '-';
 		else if (mods.flags.sign)
-			str[i++] = '+';
+			*(str++) = '+';
 	}
 
-	if ((mods.int_mod.base == BASE08 || mods.int_mod.base == BASE16) &&
-	    mods.flags.alternate_form)
+	if (num && mods.flags.alternate_form && mods.int_mod.base != BASE10)
 	{
-		str[i++] = '0';
-		if (mods.int_mod.base == BASE16)
-			str[i++] = _islower(mods.int_mod.alphabet_case) ? 'x' : 'X';
-	}
+		*(str++) = '0';
+		if (mods.int_mod.base == BASE02)
+			*(str++) = 'b';
 
-	return (i);
+		if (mods.int_mod.base == BASE16)
+			*(str++) = _islower(mods.int_mod.alphabet_case) ? 'x' : 'X';
+	}
+}
+
+/**
+ * itostr - converts a number to a string representation.
+ * @str: pointer to memory block to store the string.
+ * @num: the natural number to convert.
+ * @mods: modifier flags.
+ */
+static void itostr(char *const str, uintmax_t num, const integer_mods mods)
+{
+	int d = count_digits(num, mods.base) - 1;
+
+	for (; d > -1; --d)
+	{
+		if (num % mods.base < 10)
+			str[d] = num % mods.base + '0';
+		else
+			str[d] = ((num % mods.base) - 10) + mods.alphabet_case;
+
+		num /= mods.base;
+	}
 }
 
 /**
@@ -115,45 +81,51 @@ static unsigned int insert_special_characters(char *str, modifiers mods)
  *
  * Return: Returns a positive int on success, negative int on failure.
  */
-int format_integers(uintmax_t num, char_arr *buffer, modifiers mods)
+int format_integers(uintmax_t num, char_arr *buffer, const modifiers mods)
 {
 	char *wip_str = NULL;
 	int bytes_written = 0;
-	long int character_count = calculate_str_size(num, mods);
-	long int digits = count_digits(num, mods.int_mod.base);
-	long int start_idx = character_count - digits;
-	long int zeros = mods.precision - digits < 0 ? 0 : mods.precision - digits;
+	int digits = 0, symbols = 0, zeros = 0, padding = 0;
 
-	wip_str = malloc(character_count + 1);
+	if (mods.flags.sign || mods.flags.space || mods.int_mod.is_negative)
+		++symbols;
+
+	if (num && mods.flags.alternate_form && mods.int_mod.base != BASE10)
+	{
+		++symbols;
+		if (mods.int_mod.base != BASE08)
+			++symbols;
+	}
+
+	if (num || mods.precision)
+		digits = count_digits(num, mods.int_mod.base);
+
+	if (mods.precision > digits)
+		zeros = mods.precision - digits;
+
+	if (mods.width > (symbols + digits + zeros))
+		padding = mods.width - (symbols + digits + zeros);
+
+	wip_str = malloc(padding + symbols + digits + zeros + 1);
 	if (!wip_str)
 		return (-1);
 
-	_memset(wip_str, ' ', character_count);
-	wip_str[character_count] = '\0';
-	if (!mods.flags.left_adjust)
-	{
-		int_to_str(wip_str + start_idx, num, mods.int_mod);
-		start_idx -= zeros;
-		if (mods.flags.alternate_form && mods.int_mod.base != BASE10)
-		{
-			--start_idx;
-			if (mods.int_mod.base == BASE16)
-				--start_idx;
-		}
+	_memset(wip_str, ' ', (padding + symbols + digits + zeros));
+	wip_str[(padding + symbols + digits + zeros)] = '\0';
+	if (!mods.flags.left_adjust && !mods.flags.zero_padding)
+		wip_str += padding;
 
-		if (mods.flags.sign || mods.flags.space || mods.int_mod.is_negative)
-			--start_idx;
-	}
-	else
-	{
-		start_idx -=
-			mods.width - mods.precision < 0 ? 0 : mods.width - mods.precision;
-		int_to_str(wip_str + start_idx, num, mods.int_mod);
-		start_idx = 0;
-	}
+	if (!mods.flags.left_adjust && mods.flags.zero_padding)
+		zeros += padding;
 
-	start_idx += insert_special_characters(&wip_str[start_idx], mods);
-	_memset(wip_str + start_idx, '0', zeros);
+	insert_symbols(wip_str, num, mods);
+	_memset(wip_str + symbols, '0', zeros);
+	if (digits)
+		itostr(wip_str + symbols + zeros, num, mods.int_mod);
+
+	if (!mods.flags.left_adjust && !mods.flags.zero_padding)
+		wip_str -= padding;
+
 	bytes_written = buffer_puts(buffer, wip_str);
 	free(wip_str);
 	return (bytes_written);

@@ -22,5 +22,10 @@ bool test(void)
 	PRINTF_TEST_TEMPLATE("Can you print an address?\n%p\nNice!\n", (void *)-1);
 	PRINTF_TEST_TEMPLATE("%pppp", (void *)0x7fff5100b6f8);
 
+	if (!failed)
+		fprintf(
+			stderr,
+			__FILE__ ": " COLOUR_BOLD_BRIGHT_GREEN "OK" COLOUR_OFF "\n");
+
 	return (failed);
 }

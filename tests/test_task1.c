@@ -43,5 +43,10 @@ bool test(void)
 	PRINTF_TEST_TEMPLATE("%d", 10000);
 	PRINTF_TEST_TEMPLATE("%i", 10000);
 
+	if (!failed)
+		fprintf(
+			stderr,
+			__FILE__ ": " COLOUR_BOLD_BRIGHT_GREEN "OK" COLOUR_OFF "\n");
+
 	return (failed);
 }

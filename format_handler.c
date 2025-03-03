@@ -75,6 +75,7 @@ static void get_precision(va_list args, string *format, modifiers *mods)
 	int i = 0;
 
 	(void)args;
+	mods->precision = -1;
 	if (string_getc(format) != '.')
 		return;
 

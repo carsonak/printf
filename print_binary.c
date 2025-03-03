@@ -10,23 +10,37 @@
  */
 int print_binary(va_list args, char_arr *buffer, modifiers mods)
 {
-	int bytes_written = 0;
-	unsigned int num = 0;
-	long int character_count = 0, i = 0;
+	uintmax_t num = 0;
 
-	(void)mods;
-	num = va_arg(args, unsigned int);
-	character_count = count_digits(num, BASE02);
-	for (i = character_count - 1; i >= 0; --i)
+	switch (mods.length)
 	{
-		int ret_val = buffer_putchar(buffer, (num % 2) + '0');
-
-		if (ret_val < 0)
-			return (ret_val);
-
-		bytes_written += ret_val;
-		num /= 2;
+	case PRINTF_CHAR:
+		num = (char)va_arg(args, int);
+		break;
+	case PRINTF_SHORT:
+		num = (short int)va_arg(args, int);
+		break;
+	case PRINTF_LONG:
+		num = va_arg(args, unsigned long int);
+		break;
+		/* case PRINTF_LLONG: */
+		/* num = va_arg(args, unsigned long long int); */
+		/* break; */
+	case PRINTF_INTMAX_T:
+		num = va_arg(args, uintmax_t);
+		break;
+	case PRINTF_SIZE_T:
+		num = va_arg(args, size_t);
+		break;
+	case PRINTF_PTRDIFF_T:
+		num = va_arg(args, ptrdiff_t);
+		break;
+	default:
+		num = va_arg(args, unsigned int);
+		break;
 	}
 
-	return (bytes_written);
+	mods.int_mod.base = BASE02;
+	mods.int_mod.is_negative = false;
+	return (format_integers(num, buffer, mods));
 }

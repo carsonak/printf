@@ -14,15 +14,15 @@ int print_hexa_lower(va_list args, char_arr *buffer, modifiers mods)
 
 	switch (mods.length)
 	{
-		/* case PRINTF_CHAR: */
-		/* num = va_arg(args, unsigned char); */
-		/* break; */
-		/* case PRINTF_SHORT: */
-		/* num = va_arg(args, unsigned short int); */
-		/* break; */
-		/* case PRINTF_LONG: */
-		/* num = va_arg(args, unsigned long int); */
-		/* break; */
+	case PRINTF_CHAR:
+		num = (unsigned char)va_arg(args, unsigned int);
+		break;
+	case PRINTF_SHORT:
+		num = (unsigned short int)va_arg(args, unsigned int);
+		break;
+	case PRINTF_LONG:
+		num = va_arg(args, unsigned long int);
+		break;
 		/* case PRINTF_LLONG: */
 		/* num = va_arg(args, unsigned long long int); */
 		/* break; */
@@ -60,15 +60,15 @@ int print_hexa_upper(va_list args, char_arr *buffer, modifiers mods)
 
 	switch (mods.length)
 	{
-		/* case PRINTF_CHAR: */
-		/* num = va_arg(args, unsigned char); */
-		/* break; */
-		/* case PRINTF_SHORT: */
-		/* num = va_arg(args, unsigned short int); */
-		/* break; */
-		/* case PRINTF_LONG: */
-		/* num = va_arg(args, unsigned long int); */
-		/* break; */
+	case PRINTF_CHAR:
+		num = (unsigned char)va_arg(args, unsigned int);
+		break;
+	case PRINTF_SHORT:
+		num = (unsigned short int)va_arg(args, unsigned int);
+		break;
+	case PRINTF_LONG:
+		num = va_arg(args, unsigned long int);
+		break;
 		/* case PRINTF_LLONG: */
 		/* num = va_arg(args, unsigned long long int); */
 		/* break; */

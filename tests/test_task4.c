@@ -80,9 +80,19 @@ bool test(void)
 		s[i++] = 'A';
 
 	s[i] = 0;
-	PRINTF_CUSTOM_TEST_TEMPLATE(
-		"1111111111111111111111111111111", "%s%b\n", s, INT_MAX);
+
+	len__printf = _printf("%s%b\n", s, INT_MAX);
+	len_sprintf = sprintf(
+		_printf_ctrl_output, "%s%s\n", s, "1111111111111111111111111111111");
+	CHECK_INTEQ(len__printf, len_sprintf, failed);
+	CHECK_STREQ(_printf_test_output, _printf_ctrl_output, failed);
 
 	free(s);
+
+	if (!failed)
+		fprintf(
+			stderr,
+			__FILE__ ": " COLOUR_BOLD_BRIGHT_GREEN "OK" COLOUR_OFF "\n");
+
 	return (failed);
 }

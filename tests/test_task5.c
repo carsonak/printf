@@ -25,10 +25,15 @@ bool test(void)
 	len__printf =
 		_printf("- What did you say?\n- %S\n- That's what I thought.\n", "");
 	len_sprintf = sprintf(
-		_printf_control_output,
+		_printf_ctrl_output,
 		"- What did you say?\n- %s\n- That's what I thought.\n", "");
 	CHECK_INTEQ(len__printf, len_sprintf, failed);
-	CHECK_STREQ(_printf_test_output, _printf_control_output, failed);
+	CHECK_STREQ(_printf_test_output, _printf_ctrl_output, failed);
+
+	if (!failed)
+		fprintf(
+			stderr,
+			__FILE__ ": " COLOUR_BOLD_BRIGHT_GREEN "OK" COLOUR_OFF "\n");
 
 	return (failed);
 }

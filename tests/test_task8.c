@@ -154,5 +154,10 @@ bool test(void)
 	PRINTF_TEST_TEMPLATE(
 		"%hX + %hX = %hX\n", LONG_MIN, LONG_MAX, (LONG_MIN + LONG_MAX));
 
+	if (!failed)
+		fprintf(
+			stderr,
+			__FILE__ ": " COLOUR_BOLD_BRIGHT_GREEN "OK" COLOUR_OFF "\n");
+
 	return (failed);
 }

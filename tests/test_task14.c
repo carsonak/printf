@@ -10,5 +10,10 @@ bool test(void)
 	/* int len__printf = 0, len_sprintf = 0; */
 	bool failed = 0;
 
+	if (!failed)
+		fprintf(
+			stderr,
+			__FILE__ ": " COLOUR_BOLD_BRIGHT_GREEN "OK" COLOUR_OFF "\n");
+
 	return (failed);
 }

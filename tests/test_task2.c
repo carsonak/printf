@@ -28,5 +28,10 @@ bool test(void)
 		"%b + %b = %b\n", INT_MAX, INT_MAX, (long int)INT_MAX * 2);
 	/* clang-format on */
 
+	if (!failed)
+		fprintf(
+			stderr,
+			__FILE__ ": " COLOUR_BOLD_BRIGHT_GREEN "OK" COLOUR_OFF "\n");
+
 	return (failed);
 }

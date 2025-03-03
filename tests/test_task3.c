@@ -69,5 +69,10 @@ bool test(void)
 	PRINTF_TEST_TEMPLATE("%u == %o == %x == %X\n", 1024, 1024, 1024, 1024);
 	PRINTF_TEST_TEMPLATE("uuoxxX%xuoXo\n", 1024);
 
+	if (!failed)
+		fprintf(
+			stderr,
+			__FILE__ ": " COLOUR_BOLD_BRIGHT_GREEN "OK" COLOUR_OFF "\n");
+
 	return (failed);
 }

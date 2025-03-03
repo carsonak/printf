@@ -13,6 +13,7 @@
 #define COLOUR_BOLD_RED "\033[1;31m"
 #define COLOUR_BOLD_WHITE "\033[1;37m"
 #define COLOUR_BRIGHT_YELLOW "\033[0;93m"
+#define COLOUR_BOLD_BRIGHT_GREEN "\033[1;92m"
 
 #define TESTS_BUFFER_SIZE (1024 * 2)
 
@@ -73,23 +74,23 @@
 	do                                                                         \
 	{                                                                          \
 		len__printf = _printf(format __VA_OPT__(, ) __VA_ARGS__);              \
-		len_sprintf = sprintf(                                                 \
-			_printf_control_output, format __VA_OPT__(, ) __VA_ARGS__);        \
+		len_sprintf =                                                          \
+			sprintf(_printf_ctrl_output, format __VA_OPT__(, ) __VA_ARGS__);   \
 		CHECK_INTEQ(len__printf, len_sprintf, failed);                         \
-		CHECK_STREQ(_printf_test_output, _printf_control_output, failed);      \
+		CHECK_STREQ(_printf_test_output, _printf_ctrl_output, failed);         \
 	} while (0)
 
 #define PRINTF_CUSTOM_TEST_TEMPLATE(control_str, format, ...)                  \
 	do                                                                         \
 	{                                                                          \
 		len__printf = _printf(format __VA_OPT__(, ) __VA_ARGS__);              \
-		len_sprintf = sprintf(_printf_control_output, control_str);            \
+		len_sprintf = sprintf(_printf_ctrl_output, control_str);               \
 		CHECK_INTEQ(len__printf, len_sprintf, failed);                         \
-		CHECK_STREQ(_printf_test_output, _printf_control_output, failed);      \
+		CHECK_STREQ(_printf_test_output, _printf_ctrl_output, failed);         \
 	} while (0)
 
 extern char _printf_test_output[TESTS_BUFFER_SIZE];
-extern char _printf_control_output[TESTS_BUFFER_SIZE];
+extern char _printf_ctrl_output[TESTS_BUFFER_SIZE];
 
 ssize_t _write(int fd, const void *buf, size_t bytes);
 bool test(void);

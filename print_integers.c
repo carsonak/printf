@@ -1,4 +1,22 @@
 #include "main.h"
+/**
+ * _imaxabs - returns the absolute value of an intmax_t integer.
+ * @n: the integer.
+ *
+ * Return: the absolute value of `n`.
+ */
+static uintmax_t _imaxabs(intmax_t n)
+{
+	if (n < 0)
+	{
+		if (n == INTMAX_MIN)
+			return ((uintmax_t)(INTMAX_MAX) + 1);
+
+		return (-n);
+	}
+
+	return (n);
+}
 
 /**
  * print_int_di - handle formating of `int`s.
@@ -14,15 +32,15 @@ int print_int_di(va_list args, char_arr *buffer, modifiers mods)
 
 	switch (mods.length)
 	{
-		/* case PRINTF_CHAR: */
-		/* num = va_arg(args, char); */
-		/* break; */
-		/* case PRINTF_SHORT: */
-		/* num = va_arg(args, short int); */
-		/* break; */
-		/* case PRINTF_LONG: */
-		/* num = va_arg(args, long int); */
-		/* break; */
+	case PRINTF_CHAR:
+		num = (char)va_arg(args, int);
+		break;
+	case PRINTF_SHORT:
+		num = (short int)va_arg(args, int);
+		break;
+	case PRINTF_LONG:
+		num = va_arg(args, long int);
+		break;
 		/* case PRINTF_LLONG: */
 		/* num = va_arg(args, long long int); */
 		/* break; */
@@ -44,7 +62,7 @@ int print_int_di(va_list args, char_arr *buffer, modifiers mods)
 		mods.int_mod.is_negative = true;
 
 	mods.int_mod.base = BASE10;
-	return (format_integers(imaxabs(num), buffer, mods));
+	return (format_integers(_imaxabs(num), buffer, mods));
 }
 
 /**
@@ -61,15 +79,15 @@ int print_int_u(va_list args, char_arr *buffer, modifiers mods)
 
 	switch (mods.length)
 	{
-		/* case PRINTF_CHAR: */
-		/* num = va_arg(args, unsigned char); */
-		/* break; */
-		/* case PRINTF_SHORT: */
-		/* num = va_arg(args, unsigned short int); */
-		/* break; */
-		/* case PRINTF_LONG: */
-		/* num = va_arg(args, unsigned long int); */
-		/* break; */
+	case PRINTF_CHAR:
+		num = (unsigned char)va_arg(args, unsigned int);
+		break;
+	case PRINTF_SHORT:
+		num = (unsigned short int)va_arg(args, unsigned int);
+		break;
+	case PRINTF_LONG:
+		num = va_arg(args, unsigned long int);
+		break;
 		/* case PRINTF_LLONG: */
 		/* num = va_arg(args, unsigned long long int); */
 		/* break; */

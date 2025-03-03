@@ -40,23 +40,23 @@ INSTRUMENTATION_FLAGS = $(ADDRESS_SANITISER) $(UNDEFINED_SANITISER) -fsanitize-t
 CFLAGS = $(C_STANDARD) $(WARN_FLAGS) $(INCL_FLAGS) $(CPPFLAGS) $(OPTIMISATION_FLAGS) $(DEBUG_FLAGS) $(INSTRUMENTATION_FLAGS)
 
 .PHONY: all-tests
-all-tests: C_STANDARD := --std=gnu99
+all-tests:
+# $^ - names of all the prerequisites
 all-tests: $(TESTS_BINS)
-	$(shell for file in $(TESTS_BINS); \
+	$(shell for file in $^; \
 		do ./$$file; \
 		done \
 	)
 
-# $^ - names of all the prerequisites
-# $@ - the name of the target
 # https://www.gnu.org/software/make/manual/html_node/Static-versus-Implicit.html
 $(TESTS_BINS):$(TESTS_BIN_DIR)/test_%: $(filter-out %_write.o,$(OBJS))
+# $@ - the name of the target
 $(TESTS_BINS):$(TESTS_BIN_DIR)/test_%: $(TESTS_DIR)/test_%.c $(TESTS_DIR)/test_main.c $(TESTS_DIR)/_write.c
 	@mkdir -p $(@D)
-	$(CC) $(CFLAGS) -o $@ $^
+	$(CC) --std=c2x $(filter-out --std=gnu89,$(CFLAGS)) -o $@ $^
 
 # @D - the directory of the target
-# @< - name of only the first prequisite
+# $< - name of only the first prequisite
 $(OBJS_DIR)/%.o: $(SRCS_DIR)/%.c
 	@mkdir -p $(@D)
 	$(CC) $(CFLAGS) -o $@ -c $<

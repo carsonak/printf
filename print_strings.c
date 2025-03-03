@@ -10,20 +10,33 @@
  */
 int format_strings(const char *str, char_arr *buffer, modifiers mods)
 {
-	unsigned int idx, nob = 0;
+	int bytes_written = 0;
+	char *wip_str = NULL;
+	intmax_t wip_i = 0, wip_chars = _strlen(str);
+	intmax_t str_i = 0, spaces = 0;
 
-	(void)mods;
-	for (idx = 0; str[idx] != '\0'; idx++)
+	if (mods.precision > -1 && mods.precision < wip_chars)
+		wip_chars = mods.precision;
+
+	if (wip_chars < mods.width)
+		spaces = mods.width - wip_chars;
+
+	wip_str = malloc(wip_chars + spaces + 1);
+	wip_str[wip_chars + spaces] = 0;
+	if (mods.flags.left_adjust)
+		_memset(wip_str + wip_chars, ' ', spaces);
+	else
 	{
-		int ret_val = buffer_putchar(buffer, str[idx]);
-
-		if (ret_val < 0)
-			return (ret_val);
-
-		nob += ret_val;
+		_memset(wip_str, ' ', spaces);
+		wip_i = spaces;
 	}
 
-	return (nob);
+	for (str_i = 0; str[str_i] && str_i < wip_chars; str_i++, wip_i++)
+		wip_str[wip_i] = str[str_i];
+
+	bytes_written = buffer_puts(buffer, wip_str);
+	free(wip_str);
+	return (bytes_written);
 }
 
 /**
@@ -58,8 +71,10 @@ int print_STR(va_list args, char_arr *buffer, modifiers mods)
 {
 	unsigned int idx, nob = 0;
 	const char *str;
+	modifiers m = {0};
 
 	(void)mods;
+	m.precision = 2, m.int_mod.base = BASE16, m.int_mod.alphabet_case = UPPER;
 	str = va_arg(args, char *);
 	if (!str)
 		str = "(null)";
@@ -68,15 +83,16 @@ int print_STR(va_list args, char_arr *buffer, modifiers mods)
 	{
 		int ret_val;
 
-		if (str[idx] > 31 /* && str[idx] < 128 */)
+		if (str[idx] > 31 && str[idx] < 127)
 			ret_val = buffer_putchar(buffer, str[idx]);
 		else
 		{
-			modifiers m = {0};
+			ret_val = buffer_puts(buffer, "\\x");
+			if (ret_val < 0)
+				return (ret_val);
 
-			m.precision = 2, m.int_mod.base = BASE16,
-			m.int_mod.alphabet_case = UPPER;
-			ret_val = format_integers((unsigned char)str[idx], buffer, m);
+			nob += ret_val;
+			ret_val = format_integers(str[idx], buffer, m);
 		}
 
 		if (ret_val < 0)
