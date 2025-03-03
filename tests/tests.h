@@ -1,9 +1,6 @@
 #ifndef PRINTF_TESTS_H
 #define PRINTF_TESTS_H
 
-/* snprintf() */
-#define _ISOC99_SOURCE
-
 #include <inttypes.h> /* intmax_t */
 #include <limits.h>   /* max of types */
 #include <stdbool.h>  /* bool */
@@ -17,7 +14,7 @@
 #define COLOUR_BOLD_WHITE "\033[1;37m"
 #define COLOUR_BRIGHT_YELLOW "\033[0;93m"
 
-#define TESTS_BUFFER_SIZE (1024 * 4)
+#define TESTS_BUFFER_SIZE (1024 * 2)
 
 #define CHECK_INTEQ(actual, expected, has_failed)                              \
 	do                                                                         \
@@ -72,10 +69,29 @@
 		}                                                                      \
 	} while (0)
 
+#define PRINTF_TEST_TEMPLATE(format, ...)                                      \
+	do                                                                         \
+	{                                                                          \
+		len__printf = _printf(format __VA_OPT__(, ) __VA_ARGS__);              \
+		len_sprintf = sprintf(                                                 \
+			_printf_control_output, format __VA_OPT__(, ) __VA_ARGS__);        \
+		CHECK_INTEQ(len__printf, len_sprintf, failed);                         \
+		CHECK_STREQ(_printf_test_output, _printf_control_output, failed);      \
+	} while (0)
+
+#define PRINTF_CUSTOM_TEST_TEMPLATE(control_str, format, ...)                  \
+	do                                                                         \
+	{                                                                          \
+		len__printf = _printf(format __VA_OPT__(, ) __VA_ARGS__);              \
+		len_sprintf = sprintf(_printf_control_output, control_str);            \
+		CHECK_INTEQ(len__printf, len_sprintf, failed);                         \
+		CHECK_STREQ(_printf_test_output, _printf_control_output, failed);      \
+	} while (0)
+
 extern char _printf_test_output[TESTS_BUFFER_SIZE];
 extern char _printf_control_output[TESTS_BUFFER_SIZE];
 
 ssize_t _write(int fd, const void *buf, size_t bytes);
-int test(void);
+bool test(void);
 
 #endif /* PRINTF_TESTS_H */

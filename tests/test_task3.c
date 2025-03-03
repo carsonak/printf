@@ -1,185 +1,73 @@
-#include <limits.h>
-#include <stdio.h>
-#include "main.h"
+#include "tests.h"
 
 /**
- * main - Entry point
+ * test - TASK3 tests.
  *
- * Return: Always 0
+ * Return: 0 if all tests pass, 1 otherwise.
  */
-int main(void)
+bool test(void)
 {
-	long int intmax_plus = INT_MAX + 1024;
-	long int intmax_by_2 = INT_MAX * 2;
-	int ret1, ret2;
+	int len__printf = 0, len_sprintf = 0;
+	bool failed = 0;
 
-	/******** u ********/
+	PRINTF_TEST_TEMPLATE("%u", 1024);
+	PRINTF_TEST_TEMPLATE("%u", -1024);
+	PRINTF_TEST_TEMPLATE("%u", 0);
+	PRINTF_TEST_TEMPLATE("%u", INT_MAX);
+	PRINTF_TEST_TEMPLATE("%u", INT_MIN);
+	PRINTF_TEST_TEMPLATE("%u", (long int)INT_MAX + 1024);
+	PRINTF_TEST_TEMPLATE("%u", (long int)INT_MIN - 1024);
+	PRINTF_TEST_TEMPLATE("There is %u bytes in %u KB\n", 1024, 1);
+	PRINTF_TEST_TEMPLATE("%u - %u = %u\n", 1024, 2048, -1024);
+	PRINTF_TEST_TEMPLATE(
+		"%u + %u = %u\n", INT_MIN, INT_MAX, (INT_MIN + INT_MAX));
 
-	ret1 = printf("%X\n", 1024);
-	printf("%d\n", ret1);
-	ret2 = _printf("%X\n", 1024);
-	printf("%d\n\n", ret2);
+	/**************************%o**************************/
 
-	ret1 = printf("%X\n", -1024);
-	printf("%d\n", ret1);
-	ret2 = _printf("%X\n", -1024);
-	printf("%d\n\n", ret2);
+	PRINTF_TEST_TEMPLATE("%o", 1024);
+	PRINTF_TEST_TEMPLATE("%o", -1024);
+	PRINTF_TEST_TEMPLATE("%o", 0);
+	PRINTF_TEST_TEMPLATE("%o", INT_MAX);
+	PRINTF_TEST_TEMPLATE("%o", INT_MIN);
+	PRINTF_TEST_TEMPLATE("%o", (long int)INT_MAX + 1024);
+	PRINTF_TEST_TEMPLATE("%o", (long int)INT_MIN - 1024);
+	PRINTF_TEST_TEMPLATE("There is %o bytes in %o KB\n", 1024, 1);
+	PRINTF_TEST_TEMPLATE("%o - %o = %o\n", 1024, 2048, -1024);
+	PRINTF_TEST_TEMPLATE(
+		"%o + %o = %o\n", INT_MIN, INT_MAX, (INT_MIN + INT_MAX));
 
-	ret1 = printf("%X\n", 0);
-	printf("%d\n", ret1);
-	ret2 = _printf("%X\n", 0);
-	printf("%d\n\n", ret2);
+	/**************************%x**************************/
 
-	ret1 = printf("%X\n", UINT_MAX);
-	printf("%d\n", ret1);
-	ret2 = _printf("%X\n", UINT_MAX);
-	printf("%d\n\n", ret2);
+	PRINTF_TEST_TEMPLATE("%x", 1024);
+	PRINTF_TEST_TEMPLATE("%x", -1024);
+	PRINTF_TEST_TEMPLATE("%x", 0);
+	PRINTF_TEST_TEMPLATE("%x", INT_MAX);
+	PRINTF_TEST_TEMPLATE("%x", INT_MIN);
+	PRINTF_TEST_TEMPLATE("%x", (long int)INT_MAX + 1024);
+	PRINTF_TEST_TEMPLATE("%x", (long int)INT_MIN - 1024);
+	PRINTF_TEST_TEMPLATE("There is %x bytes in %x KB\n", 1024, 1);
+	PRINTF_TEST_TEMPLATE("%x - %x = %x\n", 1024, 2048, -1024);
+	PRINTF_TEST_TEMPLATE(
+		"%x + %x = %x\n", INT_MIN, INT_MAX, (INT_MIN + INT_MAX));
 
-	ret1 = printf("%X\n", intmax_plus);
-	printf("%d\n", ret1);
-	ret2 = _printf("%X\n", intmax_plus);
-	printf("%d\n\n", ret2);
+	/**************************%X**************************/
 
-	ret1 = printf("There is %X bytes in %X KB\n", 1024);
-	printf("%d\n", ret1);
-	ret2 = _printf("There is %X bytes in %X KB\n", 1024);
-	printf("%d\n\n", ret2);
+	PRINTF_TEST_TEMPLATE("%X", 1024);
+	PRINTF_TEST_TEMPLATE("%X", -1024);
+	PRINTF_TEST_TEMPLATE("%X", 0);
+	PRINTF_TEST_TEMPLATE("%X", INT_MAX);
+	PRINTF_TEST_TEMPLATE("%X", INT_MIN);
+	PRINTF_TEST_TEMPLATE("%X", (long int)INT_MAX + 1024);
+	PRINTF_TEST_TEMPLATE("%X", (long int)INT_MIN - 1024);
+	PRINTF_TEST_TEMPLATE("There is %X bytes in %X KB\n", 1024, 1);
+	PRINTF_TEST_TEMPLATE("%X - %X = %X\n", 1024, 2048, -1024);
+	PRINTF_TEST_TEMPLATE(
+		"%X + %X = %X\n", INT_MIN, INT_MAX, (INT_MIN + INT_MAX));
 
-	ret1 = printf("%X - %X = %X\n", 2048, 1024, 1024);
-	printf("%d\n", ret1);
-	ret2 = _printf("%X - %X = %X\n", 2048, 1024, 1024);
-	printf("%d\n\n", ret2);
+	/******************************************************/
 
-	ret1 = printf("%X + %X = %X\n", INT_MAX, INT_MAX, intmax_by_2);
-	printf("%d\n", ret1);
-	ret2 = _printf("%X + %X = %X\n", INT_MAX, INT_MAX, intmax_by_2);
-	printf("%d\n\n", ret2);
+	PRINTF_TEST_TEMPLATE("%u == %o == %x == %X\n", 1024, 1024, 1024, 1024);
+	PRINTF_TEST_TEMPLATE("uuoxxX%xuoXo\n", 1024);
 
-	/******** o ********/
-
-	ret1 = printf("%o\n", 1024);
-	printf("%d\n", ret1);
-	ret2 = _printf("%o\n", 1024);
-	printf("%d\n\n", ret2);
-
-	ret1 = printf("%o\n", -1024);
-	printf("%d\n", ret1);
-	ret2 = _printf("%o\n", -1024);
-	printf("%d\n\n", ret2);
-
-	ret1 = printf("%o\n", 0);
-	printf("%d\n", ret1);
-	ret2 = _printf("%o\n", 0);
-	printf("%d\n\n", ret2);
-
-	ret1 = printf("%o\n", UINT_MAX);
-	printf("%d\n", ret1);
-	ret2 = _printf("%o\n", UINT_MAX);
-	printf("%d\n\n", ret2);
-
-	ret1 = printf("%o\n", intmax_plus);
-	printf("%d\n", ret1);
-	ret2 = _printf("%o\n", intmax_plus);
-	printf("%d\n\n", ret2);
-
-	ret1 = printf("There is %o bytes in %o KB\n", 1024);
-	printf("%d\n", ret1);
-	ret2 = _printf("There is %o bytes in %o KB\n", 1024);
-	printf("%d\n\n", ret2);
-
-	ret1 = printf("%o - %o = %o\n", 2048, 1024, 1024);
-	printf("%d\n", ret1);
-	ret2 = _printf("%o - %o = %o\n", 2048, 1024, 1024);
-	printf("%d\n\n", ret2);
-
-	ret1 = printf("%o + %o = %o\n", INT_MAX, INT_MAX, intmax_by_2);
-	printf("%d\n", ret1);
-	ret2 = _printf("%o + %o = %o\n", INT_MAX, INT_MAX, intmax_by_2);
-	printf("%d\n\n", ret2);
-
-	/******** x ********/
-
-	ret1 = printf("%x\n", 1024);
-	printf("%d\n", ret1);
-	ret2 = _printf("%x\n", 1024);
-	printf("%d\n\n", ret2);
-
-	ret1 = printf("%x\n", -1024);
-	printf("%d\n", ret1);
-	ret2 = _printf("%x\n", -1024);
-	printf("%d\n\n", ret2);
-
-	ret1 = printf("%x\n", 0);
-	printf("%d\n", ret1);
-	ret2 = _printf("%x\n", 0);
-	printf("%d\n\n", ret2);
-
-	ret1 = printf("%x\n", UINT_MAX);
-	printf("%d\n", ret1);
-	ret2 = _printf("%x\n", UINT_MAX);
-	printf("%d\n\n", ret2);
-
-	ret1 = printf("%x\n", intmax_plus);
-	printf("%d\n", ret1);
-	ret2 = _printf("%x\n", intmax_plus);
-	printf("%d\n\n", ret2);
-
-	ret1 = printf("There is %x bytes in %x KB\n", 1024);
-	printf("%d\n", ret1);
-	ret2 = _printf("There is %x bytes in %x KB\n", 1024);
-	printf("%d\n\n", ret2);
-
-	ret1 = printf("%x - %x = %x\n", 2048, 1024, 1024);
-	printf("%d\n", ret1);
-	ret2 = _printf("%x - %x = %x\n", 2048, 1024, 1024);
-	printf("%d\n\n", ret2);
-
-	ret1 = printf("%x + %x = %x\n", INT_MAX, INT_MAX, intmax_by_2);
-	printf("%d\n", ret1);
-	ret2 = _printf("%x + %x = %x\n", INT_MAX, INT_MAX, intmax_by_2);
-	printf("%d\n\n", ret2);
-
-	/******** X ********/
-
-	ret1 = printf("%X\n", 1024);
-	printf("%d\n", ret1);
-	ret2 = _printf("%X\n", 1024);
-	printf("%d\n\n", ret2);
-
-	ret1 = printf("%X\n", -1024);
-	printf("%d\n", ret1);
-	ret2 = _printf("%X\n", -1024);
-	printf("%d\n\n", ret2);
-
-	ret1 = printf("%X\n", 0);
-	printf("%d\n", ret1);
-	ret2 = _printf("%X\n", 0);
-	printf("%d\n\n", ret2);
-
-	ret1 = printf("%X\n", UINT_MAX);
-	printf("%d\n", ret1);
-	ret2 = _printf("%X\n", UINT_MAX);
-	printf("%d\n\n", ret2);
-
-	ret1 = printf("%X\n", intmax_plus);
-	printf("%d\n", ret1);
-	ret2 = _printf("%X\n", intmax_plus);
-	printf("%d\n\n", ret2);
-
-	ret1 = printf("There is %X bytes in %X KB\n", 1024);
-	printf("%d\n", ret1);
-	ret2 = _printf("There is %X bytes in %X KB\n", 1024);
-	printf("%d\n\n", ret2);
-
-	ret1 = printf("%X - %X = %X\n", 2048, 1024, 1024);
-	printf("%d\n", ret1);
-	ret2 = _printf("%X - %X = %X\n", 2048, 1024, 1024);
-	printf("%d\n\n", ret2);
-
-	ret1 = printf("%X + %X = %X\n", INT_MAX, INT_MAX, intmax_by_2);
-	printf("%d\n", ret1);
-	ret2 = _printf("%X + %X = %X\n", INT_MAX, INT_MAX, intmax_by_2);
-	printf("%d\n\n", ret2);
-
-	return (0);
+	return (failed);
 }

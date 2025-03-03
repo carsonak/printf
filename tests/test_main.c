@@ -1,10 +1,11 @@
 #include "tests.h"
 
 char _printf_control_output[TESTS_BUFFER_SIZE] = {0};
+char _printf_test_output[TESTS_BUFFER_SIZE] = {0};
 
 /**
  * main - the main test file
  *
- * Return: Always 0
+ * Return: 0 if all tests pass, 1 otherwise.
  */
 int main(void) { return (test()); }

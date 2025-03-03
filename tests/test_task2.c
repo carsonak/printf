@@ -1,74 +1,32 @@
-#include "main.h"
-
-#include <limits.h>
-#include <stdio.h>
+#include "tests.h"
 
 /**
- * main - the TASK2 test file
+ * test - TASK2 tests.
  *
- * Return: Always 0
+ * Return: 0 if all tests pass, 1 otherwise.
  */
-int main(void)
+bool test(void)
 {
-	int ret = 0;
-	long int res = INT_MAX;
+	int len__printf = 0, len_sprintf = 0;
+	bool failed = 0;
 
-	_printf("0 = ");
-	ret = _printf("%b", 0);
-	printf("\n%d\n\n", ret);
+	PRINTF_CUSTOM_TEST_TEMPLATE("10000000000", "%b", 1024);
+	PRINTF_CUSTOM_TEST_TEMPLATE(
+		"11111111111111111111110000000000", "%b", -1024);
+	PRINTF_CUSTOM_TEST_TEMPLATE("0", "%b", 0);
+	PRINTF_CUSTOM_TEST_TEMPLATE(
+		"11111111111111111111111111111111", "%b", UINT_MAX);
+	PRINTF_CUSTOM_TEST_TEMPLATE(
+		"There is 10000000000 bytes in 1 KB\n", "There is %b bytes in %b KB\n",
+		1024, 1);
+	PRINTF_CUSTOM_TEST_TEMPLATE(
+		"100000000000 - 10000000000 = 10000000000\n", "%b - %b = %b\n", 2048,
+		1024, 1024);
+	/* clang-format off */
+	PRINTF_CUSTOM_TEST_TEMPLATE(
+		"1111111111111111111111111111111 + 1111111111111111111111111111111 = 11111111111111111111111111111110\n",
+		"%b + %b = %b\n", INT_MAX, INT_MAX, (long int)INT_MAX * 2);
+	/* clang-format on */
 
-	_printf("1 = ");
-	ret = _printf("%b", 1);
-	printf("\n%d\n\n", ret);
-
-	_printf("2 = ");
-	ret = _printf("%b", 2);
-	printf("\n%d\n\n", ret);
-
-	_printf("3 = ");
-	ret = _printf("%b", 3);
-	printf("\n%d\n\n", ret);
-
-	_printf("7 = ");
-	ret = _printf("%b", 7);
-	printf("\n%d\n\n", ret);
-
-	_printf("8 = ");
-	ret = _printf("%b", 8);
-	printf("\n%d\n\n", ret);
-
-	_printf("9 = ");
-	ret = _printf("%b", 9);
-	_printf("\n%d\n\n", ret);
-
-	_printf("1024 = ");
-	ret = _printf("%b", 1024);
-	printf("\n%d\n\n", ret);
-
-	_printf("-1024 = ");
-	ret = _printf("%b", -1024);
-	printf("\n%d\n\n", ret);
-
-	_printf("INT_MIN = ");
-	ret = _printf("%b", INT_MIN);
-	printf("\n%d\n\n", ret);
-
-	_printf("UINT_MAX = ");
-	ret = _printf("%b", UINT_MAX);
-	printf("\n%d\n\n", ret);
-
-	_printf("UINT_MAX + 1024 = ");
-	ret = _printf("%b", UINT_MAX + 1024);
-	_printf("\n%d\n\n", ret);
-
-	ret = _printf("There is %b bytes in %b KB\n", 1024, 1);
-	printf("%d\n\n", ret);
-
-	ret = _printf("%b - %b = %b\n", 2048, 1024, 1024);
-	printf("%d\n\n", ret);
-
-	ret = _printf("%b + %b = %b\n", INT_MAX, INT_MAX, res + res);
-	printf("%d\n\n", ret);
-
-	return (0);
+	return (failed);
 }

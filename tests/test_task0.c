@@ -1,55 +1,36 @@
 #include "tests.h"
 
 /**
- * test - the TASK0 test file
+ * test - TASK0 tests.
  *
  * Return: 0 if all tests are successful, 1 otherwise.
  */
-int test(void)
+bool test(void)
 {
-	int len__printf = 0, len_snprintf = 0, failed = 0;
+	int len__printf = 0, len_sprintf = 0;
+	bool failed = 0;
 
-	/* clang-format off */
-	len__printf = _printf("%c", 'S');
-	len_snprintf = snprintf(_printf_control_output, TESTS_BUFFER_SIZE, "%c", 'S');
-	CHECK_INTEQ(len__printf, len_snprintf, failed);
-	CHECK_STREQ(_printf_test_output, _printf_control_output, failed);
+	PRINTF_TEST_TEMPLATE("Let's print a simple sentence.\n");
+	PRINTF_TEST_TEMPLATE("%c", 'S');
+	PRINTF_TEST_TEMPLATE("A char inside a sentence: %c. Did it work?\n", 'F');
+	PRINTF_TEST_TEMPLATE(
+		"Let'see if the cast is correctly done: %c. Did it work?\n", 48);
+	PRINTF_TEST_TEMPLATE("%s", "This sentence is retrieved from va_args!\n");
+	PRINTF_TEST_TEMPLATE(
+		"Complete the sentence: You %s nothing, Jon Snow.\n", (char *)0);
+	PRINTF_TEST_TEMPLATE(
+		"%c%cth %s%s a%cg%s: Y%sou %s no%ching%s Snow.%c", 'W', 'i', "some ",
+		"more", 'r', "s", "", "know", 't', ", Jon", '\n');
+	PRINTF_TEST_TEMPLATE("%%");
+	PRINTF_TEST_TEMPLATE("Should print a single percent sign: %%\n");
+	PRINTF_TEST_TEMPLATE(
+		"%s%c%c%c%s%%%s%c", "Loading ", '.', '.', '.', " 99", " Please wait",
+		'\n');
+	PRINTF_TEST_TEMPLATE("css%ccs%scscscs", 'T', "Test");
+	PRINTF_TEST_TEMPLATE("%c", '\0');
+	PRINTF_TEST_TEMPLATE("%");
+	PRINTF_TEST_TEMPLATE("%!\n");
+	PRINTF_TEST_TEMPLATE("%K\n");
 
-	len__printf = _printf("A char inside a sentence: %c. Did it work?\n", 'F');
-	len_snprintf = snprintf(_printf_control_output, TESTS_BUFFER_SIZE, "A char inside a sentence: %c. Did it work?\n", 'F');
-	CHECK_INTEQ(len__printf, len_snprintf, failed);
-	CHECK_STREQ(_printf_test_output, _printf_control_output, failed);
-
-	len__printf = _printf("Let'see if the cast is correctly done: %c. Did it work?\n", 48);
-	len_snprintf = snprintf(_printf_control_output, TESTS_BUFFER_SIZE, "Let'see if the cast is correctly done: %c. Did it work?\n", 48);
-	CHECK_INTEQ(len__printf, len_snprintf, failed);
-	CHECK_STREQ(_printf_test_output, _printf_control_output, failed);
-
-	len__printf = _printf("%s", "This sentence is retrieved from va_args!\n");
-	len_snprintf = snprintf(_printf_control_output, TESTS_BUFFER_SIZE, "%s", "This sentence is retrieved from va_args!\n");
-	CHECK_INTEQ(len__printf, len_snprintf, failed);
-	CHECK_STREQ(_printf_test_output, _printf_control_output, failed);
-
-	len__printf = _printf("Complete the sentence: You %s nothing, Jon Snow.\n", (char *)0);
-	len_snprintf = snprintf(_printf_control_output, TESTS_BUFFER_SIZE, "Complete the sentence: You %s nothing, Jon Snow.\n", (char *)0);
-	CHECK_INTEQ(len__printf, len_snprintf, failed);
-	CHECK_STREQ(_printf_test_output, _printf_control_output, failed);
-
-	len__printf = _printf("Should print a single percent sign: %%\n");
-	len_snprintf = snprintf(_printf_control_output, TESTS_BUFFER_SIZE, "Should print a single percent sign: %%\n");
-	CHECK_INTEQ(len__printf, len_snprintf, failed);
-	CHECK_STREQ(_printf_test_output, _printf_control_output, failed);
-
-	len__printf = _printf("%s%c%c%c%s%%%s%c", "Loading ", '.', '.', '.', " 99", " Please wait", '\n');
-	len_snprintf = snprintf(_printf_control_output, TESTS_BUFFER_SIZE, "%s%c%c%c%s%%%s%c", "Loading ", '.', '.', '.', " 99", " Please wait", '\n');
-	CHECK_INTEQ(len__printf, len_snprintf, failed);
-	CHECK_STREQ(_printf_test_output, _printf_control_output, failed);
-
-	len__printf = _printf("%c", '\0');
-	len_snprintf = snprintf(_printf_control_output, TESTS_BUFFER_SIZE, "%c", '\0');
-	CHECK_INTEQ(len__printf, len_snprintf, failed);
-	CHECK_STREQ(_printf_test_output, _printf_control_output, failed);
-	/* clang-format on */
-
-	return (0);
+	return (failed);
 }

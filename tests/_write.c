@@ -1,7 +1,5 @@
 #include "tests.h"
 
-char _printf_test_output[TESTS_BUFFER_SIZE] = {0};
-
 /**
  * _write - wrapper for `write()`, writes to a buffer instead of a file
  * descriptor.
@@ -23,6 +21,5 @@ ssize_t _write(int fd, const void *buf, size_t bytes)
 	for (i = 0; i < (ssize_t)bytes; i++)
 		_printf_test_output[i] = str[i];
 
-	_printf_test_output[i] = 0;
 	return (i);
 }

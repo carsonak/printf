@@ -49,6 +49,13 @@ static void get_width(va_list args, string *format, modifiers *mods)
 	int i = 0;
 
 	(void)args;
+	if (string_getc(format) == '*')
+	{
+		mods->width = va_arg(args, int);
+		string_readc(format);
+		return;
+	}
+
 	if (!_isdigit(string_getc(format)))
 		return;
 
@@ -72,6 +79,13 @@ static void get_precision(va_list args, string *format, modifiers *mods)
 		return;
 
 	string_readc(format);
+	if (string_getc(format) == '*')
+	{
+		mods->precision = va_arg(args, int);
+		string_readc(format);
+		return;
+	}
+
 	mods->precision = _atoimax(&format->s[format->i]);
 	for (i = count_digits(mods->width, BASE10); i > 0; --i)
 		string_readc(format);

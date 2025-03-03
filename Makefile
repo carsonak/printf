@@ -3,8 +3,8 @@
 CC := gcc
 
 SRCS_DIR := .
-OBJS_DIR := ./obj
-TESTS_DIR := ./tests
+OBJS_DIR := obj
+TESTS_DIR := tests
 TESTS_BIN_DIR := $(TESTS_DIR)/bin
 # directories with header files
 INCLUDE_DIRS := $(SRCS_DIR)
@@ -33,10 +33,19 @@ INCL_FLAGS = $(addprefix -iquote,$(INCLUDE_DIRS))
 CPPFLAGS := -MMD
 OPTIMISATION_FLAGS := -O0
 DEBUG_FLAGS := -g3 -fno-omit-frame-pointer
-WARN_FLAGS := --std=gnu89 -pedantic -Wall -Wextra -Wno-format -Werror
+C_STANDARD := --std=gnu89
+WARN_FLAGS := -pedantic -Wall -Wextra -Wno-format -Werror
 
 INSTRUMENTATION_FLAGS = $(ADDRESS_SANITISER) $(UNDEFINED_SANITISER) -fsanitize-trap=all
-CFLAGS = $(WARN_FLAGS) $(INCL_FLAGS) $(CPPFLAGS) $(OPTIMISATION_FLAGS) $(DEBUG_FLAGS) $(INSTRUMENTATION_FLAGS)
+CFLAGS = $(C_STANDARD) $(WARN_FLAGS) $(INCL_FLAGS) $(CPPFLAGS) $(OPTIMISATION_FLAGS) $(DEBUG_FLAGS) $(INSTRUMENTATION_FLAGS)
+
+.PHONY: all-tests
+all-tests: C_STANDARD := --std=gnu99
+all-tests: $(TESTS_BINS)
+	$(shell for file in $(TESTS_BINS); \
+		do ./$$file; \
+		done \
+	)
 
 # $^ - names of all the prerequisites
 # $@ - the name of the target
@@ -51,5 +60,9 @@ $(TESTS_BINS):$(TESTS_BIN_DIR)/test_%: $(TESTS_DIR)/test_%.c $(TESTS_DIR)/test_m
 $(OBJS_DIR)/%.o: $(SRCS_DIR)/%.c
 	@mkdir -p $(@D)
 	$(CC) $(CFLAGS) -o $@ -c $<
+
+.PHONY: clean
+clean:
+	$(RM) -vdr --preserve-root -- $(OBJS_DIR) $(TESTS_BIN_DIR)
 
 sinclude $(DEP_FILES)
