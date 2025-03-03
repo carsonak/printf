@@ -74,6 +74,41 @@ static void itostr(char *const str, uintmax_t num, const integer_mods mods)
 }
 
 /**
+ * init_lengths - initialises various variables.
+ * @num: the number to be formatted.
+ * @mods: modifier flags.
+ * @len: total length of the result string.
+ * @digits: number of non-zero digits in the number.
+ * @symbols: length of sign + alternate form symbols.
+ * @zeros: number of 0's to be used as padding.
+ * @padding: number of blanks/zeros used for padding.
+ */
+static void init_lengths(
+	uintmax_t num, const modifiers mods, int *len, int *digits, int *symbols,
+	int *zeros, int *padding)
+{
+	if (mods.flags.sign || mods.flags.space || mods.int_mod.is_negative)
+		++(*symbols);
+
+	if (num && mods.flags.alternate_form && mods.int_mod.base != BASE10)
+	{
+		++(*symbols);
+		if (mods.int_mod.base != BASE08)
+			++(*symbols);
+	}
+
+	if (num || mods.precision)
+		*digits = count_digits(num, mods.int_mod.base);
+
+	if (mods.precision > *digits)
+		*zeros = mods.precision - *digits;
+
+	*len = *symbols + *digits + *zeros;
+	if (mods.width > *len)
+		*padding = mods.width - *len;
+}
+
+/**
  * format_integers - handles formatting of hexadecimal integers.
  * @num: the number to be formatted.
  * @buffer: working buffer for `_printf`.
@@ -85,27 +120,9 @@ int format_integers(uintmax_t num, char_arr *buffer, const modifiers mods)
 {
 	char *wip_str = NULL;
 	int bytes_written = 0;
-	int digits = 0, symbols = 0, zeros = 0, padding = 0;
+	int len = 0, digits = 0, symbols = 0, zeros = 0, padding = 0;
 
-	if (mods.flags.sign || mods.flags.space || mods.int_mod.is_negative)
-		++symbols;
-
-	if (num && mods.flags.alternate_form && mods.int_mod.base != BASE10)
-	{
-		++symbols;
-		if (mods.int_mod.base != BASE08)
-			++symbols;
-	}
-
-	if (num || mods.precision)
-		digits = count_digits(num, mods.int_mod.base);
-
-	if (mods.precision > digits)
-		zeros = mods.precision - digits;
-
-	if (mods.width > (symbols + digits + zeros))
-		padding = mods.width - (symbols + digits + zeros);
-
+	init_lengths(num, mods, &len, &digits, &symbols, &zeros, &padding);
 	wip_str = malloc(padding + symbols + digits + zeros + 1);
 	if (!wip_str)
 		return (-1);
