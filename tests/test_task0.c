@@ -31,6 +31,12 @@ bool test(void)
 	PRINTF_TEST_TEMPLATE("%");
 	PRINTF_TEST_TEMPLATE("%!\n");
 	PRINTF_TEST_TEMPLATE("%K\n");
+	PRINTF_TEST_TEMPLATE("Percent end space:% ");
+	PRINTF_TEST_TEMPLATE("Percent end newline:%\n");
+	PRINTF_TEST_TEMPLATE("Percent end paren:%(");
+	PRINTF_TEST_TEMPLATE("%\t");
+	PRINTF_TEST_TEMPLATE("%\r");
+	PRINTF_TEST_TEMPLATE("%\v");
 
 	if (!failed)
 		PRINT_TESTS_PASS_TEXT();

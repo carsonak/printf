@@ -1,6 +1,14 @@
 #include "tests.h"
 
 /**
+ * NOTE(Andrew): Because output is being written to buffers in memory which
+ * are then compared character by character, it becomes difficult to emulate
+ * the infinite rolling screen of a terminal. This means that these tests may
+ * fail to represent actual real world output, although the number of
+ * characters written should still be correct.
+ */
+
+/**
  * test - TASK4 tests.
  *
  * Return: 0 if all tests pass, 1 otherwise.

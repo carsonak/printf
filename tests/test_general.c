@@ -26,7 +26,6 @@ bool test(void)
 	PRINTF_TEST_TEMPLATE("Unknown:[%r]\n");
 	PRINTF_TEST_TEMPLATE("Unknown + precision:[% 6.4lr]\n");
 	PRINTF_TEST_TEMPLATE("Hanging:[% 6.4l]\n");
-	PRINTF_TEST_TEMPLATE("Percent end: %");
 
 	if (!failed)
 		PRINT_TESTS_PASS_TEXT();

@@ -154,6 +154,14 @@ bool test(void)
 	PRINTF_TEST_TEMPLATE(
 		"%hX + %hX = %hX\n", LONG_MIN, LONG_MAX, (LONG_MIN + LONG_MAX));
 
+	/*******************************************************/
+
+	PRINTF_TEST_TEMPLATE("%h\n");
+	PRINTF_TEST_TEMPLATE("%l\n");
+	PRINTF_TEST_TEMPLATE("Length modifier end space:%l ");
+	PRINTF_TEST_TEMPLATE("Length modifier end newline:%l\n");
+	PRINTF_TEST_TEMPLATE("Length modifier end bracket:%l(");
+
 	if (!failed)
 		PRINT_TESTS_PASS_TEXT();
 

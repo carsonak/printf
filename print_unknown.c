@@ -24,7 +24,7 @@ int print_unknown(string *format, char_arr *buffer)
 	intmax_t i = 0, bytes_written = 0;
 	char c = string_peekc(format);
 
-	if (!isprint(c))
+	if (!isprint(c) && !isspace(c))
 	{
 		buffer_flush(buffer);
 		return (-1);
