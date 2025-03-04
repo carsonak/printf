@@ -110,42 +110,34 @@ static void get_type(string *format, modifiers *mods)
 	if (c < 0)
 		return;
 
-	switch (c)
+	if (c == 'h')
 	{
-	case 'h':
 		mods->length = PRINTF_SHORT;
 		if (string_peekc(format) == 'h')
 		{
 			string_readc(format);
 			mods->length = PRINTF_CHAR;
 		}
-
-		break;
-	case 'l':
+	}
+	else if (c == 'l')
+	{
 		mods->length = PRINTF_LONG;
 		if (string_peekc(format) == 'l')
 		{
 			string_readc(format);
 			mods->length = PRINTF_LLONG;
 		}
-
-		break;
-	case 'L':
-		mods->length = PRINTF_LDOUBLE;
-		break;
-	case 'j':
-		mods->length = PRINTF_INTMAX_T;
-		break;
-	case 'z':
-		mods->length = PRINTF_SIZE_T;
-		break;
-	case 't':
-		mods->length = PRINTF_PTRDIFF_T;
-		break;
-	default:
-		string_readp(format);
-		return;
 	}
+	else if (c == 'L')
+		mods->length = PRINTF_LDOUBLE;
+	else if (c == 'j')
+		mods->length = PRINTF_INTMAX_T;
+	else if (c == 'z')
+		mods->length = PRINTF_SIZE_T;
+	else if (c == 't')
+		mods->length = PRINTF_PTRDIFF_T;
+	else
+		string_readp(format);
 }
 
 /**
