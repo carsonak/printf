@@ -1,5 +1,3 @@
-#include <ctype.h>
-
 #include "main.h"
 
 /**
@@ -27,7 +25,10 @@ int print_unknown(string *format, char_arr *buffer)
 	char c = string_peekc(format);
 
 	if (!isprint(c))
+	{
+		buffer_flush(buffer);
 		return (-1);
+	}
 
 	while (c != '%')
 	{

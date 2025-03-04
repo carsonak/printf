@@ -48,7 +48,7 @@ static void insert_symbols(char *str, uintmax_t num, const modifiers mods)
 			*(str++) = 'b';
 
 		if (mods.int_mod.base == BASE16)
-			*(str++) = _islower(mods.int_mod.alphabet_case) ? 'x' : 'X';
+			*(str++) = islower(mods.int_mod.alphabet_case) ? 'x' : 'X';
 	}
 }
 
@@ -125,7 +125,10 @@ int format_integers(uintmax_t num, char_arr *buffer, const modifiers mods)
 	init_lengths(num, mods, &len, &digits, &symbols, &zeros, &padding);
 	wip_str = malloc(padding + symbols + digits + zeros + 1);
 	if (!wip_str)
+	{
+		buffer_flush(buffer);
 		return (-1);
+	}
 
 	_memset(wip_str, ' ', (padding + symbols + digits + zeros));
 	wip_str[(padding + symbols + digits + zeros)] = '\0';

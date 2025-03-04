@@ -1,21 +1,8 @@
+#include <ctype.h>  /* isdigit */
 #include <limits.h> /* INTMAX_MAX */
 #include <stddef.h> /* size_t */
 
 #include "util_functions.h"
-
-/**
- * _isdigit - check if a character is a decimal digit.
- * @c: character to be checked.
- *
- * Return: 1 if true, 0 if false.
- */
-unsigned char _isdigit(const char c)
-{
-	if (c >= '0' && c <= '9')
-		return (1);
-
-	return (0);
-}
 
 /**
  * _atoimax - converts the initial digits in a string into an integer.
@@ -40,7 +27,7 @@ intmax_t _atoimax(char const *const s)
 	if (is_negative)
 		++max_val;
 
-	while (*(s + i) && _isdigit(*(s + i)) && output < max_val)
+	while (*(s + i) && isdigit(*(s + i)) && output < max_val)
 	{
 		uintmax_t tmp = (output * 10) + (*(s + i) - '0');
 

@@ -1,7 +1,5 @@
 #include "main.h"
 
-#define PRINTF_BUFFER_LENGTH (1024U)
-
 /**
  * _printf - prints a formated string to stdout.
  * @format: - pointer to a string with optional format specifiers.

@@ -2,6 +2,7 @@
 #define _MAIN_H_
 
 #include <assert.h> /* assert */
+#include <ctype.h>  /* isdigit, islower*/
 #include <inttypes.h> /* imaxabs, fixed width types */
 #include <stdarg.h>   /* va_list */
 #include <stddef.h>   /* ptrdiff_t, size_t */
@@ -12,6 +13,8 @@
 #include "printf_typedefs.h"
 #include "string_object.h"
 #include "util_functions.h"
+
+#define PRINTF_BUFFER_LENGTH (1024U)
 
 ATTR_FORMAT_FUNCTION(printf, 1, 2) int _printf(const char *format, ...);
 

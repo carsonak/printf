@@ -59,7 +59,7 @@ static void get_width(va_list args, string *format, modifiers *mods)
 		return;
 	}
 
-	if (!_isdigit(string_peekc(format)))
+	if (!isdigit(string_peekc(format)))
 		return;
 
 	mods->width = _atoimax(&format->s[format->i]);
@@ -94,7 +94,7 @@ static void get_precision(va_list args, string *format, modifiers *mods)
 	if (c == '-')
 		string_readc(format);
 
-	while (_isdigit(string_peekc(format)))
+	while (isdigit(string_peekc(format)))
 		string_readc(format);
 }
 
