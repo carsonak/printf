@@ -10,8 +10,6 @@ bool test(void)
 	int len__printf = 0, len_sprintf = 0;
 	bool failed = 0;
 
-	PRINTF_TEST_TEMPLATE("%.006d", 1024);
-
 	/**************************%.6d**************************/
 
 	PRINTF_TEST_TEMPLATE("%.6d", 102498402);
@@ -166,9 +164,7 @@ bool test(void)
 	PRINTF_TEST_TEMPLATE("%.*s", 6, "Hi!\n");
 
 	if (!failed)
-		fprintf(
-			stderr,
-			__FILE__ ": " COLOUR_BOLD_BRIGHT_GREEN "OK" COLOUR_OFF "\n");
+		PRINT_TESTS_PASS_TEXT();
 
 	return (failed);
 }

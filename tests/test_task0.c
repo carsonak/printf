@@ -33,9 +33,7 @@ bool test(void)
 	PRINTF_TEST_TEMPLATE("%K\n");
 
 	if (!failed)
-		fprintf(
-			stderr,
-			__FILE__ ": " COLOUR_BOLD_BRIGHT_GREEN "OK" COLOUR_OFF "\n");
+		PRINT_TESTS_PASS_TEXT();
 
 	return (failed);
 }

@@ -65,9 +65,7 @@ bool test(void)
 	PRINTF_TEST_TEMPLATE("In the middle %-6X of a sentence.\n", 1024);
 
 	if (!failed)
-		fprintf(
-			stderr,
-			__FILE__ ": " COLOUR_BOLD_BRIGHT_GREEN "OK" COLOUR_OFF "\n");
+		PRINT_TESTS_PASS_TEXT();
 
 	return (failed);
 }

@@ -22,15 +22,14 @@ bool test(void)
 	PRINTF_TEST_TEMPLATE("Address:[%p]\n", (void *)0x7ffe637541f0);
 	PRINTF_TEST_TEMPLATE("Percent:[%%]\n");
 	PRINTF_TEST_TEMPLATE("Len:[%d]\n", 39);
+	PRINTF_TEST_TEMPLATE("%.006d", 1024);
 	PRINTF_TEST_TEMPLATE("Unknown:[%r]\n");
 	PRINTF_TEST_TEMPLATE("Unknown + precision:[% 6.4lr]\n");
 	PRINTF_TEST_TEMPLATE("Hanging:[% 6.4l]\n");
 	PRINTF_TEST_TEMPLATE("Percent end: %");
 
 	if (!failed)
-		fprintf(
-			stderr,
-			__FILE__ ": " COLOUR_BOLD_BRIGHT_GREEN "OK" COLOUR_OFF "\n");
+		PRINT_TESTS_PASS_TEXT();
 
 	return (failed);
 }

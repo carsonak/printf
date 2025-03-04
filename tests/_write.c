@@ -15,7 +15,7 @@ ssize_t _write(int fd, const void *buf, size_t bytes)
 	const char *const str = buf;
 
 	(void)fd;
-	if (!buf || bytes >= TESTS_BUFFER_SIZE)
+	if (!buf || bytes >= PRINTF_TESTS_BUFFER_SIZE)
 		return (-1);
 
 	for (i = 0; i < (ssize_t)bytes; i++)
