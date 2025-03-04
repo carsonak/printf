@@ -10,7 +10,7 @@ int buffer_flush(char_arr *buffer)
 {
 	int bytes_printed = 0;
 
-	if (!buffer)
+	if (!buffer || !buffer->buf || buffer->size < 1 || buffer->i < 0)
 		return (-1);
 
 	bytes_printed = _write(STDOUT_FILENO, buffer->buf, buffer->i);
@@ -25,13 +25,13 @@ int buffer_flush(char_arr *buffer)
  *
  * Return: Returns a positive int on success
  * (if buffer was flushed the number returned will be greater than 0),
- * negative int on failure.
+ * -1 on error.
  */
 int buffer_putchar(char_arr *buffer, char c)
 {
 	int bytes_written = 0;
 
-	if (!buffer)
+	if (!buffer || !buffer->buf || buffer->size < 1 || buffer->i < 0)
 		return (-1);
 
 	if (buffer->i >= buffer->size)

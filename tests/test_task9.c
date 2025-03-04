@@ -69,14 +69,18 @@ bool test(void)
 	PRINTF_TEST_TEMPLATE("%6c", 'A');
 	PRINTF_TEST_TEMPLATE("%6c", 0);
 	PRINTF_TEST_TEMPLATE("In the middle %6c of a sentence.\n", 'H');
+	PRINTF_TEST_TEMPLATE("--%06c--", 'A');
+	PRINTF_TEST_TEMPLATE("--%-6c--", 'A');
 
 	/**************************%6s**************************/
 
 	PRINTF_TEST_TEMPLATE("%6s", "Best School !\n");
 	PRINTF_TEST_TEMPLATE("%6s", "Hi!\n");
 	PRINTF_TEST_TEMPLATE("In the middle %6s of a sentence.\n", "Hey");
+	PRINTF_TEST_TEMPLATE("--%06s--", "Hi!\n");
+	PRINTF_TEST_TEMPLATE("--%-6s--", "Hi!\n");
 
-	/**************************%6d**************************/
+	/**************************%*d**************************/
 
 	PRINTF_TEST_TEMPLATE("%*d", 6, 102498402);
 	PRINTF_TEST_TEMPLATE("%*d", 6, -102498402);
@@ -85,7 +89,7 @@ bool test(void)
 	PRINTF_TEST_TEMPLATE("%*d", 6, -1024);
 	PRINTF_TEST_TEMPLATE("In the middle %*d of a sentence.\n", 6, 1024);
 
-	/**************************%6i**************************/
+	/**************************%*i**************************/
 
 	PRINTF_TEST_TEMPLATE("%*i", 6, 102498402);
 	PRINTF_TEST_TEMPLATE("%*i", 6, -102498402);
@@ -94,7 +98,7 @@ bool test(void)
 	PRINTF_TEST_TEMPLATE("%*i", 6, -1024);
 	PRINTF_TEST_TEMPLATE("In the middle %*i of a sentence.\n", 6, 1024);
 
-	/**************************%6u**************************/
+	/**************************%*u**************************/
 
 	PRINTF_TEST_TEMPLATE("%*u", 6, 102498402);
 	PRINTF_TEST_TEMPLATE("%*u", 6, -102498402);
@@ -103,7 +107,7 @@ bool test(void)
 	PRINTF_TEST_TEMPLATE("%*u", 6, -1024);
 	PRINTF_TEST_TEMPLATE("In the middle %*u of a sentence.\n", 6, 1024);
 
-	/**************************%6d**************************/
+	/**************************%*d**************************/
 
 	PRINTF_TEST_TEMPLATE("%*o", 6, 102498402);
 	PRINTF_TEST_TEMPLATE("%*o", 6, -102498402);
@@ -112,7 +116,7 @@ bool test(void)
 	PRINTF_TEST_TEMPLATE("%*o", 6, -1024);
 	PRINTF_TEST_TEMPLATE("In the middle %*o of a sentence.\n", 6, 1024);
 
-	/**************************%6x**************************/
+	/**************************%*x**************************/
 
 	PRINTF_TEST_TEMPLATE("%*x", 6, 102498402);
 	PRINTF_TEST_TEMPLATE("%*x", 6, -102498402);
@@ -121,7 +125,7 @@ bool test(void)
 	PRINTF_TEST_TEMPLATE("%*x", 6, -1024);
 	PRINTF_TEST_TEMPLATE("In the middle %*x of a sentence.\n", 6, 1024);
 
-	/**************************%6X**************************/
+	/**************************%*X**************************/
 
 	PRINTF_TEST_TEMPLATE("%*X", 6, 102498402);
 	PRINTF_TEST_TEMPLATE("%*X", 6, -102498402);
@@ -130,13 +134,13 @@ bool test(void)
 	PRINTF_TEST_TEMPLATE("%*X", 6, -1024);
 	PRINTF_TEST_TEMPLATE("In the middle %*X of a sentence.\n", 6, 1024);
 
-	/**************************%6c**************************/
+	/**************************%*c**************************/
 
 	PRINTF_TEST_TEMPLATE("%*c", 6, 'A');
 	PRINTF_TEST_TEMPLATE("%*c", 6, 0);
 	PRINTF_TEST_TEMPLATE("In the middle %*c of a sentence.\n", 6, 'H');
 
-	/**************************%6s**************************/
+	/**************************%*s**************************/
 
 	PRINTF_TEST_TEMPLATE("%*s", 6, "Best School !\n");
 	PRINTF_TEST_TEMPLATE("%*s", 6, "Hi!\n");

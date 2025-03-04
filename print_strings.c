@@ -1,42 +1,36 @@
 #include "main.h"
 
 /**
- * format_strings - handles formating of strings.
- * @str: the str to be formated.
- * @buffer: working buffer for `_printf`.
+ * init_working_string - allocates and initialises scratch space for formatting
+ * strings.
+ * @wip_str: struct where pointer to the scratch area is stored.
  * @mods: modifier flags.
- *
- * Return: Returns a positive int on success, negative int on failure.
+ * @str_chars: number of characters that should be formatted.
  */
-int format_strings(const char *str, char_arr *buffer, modifiers mods)
+void init_working_string(
+	/* clang-format off */
+	char_arr * const wip_str, const modifiers mods, const intmax_t str_chars)
+/* clang-format on */
 {
-	int bytes_written = 0;
-	char *wip_str = NULL;
-	intmax_t wip_i = 0, wip_chars = _strlen(str);
-	intmax_t str_i = 0, spaces = 0;
+	intmax_t spaces = 0;
 
-	if (mods.precision > -1 && mods.precision < wip_chars)
-		wip_chars = mods.precision;
+	assert(wip_str && str_chars > -1);
+	if (str_chars < mods.width)
+		spaces = mods.width - str_chars;
 
-	if (wip_chars < mods.width)
-		spaces = mods.width - wip_chars;
+	wip_str->size = str_chars + spaces + 1;
+	wip_str->buf = malloc(wip_str->size);
+	if (!wip_str->buf)
+		return;
 
-	wip_str = malloc(wip_chars + spaces + 1);
-	wip_str[wip_chars + spaces] = 0;
+	wip_str->buf[wip_str->size - 1] = 0;
 	if (mods.flags.left_adjust)
-		_memset(wip_str + wip_chars, ' ', spaces);
+		_memset(wip_str->buf + str_chars, ' ', spaces);
 	else
 	{
-		_memset(wip_str, ' ', spaces);
-		wip_i = spaces;
+		_memset(wip_str->buf, ' ', spaces);
+		wip_str->i = spaces;
 	}
-
-	for (str_i = 0; str[str_i] && str_i < wip_chars; str_i++, wip_i++)
-		wip_str[wip_i] = str[str_i];
-
-	bytes_written = buffer_puts(buffer, wip_str);
-	free(wip_str);
-	return (bytes_written);
 }
 
 /**
@@ -49,14 +43,30 @@ int format_strings(const char *str, char_arr *buffer, modifiers mods)
  */
 int print_str(va_list args, char_arr *buffer, modifiers mods)
 {
-	const char *str;
+	const char *str = va_arg(args, char *);
+	int bytes_written = 0;
+	char_arr wip_str = {0};
+	intmax_t str_i = 0, str_chars = _strlen(str);
 
-	(void)mods;
-	str = va_arg(args, char *);
 	if (!str)
-		str = "(null)";
+		return (buffer_puts(buffer, "(null)"));
 
-	return (format_strings(str, buffer, mods));
+	if (mods.precision > -1 && mods.precision < str_chars)
+		str_chars = mods.precision;
+
+	init_working_string(&wip_str, mods, str_chars);
+	if (!wip_str.buf)
+	{
+		buffer_flush(buffer);
+		return (-1);
+	}
+
+	for (str_i = 0; str[str_i] && str_i < str_chars; ++str_i, ++wip_str.i)
+		wip_str.buf[wip_str.i] = str[str_i];
+
+	bytes_written = buffer_puts(buffer, wip_str.buf);
+	free(wip_str.buf);
+	return (bytes_written);
 }
 
 /**
@@ -70,14 +80,13 @@ int print_str(va_list args, char_arr *buffer, modifiers mods)
 int print_STR(va_list args, char_arr *buffer, modifiers mods)
 {
 	unsigned int idx, nob = 0;
-	const char *str;
+	const char *str = va_arg(args, char *);
 	modifiers m = {0};
 
 	(void)mods;
 	m.precision = 2, m.int_mod.base = BASE16, m.int_mod.alphabet_case = UPPER;
-	str = va_arg(args, char *);
 	if (!str)
-		str = "(null)";
+		return (buffer_puts(buffer, "(null)"));
 
 	for (idx = 0; str[idx] != '\0'; idx++)
 	{

@@ -77,15 +77,15 @@ static void itostr(char *const str, uintmax_t num, const integer_mods mods)
  * init_lengths - initialises various variables.
  * @num: the number to be formatted.
  * @mods: modifier flags.
- * @len: total length of the result string.
+ * @num_len: total length of the result string.
  * @digits: number of non-zero digits in the number.
  * @symbols: length of sign + alternate form symbols.
  * @zeros: number of 0's to be used as padding.
  * @padding: number of blanks/zeros used for padding.
  */
 static void init_lengths(
-	uintmax_t num, const modifiers mods, int *len, int *digits, int *symbols,
-	int *zeros, int *padding)
+	uintmax_t num, const modifiers mods, int *num_len, int *digits,
+	int *symbols, int *zeros, int *padding)
 {
 	if (mods.flags.sign || mods.flags.space || mods.int_mod.is_negative)
 		++(*symbols);
@@ -97,15 +97,15 @@ static void init_lengths(
 			++(*symbols);
 	}
 
-	if (num || mods.precision)
+	if (num || mods.precision != 0)
 		*digits = count_digits(num, mods.int_mod.base);
 
 	if (mods.precision > *digits)
 		*zeros = mods.precision - *digits;
 
-	*len = *symbols + *digits + *zeros;
-	if (mods.width > *len)
-		*padding = mods.width - *len;
+	*num_len = *symbols + *digits + *zeros;
+	if (mods.width > *num_len)
+		*padding = mods.width - *num_len;
 }
 
 /**
@@ -120,30 +120,33 @@ int format_integers(uintmax_t num, char_arr *buffer, const modifiers mods)
 {
 	char *wip_str = NULL;
 	int bytes_written = 0;
-	int len = 0, digits = 0, symbols = 0, zeros = 0, padding = 0;
+	int num_len = 0, digits = 0, symbols = 0, zeros = 0, padding = 0;
 
-	init_lengths(num, mods, &len, &digits, &symbols, &zeros, &padding);
-	wip_str = malloc(padding + symbols + digits + zeros + 1);
+	init_lengths(num, mods, &num_len, &digits, &symbols, &zeros, &padding);
+	wip_str = malloc(padding + num_len + 1);
 	if (!wip_str)
 	{
 		buffer_flush(buffer);
 		return (-1);
 	}
 
-	_memset(wip_str, ' ', (padding + symbols + digits + zeros));
-	wip_str[(padding + symbols + digits + zeros)] = '\0';
-	if (!mods.flags.left_adjust && !mods.flags.zero_padding)
-		wip_str += padding;
-
-	if (!mods.flags.left_adjust && mods.flags.zero_padding)
-		zeros += padding;
+	_memset(wip_str, ' ', padding + num_len);
+	wip_str[padding + num_len] = '\0';
+	if (!mods.flags.left_adjust)
+	{
+		if (mods.flags.zero_padding && mods.precision < 0)
+			zeros += padding;
+		else
+			wip_str += padding;
+	}
 
 	insert_symbols(wip_str, num, mods);
 	_memset(wip_str + symbols, '0', zeros);
 	if (digits)
 		itostr(wip_str + symbols + zeros, num, mods.int_mod);
 
-	if (!mods.flags.left_adjust && !mods.flags.zero_padding)
+	if (!mods.flags.left_adjust &&
+	    !(mods.flags.zero_padding && mods.precision < 0))
 		wip_str -= padding;
 
 	bytes_written = buffer_puts(buffer, wip_str);

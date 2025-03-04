@@ -22,9 +22,13 @@ bool test(void)
 	PRINTF_TEST_TEMPLATE("Address:[%p]\n", (void *)0x7ffe637541f0);
 	PRINTF_TEST_TEMPLATE("Percent:[%%]\n");
 	PRINTF_TEST_TEMPLATE("Len:[%d]\n", 39);
+	PRINTF_TEST_TEMPLATE("--%-8.6d--", 1024);
+	PRINTF_TEST_TEMPLATE("--%08.6d--", 1024);
+	PRINTF_TEST_TEMPLATE("--%-08.6d--", 1024);
+	PRINTF_TEST_TEMPLATE("--%0-8.6d--", 1024);
 	PRINTF_TEST_TEMPLATE("%.006d", 1024);
-	PRINTF_TEST_TEMPLATE("Unknown:[%r]\n");
-	PRINTF_TEST_TEMPLATE("Unknown + precision:[% 6.4lr]\n");
+	PRINTF_TEST_TEMPLATE("Unknown:[%t]\n");
+	PRINTF_TEST_TEMPLATE("Unknown + precision:[% 6.4lt]\n");
 	PRINTF_TEST_TEMPLATE("Hanging:[% 6.4l]\n");
 
 	if (!failed)

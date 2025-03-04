@@ -154,19 +154,11 @@ int format_handler(va_list args, string *format, char_arr *buffer)
 	int bytes_printed = 0, i = 0;
 	modifiers mods = {0};
 	format_funcs fmt_funcs[] = {
-		{print_character, 'c'},
-		{print_str, 's'},
-		{print_percent, '%'},
-		{print_int_di, 'd'},
-		{print_int_di, 'i'},
-		{print_binary, 'b'},
-		{print_oct, 'o'},
-		{print_int_u, 'u'},
-		{print_hexa_lower, 'x'},
-		{print_hexa_upper, 'X'},
-		{print_ptr, 'p'},
-		{print_STR, 'S'},
-		{0},
+		{print_character, 'c'},  {print_str, 's'},    {print_percent, '%'},
+		{print_int_di, 'd'},     {print_int_di, 'i'}, {print_binary, 'b'},
+		{print_oct, 'o'},        {print_int_u, 'u'},  {print_hexa_lower, 'x'},
+		{print_hexa_upper, 'X'}, {print_ptr, 'p'},    {print_STR, 'S'},
+		{print_reversed, 'r'},   {print_rot13, 'R'},  {0},
 	};
 
 	assert(format && buffer);

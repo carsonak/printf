@@ -23,6 +23,7 @@ int print_unknown(string *format, char_arr *buffer)
 {
 	intmax_t i = 0, bytes_written = 0;
 	char c = string_peekc(format);
+	bool length_modifier_seen = false;
 
 	if (!isprint(c) && !isspace(c))
 	{
@@ -41,8 +42,11 @@ int print_unknown(string *format, char_arr *buffer)
 	{
 		int ret_val;
 
-		if (is_length_modifier(c))
+		if (!length_modifier_seen && is_length_modifier(c))
+		{
+			length_modifier_seen = true;
 			continue;
+		}
 
 		ret_val = buffer_putchar(buffer, c);
 		if (ret_val < 0)

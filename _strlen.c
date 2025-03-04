@@ -10,7 +10,7 @@ int _strlen(char const *const s)
 {
 	int i;
 
-	for (i = 0; s[i] != '\0'; i++)
+	for (i = 0; s && s[i] != '\0'; i++)
 		;
 
 	return (i);

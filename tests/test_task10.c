@@ -89,6 +89,8 @@ bool test(void)
 	PRINTF_TEST_TEMPLATE("In the middle %.6s of a sentence.\n", "Hey");
 	PRINTF_TEST_TEMPLATE("%.0s", "Hi!\n");
 	PRINTF_TEST_TEMPLATE("%.s", "Hi!\n");
+	PRINTF_TEST_TEMPLATE("--%6.3s--", "Hi!!\n");
+	PRINTF_TEST_TEMPLATE("--%3.6s--", "Hi!!\n");
 
 	/**************************%.*d**************************/
 
