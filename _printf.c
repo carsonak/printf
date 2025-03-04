@@ -22,7 +22,7 @@ int _printf(const char *format, ...)
 	va_start(args, format);
 	fmt.size = _strlen(format) + 1, fmt.i = 0, fmt.s = format;
 	buffer.size = sizeof(arr), buffer.i = 0, buffer.buf = arr;
-	for (c = string_readc(&fmt); c > -1; c = string_readc(&fmt))
+	for (c = string_readc(&fmt); c > 0; c = string_readc(&fmt))
 	{
 		if (c != '%')
 		{
@@ -46,5 +46,5 @@ int _printf(const char *format, ...)
 	if (ret_val < 0)
 		return (-1);
 
-	return (bytes_printed + ret_val - 1);
+	return (bytes_printed + ret_val);
 }
