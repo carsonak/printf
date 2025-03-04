@@ -14,7 +14,7 @@ SRCS = $(shell find $(SRCS_DIR) -maxdepth 1 -name '*.c')
 # .o file names
 OBJS = $(SRCS:$(SRCS_DIR)/%.c=$(OBJS_DIR)/%.o)
 # all test files
-TESTS = $(shell find $(TESTS_DIR) -name test_main.c -prune -o -name 'test_*.c' -print)
+TESTS = $(shell find $(TESTS_DIR) -name test_main.c -prune -o -name 'test_*.c' -print | sort)
 # all test files' binaries
 TESTS_BINS = $(TESTS:$(TESTS_DIR)/%.c=$(TESTS_BIN_DIR)/%)
 # auto-genarated files for .h files make rules
