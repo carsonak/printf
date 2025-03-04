@@ -9,6 +9,9 @@ static void get_flags(string *format, modifiers *mods)
 {
 	char c = string_readc(format);
 
+	if (c < 0)
+		return;
+
 	while (c == '#' || c == '0' || c == '-' || c == ' ' || c == '+')
 	{
 		switch (c)
@@ -49,14 +52,14 @@ static void get_width(va_list args, string *format, modifiers *mods)
 	int i = 0;
 
 	(void)args;
-	if (string_getc(format) == '*')
+	if (string_peekc(format) == '*')
 	{
 		mods->width = va_arg(args, int);
 		string_readc(format);
 		return;
 	}
 
-	if (!_isdigit(string_getc(format)))
+	if (!_isdigit(string_peekc(format)))
 		return;
 
 	mods->width = _atoimax(&format->s[format->i]);
@@ -72,15 +75,15 @@ static void get_width(va_list args, string *format, modifiers *mods)
  */
 static void get_precision(va_list args, string *format, modifiers *mods)
 {
-	int i = 0;
+	char c = string_peekc(format);
 
-	(void)args;
 	mods->precision = -1;
-	if (string_getc(format) != '.')
+	if (c != '.')
 		return;
 
 	string_readc(format);
-	if (string_getc(format) == '*')
+	c = string_peekc(format);
+	if (c == '*')
 	{
 		mods->precision = va_arg(args, int);
 		string_readc(format);
@@ -88,7 +91,10 @@ static void get_precision(va_list args, string *format, modifiers *mods)
 	}
 
 	mods->precision = _atoimax(&format->s[format->i]);
-	for (i = count_digits(mods->width, BASE10); i > 0; --i)
+	if (c == '-')
+		string_readc(format);
+
+	while (_isdigit(string_peekc(format)))
 		string_readc(format);
 }
 
@@ -99,11 +105,16 @@ static void get_precision(va_list args, string *format, modifiers *mods)
  */
 static void get_type(string *format, modifiers *mods)
 {
-	switch (string_readc(format))
+	char c = string_readc(format);
+
+	if (c < 0)
+		return;
+
+	switch (c)
 	{
 	case 'h':
 		mods->length = PRINTF_SHORT;
-		if (string_getc(format) == 'h')
+		if (string_peekc(format) == 'h')
 		{
 			string_readc(format);
 			mods->length = PRINTF_CHAR;
@@ -112,7 +123,7 @@ static void get_type(string *format, modifiers *mods)
 		break;
 	case 'l':
 		mods->length = PRINTF_LONG;
-		if (string_getc(format) == 'l')
+		if (string_peekc(format) == 'l')
 		{
 			string_readc(format);
 			mods->length = PRINTF_LLONG;
@@ -171,7 +182,7 @@ int format_handler(va_list args, string *format, char_arr *buffer)
 	get_width(args, format, &mods);
 	get_precision(args, format, &mods);
 	get_type(format, &mods);
-	c = string_getc(format);
+	c = string_peekc(format);
 	for (i = 0; fmt_funcs[i].ch; i++)
 	{
 		if (c == fmt_funcs[i].ch)

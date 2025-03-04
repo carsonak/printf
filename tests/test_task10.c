@@ -10,6 +10,8 @@ bool test(void)
 	int len__printf = 0, len_sprintf = 0;
 	bool failed = 0;
 
+	PRINTF_TEST_TEMPLATE("%.006d", 1024);
+
 	/**************************%.6d**************************/
 
 	PRINTF_TEST_TEMPLATE("%.6d", 102498402);

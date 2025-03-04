@@ -16,7 +16,9 @@ typedef struct string
 	char const *s;
 } string;
 
-char string_getc(string *s);
+char string_peekc(string const *const s);
+char string_peekn(string const *const s);
+char string_peekp(string const *const s);
 char string_readc(string *s);
 char string_readp(string *s);
 

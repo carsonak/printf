@@ -29,7 +29,7 @@ intmax_t _atoimax(char const *const s)
 	size_t i = 0;
 	unsigned char is_negative = 0;
 
-	while (*(s + i) && !_isdigit(*(s + i)))
+	while (*(s + i) && (*(s + i) == '-' || *(s + i) == '+'))
 	{
 		if (*(s + i) == '-')
 			is_negative = !is_negative;

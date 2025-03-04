@@ -8,8 +8,12 @@
  */
 int buffer_flush(char_arr *buffer)
 {
-	int bytes_printed = _write(STDOUT_FILENO, buffer->buf, buffer->i);
+	int bytes_printed = 0;
 
+	if (!buffer)
+		return (-1);
+
+	bytes_printed = _write(STDOUT_FILENO, buffer->buf, buffer->i);
 	buffer->i = 0;
 	return (bytes_printed);
 }
@@ -26,6 +30,9 @@ int buffer_flush(char_arr *buffer)
 int buffer_putchar(char_arr *buffer, char c)
 {
 	int bytes_written = 0;
+
+	if (!buffer)
+		return (-1);
 
 	if (buffer->i >= buffer->size)
 		bytes_written = buffer_flush(buffer);
