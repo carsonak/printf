@@ -9,14 +9,43 @@ The C code in this project follows the [Betty style guide](https://github.com/al
 
 ## Structure
 
-The printf function `_printf` is located in [_printf.c](./_printf.c).
+The printf function `_printf` is located in [_printf.c](./_printf.c) and its
+declaration in [_printf.h](./_printf.h).
 
-All sub-functions used by `_printf` are contained in files in the top level
-of the repository. The prototypes and other defines used in the project
-are aggregated into [main.h](./main.h).
+To use the `_printf` function you can build either a shared or static library
+using the [make](https://en.wikipedia.org/wiki/Make_(software)) program and
+then link the library to your main program which includes the header file
+[_printf.h](./_printf.h).
+For example to make a static library and link to it using [gcc](https://en.wikipedia.org/wiki/GNU_Compiler_Collection);
+run the following commands in the top level of the repository:
 
-Tests are contained in the [tests](./tests) directory and can be run with the
-make program, just run the following command in the top level of the repository.
+```bash
+make lib_printf.a
+gcc -I. my_main_program.c -L. -l_printf
+```
+
+The library files can be placed anywhere you want in your system as long you
+pass the new directory to the **-L** option (i.e., `-L/path/to/lib/directory`).
+The **-I** option should also be updated if the header file [_printf.h](./_printf.h)
+is moved (i.e., `-I/path/to/header/directory`).
+
+A shared library might require a different configuration, but to simply
+compile and run your program you can run the following commands:
+
+```bash
+make lib_printf.so
+gcc -I. my_main_program.c -L. -l_printf
+LD_LIBRARY_PATH=./:$LD_LIBRARY_PATH ./a.out
+```
+
+Similarly, the **-I** and **-L** options should be updated if you decide to
+move the header and library files. In addition the environment variable
+`$LD_LIBRARY_PATH` should also be updated with the new path to the library
+directory (i.e., `LD_LIBRARY_PATH=/path/to/lib/directory:$LD_LIBRARY_PATH`),
+then exported or prefixed to the command running your program.
+
+Tests are contained in the [tests](./tests) directory and can be compiled and
+automatically run with a make command:
 
 ```bash
 make all-tests
@@ -24,11 +53,12 @@ make all-tests
 
 ## Format Specification
 
-The format string has an identical syntax to the standard library printf.
+The format string has an identical syntax to the standard library's printf
+format string.
 
-> **%\[flags...\]\[width\]\[.precision\]\[length modifier\]conversion**
+> **%\[flags...\]\[width\]\[.\[precision\]\]\[length modifier\]\<conversion\>**
 
-The format string begins with a "**%**" and ends with a conversion specifier.
+The format string begins with a '**%**' and ends with a conversion specifier.
 In between there may be (in this order) zero or more **flags**, an optional
 **minimum field width**, an optional **precision** and an optional **length modifier**.
 
@@ -38,7 +68,7 @@ the variable list of arguments. The arguments must correspond properly
 
 ### Flag characters
 
-The character % is followed by zero or more of the following flags:
+The character '**%**' is followed by zero or more of the following flags:
 
 | FLAG | DESCRIPTION |
 | :---: | :--- |
@@ -97,7 +127,7 @@ or **X** conversion.
 
 This is a character that specifies the type of conversion to be applied.
 
-| Conversio | Description |
+| Conversion | Description |
 | :---: | :--- |
 | d, i | The *int* argument is converted to signed decimal notation. The **precision**, if any, gives the minimum number of digits that must appear; if the converted value  requires fewer digits, it is padded on the left with zeros.  The default **precision** is 1.  When 0 is printed with an explicit **precision** 0, the output is empty. |
 | b, o, u, x, X | The *unsigned int* argument is converted to unsigned binary (**b**), unsigned octal (**o**), unsigned decimal (**u**), or unsigned hexadecimal (**x** and **X**) notation. The letters **abcdef** are  used for **x** conversions; the letters **ABCDEF** are used for **X** conversions. The **precision**, if any, gives the minimum number of digits that must appear; if the converted value requires fewer digits, it is padded on the left with zeros. The default **precision** is 1. When 0 is printed with an explicit **precision** 0, the output is empty. |
@@ -115,13 +145,14 @@ Upon successful return, the `_printf` function returns the number of bytes print
 
 If an output, memory, syntax or any other error is encountered, a negative value is returned.
 
-## Examples
+## Example
 
 ```C
 #include <limits.h>
+#include <inttypes.h>
 #include <stddef.h>
 
-#include "main.h"
+#include "_printf.h"
 
 int main(void)
 {
@@ -141,7 +172,7 @@ int main(void)
     _printf("\nIf you follow the river's flow\n");
     _printf("You will find where deer hide in the %rs\n", "deer");
     _printf("and people are part of a %r's %r\n", "flow", "part");
- return (0);
+    return (0);
 }
 ```
 
