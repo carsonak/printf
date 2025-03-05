@@ -35,6 +35,7 @@ INCL_FLAGS = $(addprefix -iquote,$(INCLUDE_DIRS))
 CPPFLAGS := -MMD
 OPTIMISATION_FLAGS := -O2
 DEBUG_FLAGS := -g3 -fno-omit-frame-pointer
+# Original project required compilation with --std=gnu89
 C_STANDARD := --std=gnu89
 WARN_FLAGS := -pedantic -Wall -Wextra -Wno-format -Werror
 
@@ -47,16 +48,17 @@ $(SHARED_LIB): ADDRESS_SANITISER :=
 $(SHARED_LIB): UNDEFINED_SANITISER :=
 $(SHARED_LIB): DEBUG_FLAGS :=
 $(SHARED_LIB): CPPFLAGS += -DNDEBUG
-$(SHARED_LIB): C_STANDARD := --std=c17
+$(SHARED_LIB): C_STANDARD := --std=c99
+$(SHARED_LIB): INSTRUMENTATION_FLAGS += -fpic
 # $^ - names of all the prerequisites
 $(SHARED_LIB): $(OBJS)
-	$(CC) $(CFLAGS) -fpic -shared -o $@ $^
+	$(CC) $(CFLAGS) -shared -o $@ $^
 
 $(STATIC_LIB): ADDRESS_SANITISER :=
 $(STATIC_LIB): UNDEFINED_SANITISER :=
 $(STATIC_LIB): DEBUG_FLAGS :=
 $(STATIC_LIB): CPPFLAGS += -DNDEBUG
-$(STATIC_LIB): C_STANDARD := --std=c17
+$(STATIC_LIB): C_STANDARD := --std=c99
 $(STATIC_LIB): $(OBJS)
 	$(AR) $(ARFLAGS) $@ $^
 
@@ -85,6 +87,7 @@ $(TESTS_BINS):$(TESTS_BIN_DIR)/test_%: | $(TESTS_BIN_DIR)
 $(TESTS_BINS):$(TESTS_BIN_DIR)/test_%: $(filter-out %_write.o,$(OBJS))
 $(TESTS_BINS):$(TESTS_BIN_DIR)/test_%: $(TESTS_DIR)/test_%.c $(TESTS_DIR)/test_main.c $(TESTS_DIR)/_write.c
 	$(CC) --std=c2x $(filter-out --std=gnu89,$(CFLAGS)) -o $@ $^
+# Need to compile with atleast --std=c23 for the __VA_OPT__(, ) macro.
 
 .PHONY: clean
 clean:
