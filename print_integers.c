@@ -1,4 +1,4 @@
-#include "main.h"
+#include "_printf_internals.h"
 /**
  * _imaxabs - returns the absolute value of an intmax_t integer.
  * @n: the integer.

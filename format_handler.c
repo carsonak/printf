@@ -1,4 +1,4 @@
-#include "main.h"
+#include "_printf_internals.h"
 
 /**
  * get_flags - interpret the flag modifiers in the string.

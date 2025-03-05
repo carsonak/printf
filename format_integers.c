@@ -1,4 +1,4 @@
-#include "main.h"
+#include "_printf_internals.h"
 
 /**
  * count_digits - calculate how many digits can represent a number in the

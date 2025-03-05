@@ -1,4 +1,4 @@
-#include "main.h"
+#include "_printf_internals.h"
 
 /**
  * print_reversed - handles reversed string format specifier.

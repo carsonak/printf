@@ -1,4 +1,4 @@
-#include "main.h"
+#include "_printf_internals.h"
 
 /**
  * print_ptr - prints an address in lowercase hexadecimal.

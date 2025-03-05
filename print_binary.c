@@ -1,4 +1,4 @@
-#include "main.h"
+#include "_printf_internals.h"
 
 /**
  * print_binary - converts an unsigned int into binary.

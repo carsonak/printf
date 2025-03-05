@@ -1,3 +1,5 @@
+#include <unistd.h> /* STDOUT_FILENO */
+
 #include "buffer_object.h"
 
 /**

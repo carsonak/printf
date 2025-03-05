@@ -1,4 +1,4 @@
-#include "main.h"
+#include "util_functions.h"
 
 /**
  * _memset - fills a continuous memory block with a constant byte.

@@ -1,4 +1,4 @@
-#include <unistd.h>
+#include <unistd.h> /* write */
 
 #include "util_functions.h"
 

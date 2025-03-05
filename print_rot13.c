@@ -1,4 +1,4 @@
-#include "main.h"
+#include "_printf_internals.h"
 
 /**
  * rot13_letter - rotates a letter by 13 characters.

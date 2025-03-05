@@ -5,11 +5,12 @@
 #include <limits.h>   /* max of types */
 #include <stdbool.h>  /* bool */
 #include <string.h>   /* strncmp */
+#include <unistd.h>   /* ssize_t */
 
 #include "main.h"
 #include "tests_macros.h"
 
-#define PRINTF_TESTS_BUFFER_SIZE (PRINTF_BUFFER_LENGTH * 2)
+#define PRINTF_TESTS_BUFFER_SIZE (1024U * 2)
 
 extern char _printf_test_output[PRINTF_TESTS_BUFFER_SIZE];
 extern char _printf_ctrl_output[PRINTF_TESTS_BUFFER_SIZE];

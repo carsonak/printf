@@ -1,4 +1,4 @@
-#include "main.h"
+#include "_printf_internals.h"
 
 /**
  * init_working_string - allocates and initialises scratch space for formatting

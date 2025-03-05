@@ -1,4 +1,4 @@
-#include "main.h"
+#include "_printf_internals.h"
 
 /**
  * is_length_modifier - checks if a character is a `_printf()` length modifier.
