@@ -7,42 +7,65 @@ project.
 
 The C code in this project follows the [Betty style guide](https://github.com/alx-tools/Betty/wiki).
 
-## Structure
+## Installation
 
-The printf function `_printf` is located in [_printf.c](./_printf.c) and its
-declaration in [_printf.h](./_printf.h).
+### Requirements
 
-To use the `_printf` function you can build either a shared or static library
-using the [make](https://en.wikipedia.org/wiki/Make_(software)) program and
-then link the library to your main program which includes the header file
-[_printf.h](./_printf.h).
-For example to make a static library and link to it using [gcc](https://en.wikipedia.org/wiki/GNU_Compiler_Collection);
-run the following commands in the top level of the repository:
+- [make](https://en.wikipedia.org/wiki/Make_(software))
+- A C compiler, eg. [gcc](https://en.wikipedia.org/wiki/GNU_Compiler_Collection)
+
+To use the `_printf` function  run `make install` in the top level of the
+repository, super user permissions are required. You can then compile your
+program and link to the library **lib_printf.so**. For example with gcc:
+
+```bash
+make install
+gcc -Wno-format my_program.c -l_printf
+./a.out
+```
+
+The `-Wno-format` option suppresses printf format string warnings as `_printf`
+implements some custom formatting syntax. You may also wish to build the
+library and then configure your system as you wish. For example:
+
+<details>
+<summary>Building a static library</summary>
 
 ```bash
 make lib_printf.a
-gcc -I. my_main_program.c -L. -l_printf
+gcc -Wno-format -I. my_program.c -L. -l_printf
+./a.out
 ```
 
-The library files can be placed anywhere you want in your system as long you
+The archive file can be placed anywhere you want in your system as long you
 pass the new directory to the **-L** option (i.e., `-L/path/to/lib/directory`).
 The **-I** option should also be updated if the header file [_printf.h](./_printf.h)
 is moved (i.e., `-I/path/to/header/directory`).
 
-A shared library might require a different configuration, but to simply
-compile and run your program you can run the following commands:
+</details>
+
+<details>
+<summary>Building a dynamic library</summary>
 
 ```bash
 make lib_printf.so
-gcc -I. my_main_program.c -L. -l_printf
-LD_LIBRARY_PATH=./:$LD_LIBRARY_PATH ./a.out
+gcc -Wno-format -I. my_program.c -L. -l_printf
+env LD_LIBRARY_PATH=./:$LD_LIBRARY_PATH ./a.out
 ```
 
-Similarly, the **-I** and **-L** options should be updated if you decide to
-move the header and library files. In addition the environment variable
-`$LD_LIBRARY_PATH` should also be updated with the new path to the library
-directory (i.e., `LD_LIBRARY_PATH=/path/to/lib/directory:$LD_LIBRARY_PATH`),
+Similar to the static library, the **-I** and **-L** options should be updated
+with the appropriate directories if you decide to move the header and library
+files. In addition, the environment variable `$LD_LIBRARY_PATH` should also be
+updated with the new path to the library directory (i.e., `LD_LIBRARY_PATH=/path/to/lib/directory:$LD_LIBRARY_PATH`),
 then exported or prefixed to the command running your program.
+
+</details>
+
+## Structure
+
+The printf function `_printf` is located in [_printf.c](./_printf.c) and its
+declaration in [_printf.h](./_printf.h). All the sub-functions `_printf` uses
+are declared and defined in the files in the top level of the repository.
 
 Tests are contained in the [tests](./tests) directory and can be compiled and
 automatically run with a make command:
@@ -148,11 +171,11 @@ If an output, memory, syntax or any other error is encountered, a negative value
 ## Example
 
 ```C
+#include "_printf.h"
+
 #include <limits.h>
 #include <inttypes.h>
 #include <stddef.h>
-
-#include "_printf.h"
 
 int main(void)
 {
@@ -176,7 +199,7 @@ int main(void)
 }
 ```
 
-#### Ouput
+#### Output
 
 ```txt
 A simple sentence.

@@ -44,6 +44,11 @@ CFLAGS = $(C_STANDARD) $(WARN_FLAGS) $(INCL_FLAGS) $(CPPFLAGS) $(OPTIMISATION_FL
 
 ARFLAGS := -rvcsD
 
+install: $(SHARED_LIB)
+	sudo cp $(PROJECT_NAME).h /usr/local/include
+	sudo mv $< /usr/local/lib
+	sudo ldconfig
+
 $(SHARED_LIB): ADDRESS_SANITISER :=
 $(SHARED_LIB): UNDEFINED_SANITISER :=
 $(SHARED_LIB): DEBUG_FLAGS :=

@@ -1,11 +1,12 @@
+#include "_printf.h"
+
 #include <limits.h>
 #include <inttypes.h>
 #include <stddef.h>
 
-#include "_printf.h"
-
 int main(void)
 {
+	/* clang-format off */
 	_printf("A simple sentence.\n");
 	_printf("Percent: [%%]\n");
 	_printf("Integers: [%d, %i]\n", INT_MAX, INT_MIN);
